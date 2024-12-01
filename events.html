@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern School</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #FF6B6B;
+            --accent: #FFA45C;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+      
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --hover-color: #2171cc;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            padding: 0.7rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            padding: 0;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            position: relative;
+            width: 24px;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            transform: translateY(-8px);
+        }
+
+        .navbar-toggler-icon::after {
+            transform: translateY(8px);
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background-color: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+        }
+
+        .nav-item {
+            position: relative;
+            margin: 0 0.3rem;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            padding: 0.8rem 1.2rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-item.active .nav-link {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-item.active .nav-link::before {
+            transform: scaleX(1);
+        }
+
+        @media (min-width: 992px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .nav-item::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: -0.3rem;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 20px;
+                background-color: rgba(74, 144, 226, 0.2);
+            }
+
+            .nav-item:last-child::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: white;
+                padding: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                margin-top: 1rem;
+            }
+
+            .nav-item {
+                margin: 0.5rem 0;
+            }
+
+            .nav-link {
+                text-align: center;
+                padding: 0.5rem !important;
+            }
+
+            .nav-link::before {
+                bottom: -2px;
+            }
+        }
+
+        /* Premium animation effects */
+        @keyframes navItemFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar-nav .nav-item {
+            animation: navItemFade 0.5s ease forwards;
+            animation-delay: calc(0.1s * var(--item-number));
+        }
+    </style>
+  
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+          <a class="navbar-brand" href="#">
+              <img src="imgs/logo.jpg" alt="SVSS School logo">
+          </a>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavMain" aria-controls="navbarNavMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavMain">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active" style="--item-number: 1">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                  <li class="nav-item" style="--item-number: 2">
+                      <a class="nav-link" href="about.html">About</a>
+                  </li>
+                  <li class="nav-item" style="--item-number: 3">
+                      <a class="nav-link" href="academics.html">Academics</a>
+                  </li>
+                  <li class="nav-item" style="--item-number: 4">
+                      <a class="nav-link" href="gallery.html">Gallery</a>
+                  </li>
+                  <li class="nav-item" style="--item-number: 5">
+                      <a class="nav-link" href="events.html">Events</a>
+                  </li>
+
+                  <li class="nav-item" style="--item-number: 5">
+                    <a class="nav-link" href="teachers.html">Gurdains Of Knowledge</a>
+                </li>
+
+                  <li class="nav-item" style="--item-number: 6">
+                      <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+
+
+    <style>
+     
+
+        .hero-section {
+            background: linear-gradient(rgba(74, 144, 226, 0.9), rgba(74, 144, 226, 0.7)),
+                        url('imgs/image.JPG') center/cover;
+            height: 650px;
+            color: white;
+        }
+
+        .event-card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-date {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .category-badge {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .featured-event {
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .calendar-section {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+        }
+
+        .calendar-event {
+            border-left: 3px solid var(--primary-blue);
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section d-flex align-items-center justify-content-center text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">School Events</h1>
+            <p class="lead">Stay updated with all our upcoming events and activities</p>
+            <button class="btn btn-light btn-lg">View All Events</button>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+    <style>
+        .calendar-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            min-height: 120px;
+            position: relative;
+        }
+        
+        .calendar-day.holiday {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        
+        .calendar-day:hover {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        .nepali-date {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .english-date {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .event-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .event-list {
+            margin-top: 10px;
+            font-size: 0.8rem;
+        }
+        
+        .modal-body {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .calendar-day {
+                min-height: 80px;
+                font-size: 0.8rem;
+            }
+            
+            .nepali-date {
+                font-size: 1rem;
+            }
+            
+            .english-date {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="calendar-header text-center">
+            <div class="row align-items-center">
+                <div class="col">
+                    <button class="btn btn-outline-primary" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+                <div class="col-6">
+                    <h2 id="currentMonth"></h2>
+                    <p id="currentYear" class="mb-0"></p>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-primary" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col text-center">Sun</div>
+            <div class="col text-center">Mon</div>
+            <div class="col text-center">Tue</div>
+            <div class="col text-center">Wed</div>
+            <div class="col text-center">Thu</div>
+            <div class="col text-center">Fri</div>
+            <div class="col text-center">Sat</div>
+        </div>
+        
+        <div id="calendar" class="row g-0"></div>
+    </div>
+
+    <!-- Event Modal -->
+    <div class="modal fade" id="eventModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Events</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="eventDetails">
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script>
+      // Global variables
+let calendarData = [];
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let currentNepaliMonth;
+let currentNepaliYear;
+const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+
+async function fetchCalendarData() {
+    try {
+        const response = await fetch("https://api.saralpatro.com/graphql", {
+            credentials: "omit",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: `
+                    {
+                        dates(bsYear: 2081) {
+                            bsDay
+                            bsMonth
+                            bsYear
+                            adDay
+                            adMonth
+                            adYear
+                            weekday
+                            isHoliday
+                            events {
+                                strEn
+                                strNp
+                                isHoliday
+                            }
+                        }
+                    }
+                `
+            }),
+            method: "POST",
+            mode: "cors"
+        });
+
+        const data = await response.json();
+        calendarData = data.data.dates;
+        
+        // Find current date in the calendar data
+        const today = new Date();
+        const currentDate = calendarData.find(date => 
+            date.adYear === today.getFullYear() &&
+            date.adMonth === (today.getMonth() + 1) &&
+            date.adDay === today.getDate()
+        );
+
+        if (currentDate) {
+            currentNepaliMonth = currentDate.bsMonth - 1; // Convert to 0-based index
+            currentNepaliYear = currentDate.bsYear;
+            currentMonth = currentDate.adMonth - 1; // Convert to 0-based index
+            currentYear = currentDate.adYear;
+        }
+
+        renderCalendar();
+    } catch (error) {
+        console.error("Error fetching calendar data:", error);
+    }
+}
+
+function renderCalendar() {
+    const calendar = document.getElementById('calendar');
+    calendar.innerHTML = '';
+    
+    // Filter data for current Nepali month
+    const monthData = calendarData.filter(date => 
+        date.bsMonth === currentNepaliMonth + 1
+    );
+
+    if (monthData.length === 0) return;
+
+    // Find first day of month
+    const firstDay = monthData[0].weekday;
+    
+    // Create empty cells for days before first day of month
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDay = createDayElement();
+        calendar.appendChild(emptyDay);
+    }
+
+    // Create cells for each day of the month
+    monthData.forEach(date => {
+        const dayElement = createDayElement(date);
+        
+        // Highlight current day
+        const today = new Date();
+        if (date.adYear === today.getFullYear() &&
+            date.adMonth === (today.getMonth() + 1) &&
+            date.adDay === today.getDate()) {
+            dayElement.style.backgroundColor = '#e3f2fd';
+            dayElement.style.border = '2px solid #1976d2';
+        }
+        
+        calendar.appendChild(dayElement);
+    });
+
+    // Update header
+    document.getElementById('currentMonth').textContent = 
+        `${getNepaliMonth(currentNepaliMonth)} / ${getEnglishMonth(currentMonth)}`;
+    document.getElementById('currentYear').textContent = 
+        `${monthData[0].bsYear} / ${monthData[0].adYear}`;
+}
+
+function createDayElement(date = null) {
+    const div = document.createElement('div');
+    div.className = 'col calendar-day';
+    
+    if (!date) return div;
+
+    if (date.isHoliday) {
+        div.classList.add('holiday');
+    }
+
+    // Add Nepali date
+    const nepaliDate = document.createElement('div');
+    nepaliDate.className = 'nepali-date';
+    nepaliDate.textContent = date.bsDay;
+    div.appendChild(nepaliDate);
+
+    // Add English date
+    const englishDate = document.createElement('div');
+    englishDate.className = 'english-date';
+    englishDate.textContent = date.adDay;
+    div.appendChild(englishDate);
+
+    // Add events if any
+    if (date.events && date.events.length > 0) {
+        const eventList = document.createElement('div');
+        eventList.className = 'event-list';
+        date.events.slice(0, 2).forEach(event => {
+            const eventDot = document.createElement('span');
+            eventDot.className = 'event-dot';
+            eventList.appendChild(eventDot);
+        });
+        div.appendChild(eventList);
+    }
+
+    // Add click handler
+    div.addEventListener('click', () => showEvents(date));
+
+    return div;
+}
+
+function showEvents(date) {
+    const modalBody = document.getElementById('eventDetails');
+    modalBody.innerHTML = `
+        <h6>${date.bsDay} ${getNepaliMonth(date.bsMonth - 1)} ${date.bsYear}</h6>
+        <h6>${date.adDay} ${getEnglishMonth(date.adMonth - 1)} ${date.adYear}</h6>
+        <hr>
+    `;
+
+    if (date.events && date.events.length > 0) {
+        const eventsList = document.createElement('ul');
+        eventsList.className = 'list-group';
+        date.events.forEach(event => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.innerHTML = `
+                <div>${event.strEn}</div>
+                <div class="text-muted">${event.strNp}</div>
+            `;
+            eventsList.appendChild(li);
+        });
+        modalBody.appendChild(eventsList);
+    } else {
+        modalBody.innerHTML += '<p>No events for this day</p>';
+    }
+
+    eventModal.show();
+}
+
+function getNepaliMonth(month) {
+    const months = [
+        'Baisakh', 'Jestha', 'Ashadh', 'Shrawan', 
+        'Bhadra', 'Ashwin', 'Kartik', 'Mangsir',
+        'Poush', 'Magh', 'Falgun', 'Chaitra'
+    ];
+    return months[month];
+}
+
+function getEnglishMonth(month) {
+    const months = [
+        'January', 'February', 'March', 'April',
+        'May', 'June', 'July', 'August',
+        'September', 'October', 'November', 'December'
+    ];
+    return months[month];
+}
+
+// Navigation button handlers
+document.getElementById('prevMonth').addEventListener('click', () => {
+    const firstDayOfCurrentMonth = calendarData.find(date => 
+        date.bsMonth === currentNepaliMonth + 1 &&
+        date.bsDay === 1
+    );
+    
+    const prevMonthData = calendarData.find(date => 
+        date.adYear === firstDayOfCurrentMonth.adYear &&
+        date.adMonth === firstDayOfCurrentMonth.adMonth - 1 &&
+        date.bsDay === 1
+    ) || calendarData.find(date => 
+        date.adYear === firstDayOfCurrentMonth.adYear - 1 &&
+        date.adMonth === 12 &&
+        date.bsDay === 1
+    );
+
+    if (prevMonthData) {
+        currentNepaliMonth = prevMonthData.bsMonth - 1;
+        currentNepaliYear = prevMonthData.bsYear;
+        currentMonth = prevMonthData.adMonth - 1;
+        currentYear = prevMonthData.adYear;
+        renderCalendar();
+    }
+});
+
+document.getElementById('nextMonth').addEventListener('click', () => {
+    const firstDayOfCurrentMonth = calendarData.find(date => 
+        date.bsMonth === currentNepaliMonth + 1 &&
+        date.bsDay === 1
+    );
+    
+    const nextMonthData = calendarData.find(date => 
+        date.adYear === firstDayOfCurrentMonth.adYear &&
+        date.adMonth === firstDayOfCurrentMonth.adMonth + 1 &&
+        date.bsDay === 1
+    ) || calendarData.find(date => 
+        date.adYear === firstDayOfCurrentMonth.adYear + 1 &&
+        date.adMonth === 1 &&
+        date.bsDay === 1
+    );
+
+    if (nextMonthData) {
+        currentNepaliMonth = nextMonthData.bsMonth - 1;
+        currentNepaliYear = nextMonthData.bsYear;
+        currentMonth = nextMonthData.adMonth - 1;
+        currentYear = nextMonthData.adYear;
+        renderCalendar();
+    }
+});
+
+// Initialize calendar
+fetchCalendarData();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Featured Events Section -->
+    <section class="container my-5">
+        <h2 class="text-center mb-4">Featured Events</h2>
+        <div class="row g-4">
+            <!-- Featured Event Card 1 -->
+            <div class="col-md-4">
+                <div class="card event-card h-100">
+                    <img src="imgs/image.JPG" class="card-img-top" alt="Annual Sports Day">
+                    <div class="card-body">
+                        <div class="event-date mb-3">
+                            <h5 class="mb-0">DEC</h5>
+                            <h3 class="mb-0">15</h3>
+                        </div>
+                        <h5 class="card-title">Annual Sports Day</h5>
+                        <p class="card-text">Join us for a day of athletic excellence and sportsmanship.</p>
+                        <span class="badge category-badge">Sports</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Event Card 2 -->
+            <div class="col-md-4">
+                <div class="card event-card h-100">
+                    <img src="imgs/image.JPG" class="card-img-top" alt="Science Exhibition">
+                    <div class="card-body">
+                        <div class="event-date mb-3">
+                            <h5 class="mb-0">DEC</h5>
+                            <h3 class="mb-0">20</h3>
+                        </div>
+                        <h5 class="card-title">Science Exhibition</h5>
+                        <p class="card-text">Discover amazing student projects and innovations.</p>
+                        <span class="badge category-badge">Academic</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Event Card 3 -->
+            <div class="col-md-4">
+                <div class="card event-card h-100">
+                    <img src="imgs/image.JPG" class="card-img-top" alt="Annual Day">
+                    <div class="card-body">
+                        <div class="event-date mb-3">
+                            <h5 class="mb-0">DEC</h5>
+                            <h3 class="mb-0">25</h3>
+                        </div>
+                        <h5 class="card-title">Annual Day Celebration</h5>
+                        <p class="card-text">A cultural extravaganza showcasing student talents.</p>
+                        <span class="badge category-badge">Cultural</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar Section -->
+    <section class="calendar-section">
+        <div class="container">
+            <h2 class="text-center mb-4">Upcoming Events</h2>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="calendar-event">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Parent-Teacher Meeting</h5>
+                            <span class="text-muted">Dec 10, 2024</span>
+                        </div>
+                        <p class="mb-0">Time: 9:00 AM - 2:00 PM</p>
+                    </div>
+
+                    <div class="calendar-event">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Christmas Celebration</h5>
+                            <span class="text-muted">Dec 23, 2024</span>
+                        </div>
+                        <p class="mb-0">Time: 11:00 AM - 3:00 PM</p>
+                    </div>
+
+                    <div class="calendar-event">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">New Year Special Assembly</h5>
+                            <span class="text-muted">Jan 5, 2025</span>
+                        </div>
+                        <p class="mb-0">Time: 8:30 AM - 10:30 AM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="container my-5">
+        <div class="row">
+            <div class="col-lg-6 mx-auto text-center">
+                <h3>Stay Updated!</h3>
+                <p>Subscribe to our newsletter to receive event updates</p>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" placeholder="Enter your email">
+                    <button class="btn btn-primary" style="background-color: #4A90E2;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+       <!-- Back to Top Button -->
+       <button onclick="topFunction()" id="backToTop" class="btn position-fixed bottom-0 end-0 m-4" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+  
+    <script>
+         // Back to Top Button
+         window.onscroll = function() {scrollFunction()};
+          
+          function scrollFunction() {
+              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                  document.getElementById("backToTop").style.display = "block";
+              } else {
+                  document.getElementById("backToTop").style.display = "none";
+              }
+          }
+          
+          function topFunction() {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+          }
+    </script>
+  
+    <style>
+      
+      #backToTop {
+              background: var(--primary-color);
+              border: none;
+              border-radius: 50%;
+              width: 50px;
+              height: 50px;
+              box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+          }
+  
+    </style>
+
+    
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    </script>
+
+
+
+<script>
+    // Get the current URL path without query strings or hash
+    const currentPath = window.location.pathname;
+
+    // Select all nav-link elements
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    navLinks.forEach(link => {
+        // Normalize link paths and current path for comparison
+        const linkPath = new URL(link.href).pathname;
+
+        // Add 'active' class to the parent nav-item if the paths match
+        if (linkPath === currentPath || (linkPath === '/' && currentPath === '/')) {
+            link.closest(".nav-item").classList.add("active");
+        } else {
+            link.closest(".nav-item").classList.remove("active");
+        }
+    });
+</script>
+</body>
+</html>

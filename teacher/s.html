@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #e8f0fe;
+            --secondary-color: #64748b;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #1a1a1a;
+        }
+
+        .profile-header {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .profile-cover {
+            height: 240px;
+            background: linear-gradient(135deg, var(--primary-color), #1e40af);
+            position: relative;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 6px solid white;
+            position: absolute;
+            bottom: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+            object-fit: cover;
+            background-color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-info {
+            margin-top: 100px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stats-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+        }
+
+        .achievement-badge {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin: 8px;
+            display: inline-block;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .subject-tag {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            padding: 8px 18px;
+            margin: 6px;
+            display: inline-block;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .subject-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .timetable-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .timetable-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .timetable-row {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .timetable-row:hover {
+            background-color: var(--primary-light);
+        }
+
+        .timetable-time {
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .expertise-level {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+
+        .expertise-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        .stats-mini-card {
+            background-color: var(--primary-light);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .qualification-card {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .profile-cover {
+                height: 180px;
+            }
+            
+            .profile-image {
+                width: 140px;
+                height: 140px;
+                bottom: -70px;
+            }
+
+            .profile-info {
+                margin-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="profile-header">
+            <div class="profile-cover">
+                <img src="/api/placeholder/180/180" alt="Teacher" class="profile-image">
+            </div>
+            <div class="profile-info">
+                <h2 class="mb-2">Anjana Thapa</h2>
+                <p class="text-muted mb-2">anjana.thapa@email.com</p>
+                <p class="mb-3">Primary Education Department</p>
+                
+                <!-- Rating Section -->
+                <div class="rating-stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                    <span class="ms-2 fs-5">4.5/5</span>
+                </div>
+                
+                <div class="mt-4" id="subjectsList">
+                    <span class="subject-tag"><i class="fas fa-book me-2"></i>Social</span>
+                    <span class="subject-tag"><i class="fas fa-globe me-2"></i>Local</span>
+                    <span class="subject-tag"><i class="fas fa-map me-2"></i>Serofero</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h5>Teaching Experience</h5>
+                    <p class="mb-0 fs-4">8 Years</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h5>Students Taught</h5>
+                    <p class="mb-0 fs-4">500+</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="icon-circle">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h5>Achievements</h5>
+                    <p class="mb-0 fs-4">12</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-8">
+                <div class="stats-card">
+                    <h4 class="mb-4"><i class="fas fa-clock me-2"></i>Weekly Schedule</h4>
+                    <div class="timetable-card">
+                        <div class="timetable-header">
+                            <h5 class="mb-0">Daily Timetable</h5>
+                        </div>
+                        <div class="timetable-row">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="timetable-time">10:15 AM - 11:00 AM</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">Rhymes</h6>
+                                    <small class="text-muted">Class 2 - Section A</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timetable-row">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="timetable-time">11:00 AM - 12:00 PM</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">English</h6>
+                                    <small class="text-muted">Class 2 - Section A</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timetable-row">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="timetable-time">12:00 PM - 01:00 PM</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">Mathematics</h6>
+                                    <small class="text-muted">Class 2 - Section A</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timetable-row">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="timetable-time">01:30 PM - 02:00 PM</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">Writing</h6>
+                                    <small class="text-muted">Class 2 - Section A</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timetable-row">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <div class="timetable-time">02:00 PM - 03:00 PM</div>
+                                </div>
+                                <div class="col-md-8">
+                                    <h6 class="mb-1">Science</h6>
+                                    <small class="text-muted">Class 2 - Section A</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="stats-card">
+                    <h4 class="mb-4"><i class="fas fa-star me-2"></i>Expertise</h4>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Primary Education</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="expertise-level">
+                            <div class="expertise-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Child Psychology</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="expertise-level">
+                            <div class="expertise-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Creative Teaching</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="expertise-level">
+                            <div class="expertise-fill" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <h4 class="mb-4"><i class="fas fa-graduation-cap me-2"></i>Qualifications</h4>
+                    <div class="qualification-card">
+                        <h6>Master in Education</h6>
+                        <small class="text-muted">University of Education (2015-2017)</small>
+                    </div>
+                    <div class="qualification-card">
+                        <h6>Bachelor in Education</h6>
+                        <small class="text-muted">City University (2011-2015)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-card mt-4">
+            <h4 class="mb-4"><i class="fas fa-trophy me-2"></i>Achievements & Recognition</h4>
+            <div class="achievement-badge">
+                <i class="fas fa-trophy me-2"></i>
+                Best Teacher of the Year 2023
+            </div>
+            <div class="achievement-badge">
+                <i class="fas fa-star me-2"></i>
+                Excellence in Teaching
+            </div>
+            <div class="achievement-badge">
+                <i class="fas fa-medal me-2"></i>
+                Student Mentor Award
+            </div>
+            <div class="achievement-badge">
+                <i class="fas fa-certificate me-2"></i>
+                Perfect Attendance 2023
+            </div>
+            <div class="achievement-badge">
+                <i class="fas fa-heart me-2"></i>
+                Most Loved Teacher
+            </div>
+        </div>
+
+        <div class="stats-card mt-4">
+            <h4 class="mb-4"><i class="fas fa-chart-bar me-2"></i>Teaching Statistics</h4>
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stats-mini-card text-center">
+                        <i class="fas fa-book-reader mb-2"></i>
+                        <h4>98%</h4>
+                        <small>Course Completion Rate</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-mini-card text-center">
+                        <i class="fas fa-user-graduate mb-2"></i>
+                        <h4>95%</h4>
+                        <small>Student Success Rate</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-mini-card text-center">
+                        <i class="fas fa-clock mb-2"></i>
+                        <h4>99%</h4>
+                        <small>Attendance Rate</small>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stats-mini-card text-center">
+                        <i class="fas fa-chalkboard-teacher mb-2"></i>
+                        <h4>1200+</h4>
+                        <small>Classes Conducted</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="stats-card mt-4">
+            <h4 class="mb-4"><i class="fas fa-address-card me-2"></i>Contact Information</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <i class="fas fa-envelope me-2 text-primary"></i>
+                        <span>anjana.thapa@email.com</span>
+                    </div>
+                    <div class="mb-3">
+                        <i class="fas fa-phone me-2 text-primary"></i>
+                        <span>+977-9841234567</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <i class="fas fa-clock me-2 text-primary"></i>
+                        <span>Office Hours: 9:00 AM - 4:00 PM</span>
+                    </div>
+                    <div class="mb-3">
+                        <i class="fas fa-location-dot me-2 text-primary"></i>
+                        <span>Room 203, Primary Block</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const supabaseClient = supabase.createClient(
+                'https://oyjqllqplktgruvebfap.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8'
+            );
+
+            const TEACHER_ID = '08936058-e39e-4acb-9b50-cb6edf262df5';
+
+            try {
+    // Fetch teacher data
+    const { data: teacher, error: teacherError } = await supabaseClient
+        .from('teachers')
+        .select('*')
+        .eq('id', TEACHER_ID)
+        .single();
+
+    if (teacherError) throw teacherError;
+
+    // Fetch reviews for average rating calculation
+    const { data: reviews, error: reviewsError } = await supabaseClient
+        .from('teacher_reviews')
+        .select('rating, created_at') // Include created_at for time-based weighting
+        .eq('teacher_id', TEACHER_ID);
+
+    if (reviewsError) throw reviewsError;
+
+    // Calculate review statistics using the weighted average approach (like the first snippet)
+    const reviewStats = calculateReviewStats(reviews);
+
+    // Extract the adjusted average rating (no rounding)
+    const adjustedAverage = reviewStats.averageRating;
+
+    // Update rating stars
+    const ratingStarsContainer = document.querySelector('.rating-stars');
+    ratingStarsContainer.innerHTML = generateStars(adjustedAverage) + 
+        `<span class="ms-2 fs-5">${adjustedAverage.toFixed(1)}/5</span>`;
+
+    // Update DOM with teacher data
+    if (teacher.teacher_image) {
+        document.querySelector('.profile-image').src = teacher.teacher_image;
+    }
+
+    // Update timetable if it exists
+    if (teacher.timetable) {
+        const timetable = JSON.parse(teacher.timetable);
+        updateTimetable(timetable);
+    }
+
+} catch (error) {
+    console.error('Error fetching data:', error);
+}
+
+// Function to calculate review statistics (Weighted average with recency)
+function calculateReviewStats(reviews) {
+    const stats = {
+        totalReviews: reviews.length,
+        distribution: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+        weightedSum: 0,
+        recentWeight: 0
+    };
+
+    const now = new Date();
+
+    reviews.forEach(review => {
+        const reviewDate = new Date(review.created_at);
+        const daysSinceReview = (now - reviewDate) / (1000 * 60 * 60 * 24); // Calculate days since the review
+        const timeWeight = 1 / Math.log(daysSinceReview + Math.E); // Logarithmic weighting for recency
+
+        stats.weightedSum += review.rating * timeWeight; // Add weighted rating
+        stats.recentWeight += timeWeight; // Add weight to recent reviews
+        stats.distribution[review.rating]++; // Count rating distribution
+    });
+
+    const weightedAverage = stats.weightedSum / stats.recentWeight; // Calculate weighted average
+    const confidenceWeight = Math.min(stats.totalReviews / 10, 1); // Confidence weight based on the number of reviews
+    const baselineRating = 3.5; // Baseline rating to balance the average
+    const adjustedAverage = (weightedAverage * confidenceWeight) + (baselineRating * (1 - confidenceWeight)); // Adjusted average
+
+    return {
+        averageRating: adjustedAverage, // Return the raw adjusted average
+        totalReviews: stats.totalReviews,
+        distribution: stats.distribution
+    };
+}
+
+// Function to generate the rating stars
+function generateStars(rating) {
+    let stars = '';
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+
+    for (let i = 0; i < fullStars; i++) {
+        stars += '<i class="fas fa-star"></i>';
+    }
+    if (hasHalfStar) {
+        stars += '<i class="fas fa-star-half-alt"></i>';
+    }
+    const emptyStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < emptyStars; i++) {
+        stars += '<i class="far fa-star"></i>';
+    }
+    return stars;
+}
+        });
+        function updateTimetable(timetable) {
+            const timetableContainer = document.querySelector('.timetable-card');
+            let timetableHTML = `
+                <div class="timetable-header">
+                    <h5 class="mb-0">Daily Timetable</h5>
+                </div>
+            `;
+
+            timetable.forEach(slot => {
+                timetableHTML += `
+                    <div class="timetable-row">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="timetable-time">${slot.time}</div>
+                            </div>
+                            <div class="col-md-8">
+                                <h6 class="mb-1">${slot.subject}</h6>
+                                <small class="text-muted">Class ${slot.class} - Section ${slot.section}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            timetableContainer.innerHTML = timetableHTML;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f0f2f5;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+      .review-form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 0.75rem;
+        justify-content: center;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        font-size: 2.5rem;
+        color: #ddd;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input:checked ~ label {
+        color: #ffd700;
+        transform: scale(1.1);
+    }
+
+    .file-upload-label {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background: #4f46e5;
+        color: white;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .file-upload-label:hover {
+        background: #4338ca;
+        transform: translateY(-1px);
+    }
+
+    .submit-button {
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        transition: all 0.2s ease;
+    }
+
+    .submit-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    }
+
+    @media (max-width: 640px) {
+        .review-form-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+    }
+  
+/* Container styles */
+#reviewsContainer {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+gap: 1.5rem;
+padding: 1rem;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+/* Review card styles */
+.review-card {
+background: #ffffff;
+border-radius: 0.75rem;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+padding: 1.5rem;
+transition: transform 0.2s ease-in-out;
+}
+
+.review-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Review header styles */
+.review-header {
+display: flex;
+align-items: flex-start;
+gap: 1rem;
+margin-bottom: 1rem;
+}
+
+.user-avatar {
+width: 48px;
+height: 48px;
+border-radius: 50%;
+flex-shrink: 0;
+object-fit: cover;
+}
+
+.user-info {
+flex-grow: 1;
+}
+
+.user-name {
+font-weight: 600;
+color: #1F2937;
+margin-bottom: 0.25rem;
+}
+
+.review-stars {
+color: #FCD34D;
+font-size: 0.875rem;
+}
+
+.review-date {
+font-size: 0.875rem;
+color: #6B7280;
+}
+
+.review-text {
+color: #4B5563;
+line-height: 1.5;
+margin: 0;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 640px) {
+#reviewsContainer {
+grid-template-columns: 1fr;
+gap: 1rem;
+padding: 0.75rem;
+}
+
+.review-card {
+padding: 1rem;
+}
+
+.user-avatar {
+width: 40px;
+height: 40px;
+}
+
+.review-header {
+gap: 0.75rem;
+}
+}
+
+/* Medium screens */
+@media (min-width: 641px) and (max-width: 1024px) {
+#reviewsContainer {
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+}
+
+/* For larger screens, ensure we don't stretch too wide */
+@media (min-width: 1400px) {
+#reviewsContainer {
+margin: 0 auto;
+padding: 2rem;
+}
+}
+@media (min-width: 640px) {
+  .stats-card {
+    padding: 2rem;
+  }
+}
+
+.stats-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .stats-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.rating-summary {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .rating-summary {
+    text-align: left;
+  }
+}
+
+.rating-big {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (min-width: 640px) {
+  .rating-big {
+    font-size: 3.5rem;
+  }
+}
+
+.stars-big {
+  font-size: 1.5rem;
+  color: #FCD34D;
+  margin: 0.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .stars-big {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+}
+
+.distribution-container {
+  flex: 1;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .distribution-container {
+    margin-left: 2rem;
+    margin-right: 0;
+  }
+}
+
+.distribution-row {
+  display: flex;
+  align-items: center;
+  margin: 0.75rem 0;
+  gap: 0.5rem;
+}
+
+.distribution-label {
+  width: 50px;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .distribution-label {
+    width: 60px;
+    font-size: 1rem;
+  }
+}
+
+.distribution-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  flex: 1;
+}
+
+.distribution-fill {
+  height: 100%;
+  background: #FCD34D;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.distribution-count {
+  width: 40px;
+  text-align: right;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .distribution-count {
+    width: 50px;
+    font-size: 1rem;
+  }
+}
+
+
+@media (min-width: 640px) {
+  .review-date {
+    font-size: 0.875rem;
+  }
+}
+
+
+
+.shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0) 0%, 
+    rgba(255,255,255,0.2) 50%, 
+    rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+    .loader {
+        display: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 2px solid #3498db;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .stats-box {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 1rem;
+        padding: 1rem;
+    }
+
+    .progress-bar {
+        transition: width 0.5s ease;
+    }
+
+    @media (max-width: 640px) {
+        .container {
+            padding: 1rem;
+        }
+        
+        .stats-container {
+            flex-direction: column;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="text-center md:text-left mb-6 md:mb-0">
+                <h1 id="teacherNameSecond" class="text-4xl font-bold mb-2">Loading teacher info...</h1>
+                <p class="text-gray-200">Share your experience with this teacher</p>
+            </div>
+            <div class="stats-box">
+                <div class="text-center">
+                    <span id="averageRating" class="text-5xl font-bold">-</span>
+                    <div id="ratingStars" class="text-yellow-400 text-2xl mt-2"></div>
+                    <p class="mt-2"><span id="totalReviews">0</span> reviews</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto px-4">
+    <!-- Rating Distribution -->
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Rating Distribution</h2>
+        <div id="ratingDistribution" class="space-y-3"></div>
+    </div>
+
+    <!-- Review Form -->
+   <!-- Review Form Section -->
+<div class="bg-white rounded-lg shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+<h2 class="text-2xl font-semibold mb-8 text-center text-gray-800">
+    <i class="fas fa-pen-to-square mr-2 text-indigo-600"></i>Share Your Experience
+</h2>
+
+<form id="reviewForm" class="space-y-8 max-w-xl mx-auto">
+    <!-- Name Input -->
+    <div class="text-center">
+        <input type="text" 
+               id="userName" 
+               placeholder="Your Name"
+               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-center text-lg transition-all duration-300" 
+               required>
+    </div>
+
+    <!-- Star Rating -->
+    <div class="flex flex-col items-center space-y-3">
+        <label class="text-gray-600 font-medium">Your Rating</label>
+        <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5" required>
+            <label for="star5" class="transition-transform duration-200 hover:scale-110">
+                <i class="fas fa-star"></i>
+            </label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" class="transition-transform duration-200 hover:scale-110">
+                <i class="fas fa-star"></i>
+            </label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" class="transition-transform duration-200 hover:scale-110">
+                <i class="fas fa-star"></i>
+            </label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" class="transition-transform duration-200 hover:scale-110">
+                <i class="fas fa-star"></i>
+            </label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" class="transition-transform duration-200 hover:scale-110">
+                <i class="fas fa-star"></i>
+            </label>
+        </div>
+    </div>
+
+    <!-- Review Text -->
+    <div class="text-center">
+        <textarea id="reviewText" 
+                  rows="4" 
+                  placeholder="Share your experience with this teacher..."
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-center resize-none transition-all duration-300"
+                  required></textarea>
+    </div>
+
+    <!-- Optional Image Upload -->
+    <div class="flex flex-col items-center space-y-3">
+        <label for="userImage" class="cursor-pointer group">
+            <div class="bg-indigo-50 text-indigo-600 px-6 py-3 rounded-lg hover:bg-indigo-100 transition-all duration-300 flex items-center space-x-2">
+                <i class="fas fa-camera"></i>
+                <span>Add Profile Picture (Optional)</span>
+            </div>
+            <input type="file" id="userImage" class="hidden" accept="image/*">
+        </label>
+        <img id="imagePreview" class="hidden w-20 h-20 rounded-full object-cover border-4 border-indigo-200">
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+        <button type="submit" 
+                class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 mx-auto">
+            <span>Submit Review</span>
+            <div class="loader ml-2"></div>
+        </button>
+    </div>
+</form>
+</div>
+
+
+
+    <!-- Reviews Container -->
+    <div id="reviewsContainer" class="space-y-6 mb-8"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const supabaseClient = supabase.createClient(
+            'https://oyjqllqplktgruvebfap.supabase.co', 
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8'
+        );
+
+        const TEACHER_ID = '8b8ecec4-6c2e-4859-8a0d-6a1bd2e76291';
+
+        async function loadTeacherDetails() {
+            try {
+                const { data: teacher, error } = await supabaseClient
+                    .from('teachers')
+                    .select('*')
+                    .eq('id', TEACHER_ID)
+                    .single();
+
+                if (error) throw error;
+                document.getElementById('teacherNameSecond').textContent = teacher.name;
+            } catch (error) {
+                console.error('Error loading teacher:', error);
+                document.getElementById('teacherNameSecond').textContent = 'Teacher information unavailable';
+            }
+        }
+
+        function calculateReviewStats(reviews) {
+            const stats = {
+                totalReviews: reviews.length,
+                distribution: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+                weightedSum: 0,
+                recentWeight: 0
+            };
+
+            const now = new Date();
+            reviews.forEach(review => {
+                const reviewDate = new Date(review.created_at);
+                const daysSinceReview = (now - reviewDate) / (1000 * 60 * 60 * 24);
+                const timeWeight = 1 / Math.log(daysSinceReview + Math.E);
+                
+                stats.weightedSum += review.rating * timeWeight;
+                stats.recentWeight += timeWeight;
+                stats.distribution[review.rating]++;
+            });
+
+            const weightedAverage = stats.weightedSum / stats.recentWeight;
+            const confidenceWeight = Math.min(stats.totalReviews / 10, 1);
+            const baselineRating = 3.5;
+            const adjustedAverage = (weightedAverage * confidenceWeight) + (baselineRating * (1 - confidenceWeight));
+
+            return {
+                averageRating: adjustedAverage.toFixed(1),
+                totalReviews: stats.totalReviews,
+                distribution: stats.distribution
+            };
+        }
+
+        async function loadReviews() {
+            try {
+                const { data: reviews, error } = await supabaseClient
+                    .from('teacher_reviews')
+                    .select('*')
+                    .eq('teacher_id', TEACHER_ID)
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                const stats = calculateReviewStats(reviews);
+                
+                document.getElementById('averageRating').textContent = stats.averageRating;
+                document.getElementById('totalReviews').textContent = stats.totalReviews;
+                
+                document.getElementById('ratingStars').innerHTML = 
+                    '★'.repeat(Math.round(stats.averageRating)) + 
+                    '☆'.repeat(5 - Math.round(stats.averageRating));
+
+                const distributionHTML = Object.entries(stats.distribution)
+                    .reverse()
+                    .map(([rating, count]) => {
+                        const percentage = (count / stats.totalReviews * 100) || 0;
+                        return `
+                            <div class="flex items-center">
+                                <div class="w-16 text-sm font-medium">${rating} stars</div>
+                                <div class="flex-1 h-5 mx-4 bg-gray-200 rounded-full overflow-hidden">
+                                    <div class="progress-bar h-full bg-yellow-400" 
+                                         style="width: ${percentage}%"></div>
+                                </div>
+                                <div class="w-16 text-sm text-right">${count} (${percentage.toFixed(1)}%)</div>
+                            </div>
+                        `;
+                    }).join('');
+                document.getElementById('ratingDistribution').innerHTML = distributionHTML;
+
+                const container = document.getElementById('reviewsContainer');
+    container.innerHTML = reviews.map(review => {
+      const date = new Date(review.created_at);
+      const formattedDate = new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      }).format(date);
+
+      return `
+        <div class="review-card">
+          <div class="review-header">
+            ${review.user_image_url
+              ? `<img src="${review.user_image_url}" class="user-avatar" alt="${review.user_name}">`
+              : `<div class="user-avatar" style="background: #EEF2FF; display: flex; align-items: center; justify-content: center;">
+                  <i class="fas fa-user" style="color: #4F46E5;"></i>
+                 </div>`
+            }
+            <div class="user-info">
+              <div class="user-name">${review.user_name}</div>
+              <div class="review-stars">
+                ${'<i class="fas fa-star"></i>'.repeat(review.rating)}
+                ${'<i class="far fa-star"></i>'.repeat(5 - review.rating)}
+              </div>
+            </div>
+            <div class="review-date">${formattedDate}</div>
+          </div>
+          <p class="review-text">${review.review_text}</p>
+        </div>
+      `;
+    }).join('');
+
+  } catch (error) {
+    console.error('Error loading reviews:', error);
+  }
+}
+
+
+document.getElementById('userImage').addEventListener('change', function(event) {
+const file = event.target.files[0];
+if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        preview.src = e.target.result;
+        preview.classList.remove('hidden');
+    }
+    reader.readAsDataURL(file);
+}
+});
+
+// Function to resize image
+function resizeImage(file) {
+return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 150;
+            canvas.height = 150;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, 150, 150);
+            
+            // Convert canvas to blob
+            canvas.toBlob((blob) => {
+                resolve(blob);
+            }, file.type);
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+}
+
+document.getElementById('reviewForm').addEventListener('submit', async function(event) {
+event.preventDefault();
+const loader = document.querySelector('.loader');
+loader.style.display = 'inline-block';
+
+try {
+    const userName = document.getElementById('userName').value;
+    const rating = document.querySelector('input[name="rating"]:checked').value;
+    const reviewText = document.getElementById('reviewText').value;
+    const userImage = document.getElementById('userImage').files[0];
+
+    let userImageUrl = null;
+    if (userImage) {
+        // Resize image before uploading
+        const resizedImage = await resizeImage(userImage);
+        
+        const fileExt = userImage.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+            .from('teacher_review_images')
+            .upload(fileName, resizedImage);
+
+        if (uploadError) throw uploadError;
+        
+        const { data: { publicUrl } } = supabaseClient.storage
+            .from('teacher_review_images')
+            .getPublicUrl(fileName);
+            
+        userImageUrl = publicUrl;
+    }
+
+    const { data, error } = await supabaseClient
+        .from('teacher_reviews')
+        .insert([
+            {
+                user_name: userName,
+                rating: rating,
+                review_text: reviewText,
+                user_image_url: userImageUrl,
+                teacher_id: TEACHER_ID
+            }
+        ]);
+
+    if (error) throw error;
+
+    // Show success message
+    const successAlert = document.createElement('div');
+    successAlert.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-500 ease-in-out';
+    successAlert.textContent = 'Review submitted successfully!';
+    document.body.appendChild(successAlert);
+
+    // Remove success message after 3 seconds
+    setTimeout(() => {
+        successAlert.style.transform = 'translateX(200%)';
+        setTimeout(() => successAlert.remove(), 500);
+    }, 3000);
+
+    // Reset form and refresh reviews
+    event.target.reset();
+    document.getElementById('imagePreview').classList.add('hidden');
+    loadReviews();
+    
+} catch (error) {
+    console.error('Error:', error);
+    
+    // Show error message
+    const errorAlert = document.createElement('div');
+    errorAlert.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg';
+    errorAlert.textContent = 'Failed to submit review. Please try again.';
+    document.body.appendChild(errorAlert);
+
+    // Remove error message after 3 seconds
+    setTimeout(() => errorAlert.remove(), 3000);
+} finally {
+    loader.style.display = 'none';
+}
+});
+
+        // Add smooth scroll to reviews section when clicking on total reviews
+        document.getElementById('totalReviews').parentElement.addEventListener('click', () => {
+            document.getElementById('reviewsContainer').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+
+        // Add hover effect to rating stars
+        const starLabels = document.querySelectorAll('.star-rating label');
+        starLabels.forEach((label, index) => {
+            label.addEventListener('mouseover', () => {
+                starLabels.forEach((l, i) => {
+                    if (i <= index) {
+                        l.style.transform = 'scale(1.2)';
+                    }
+                });
+            });
+
+            label.addEventListener('mouseout', () => {
+                starLabels.forEach(l => {
+                    l.style.transform = 'scale(1)';
+                });
+            });
+        });
+
+        // Add scroll animation for review cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const reviewObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Function to observe review cards
+        function observeReviews() {
+            const reviewCards = document.querySelectorAll('.review-card');
+            reviewCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                reviewObserver.observe(card);
+            });
+        }
+
+        // Add window resize handler for responsive design
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const isMobile = window.innerWidth < 640;
+                document.querySelectorAll('.stats-box').forEach(box => {
+                    box.style.width = isMobile ? '100%' : 'auto';
+                });
+            }, 250);
+        });
+
+        // Initialize
+        loadTeacherDetails();
+        loadReviews();
+
+        // Add event listener for when new reviews are loaded
+        const reviewsContainer = document.getElementById('reviewsContainer');
+        const reviewsObserver = new MutationObserver(observeReviews);
+        reviewsObserver.observe(reviewsContainer, { childList: true });
+    });
+</script>
+
+<!-- Floating button to scroll to top -->
+<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+        class="fixed bottom-8 right-8 bg-indigo-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-indigo-700 transition-colors duration-300"
+        style="display: none;"
+        id="scrollTopBtn">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script>
+    // Show/hide scroll to top button
+    window.onscroll = function() {
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollTopBtn.style.display = 'flex';
+        } else {
+            scrollTopBtn.style.display = 'none';
+        }
+    };
+</script>
+</body>
+</html>

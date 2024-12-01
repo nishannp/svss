@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.7/supabase.min.js"></script>
+    <style>
+        .profile-card {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff;
+        }
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .rating-stars {
+            color: #FFD700;
+        }
+        .schedule-card {
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .achievement-card {
+            border-left: 4px solid #4F46E5;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Loading Spinner -->
+        <div id="loading" class="flex justify-center items-center h-screen">
+            <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600"></div>
+        </div>
+
+        <!-- Main Content (hidden initially) -->
+        <div id="content" class="hidden">
+            <!-- Top Section -->
+            <div class="profile-card rounded-xl p-6 mb-8">
+                <div class="grid md:grid-cols-3 gap-6 items-center">
+                    <div class="text-center md:text-left">
+                        <img id="teacher-image" src="/api/placeholder/150/150" alt="Teacher" 
+                             class="rounded-full w-40 h-40 object-cover mx-auto md:mx-0 border-4 border-indigo-600">
+                    </div>
+                    <div class="md:col-span-2">
+                        <h1 id="teacher-name" class="text-3xl font-bold text-gray-800 mb-2"></h1>
+                        <div id="rating" class="text-xl mb-3">
+                            <span class="rating-stars"></span>
+                            <span class="text-gray-600 text-sm ml-2">(Based on student reviews)</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div><i class="fas fa-envelope mr-2"></i><span id="teacher-email"></span></div>
+                            <div><i class="fas fa-phone mr-2"></i><span id="teacher-phone"></span></div>
+                            <div><i class="fas fa-building mr-2"></i><span id="teacher-department"></span></div>
+                            <div><i class="fas fa-calendar mr-2"></i>Started: <span id="start-date"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="stats-card bg-white p-4 rounded-lg text-center">
+                    <i class="fas fa-user-graduate text-3xl text-indigo-600 mb-2"></i>
+                    <h3 class="text-gray-600">Students Taught</h3>
+                    <p id="students-count" class="text-2xl font-bold text-gray-800"></p>
+                </div>
+                <div class="stats-card bg-white p-4 rounded-lg text-center">
+                    <i class="fas fa-clock text-3xl text-indigo-600 mb-2"></i>
+                    <h3 class="text-gray-600">Years Experience</h3>
+                    <p id="experience" class="text-2xl font-bold text-gray-800"></p>
+                </div>
+                <div class="stats-card bg-white p-4 rounded-lg text-center">
+                    <i class="fas fa-book text-3xl text-indigo-600 mb-2"></i>
+                    <h3 class="text-gray-600">Subjects</h3>
+                    <p id="subjects-count" class="text-2xl font-bold text-gray-800"></p>
+                </div>
+                <div class="stats-card bg-white p-4 rounded-lg text-center">
+                    <i class="fas fa-trophy text-3xl text-indigo-600 mb-2"></i>
+                    <h3 class="text-gray-600">Achievements</h3>
+                    <p id="achievements-count" class="text-2xl font-bold text-gray-800"></p>
+                </div>
+            </div>
+
+            <!-- Qualifications & Expertise -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white rounded-lg p-6">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                        <i class="fas fa-graduation-cap mr-2 text-indigo-600"></i>Qualifications
+                    </h2>
+                    <ul id="qualifications-list" class="space-y-3"></ul>
+                </div>
+                <div class="bg-white rounded-lg p-6">
+                    <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                        <i class="fas fa-star mr-2 text-indigo-600"></i>Areas of Expertise
+                    </h2>
+                    <div id="expertise-tags" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+
+            <!-- Weekly Schedule -->
+            <div class="schedule-card p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-calendar-alt mr-2 text-indigo-600"></i>Weekly Schedule
+                </h2>
+                <div id="schedule-grid" class="grid grid-cols-7 gap-4"></div>
+            </div>
+
+            <!-- Teaching Statistics -->
+            <div class="bg-white rounded-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-chart-bar mr-2 text-indigo-600"></i>Teaching Statistics
+                </h2>
+                <div id="statistics-grid" class="grid md:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Supabase Client
+        const supabase = supabase.createClient('https://oyjqllqplktgruvebfap.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8');
+
+        // Helper function to create star rating
+        function createStarRating(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars && hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Helper function to format date
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        async function loadTeacherProfile(teacherId) {
+            try {
+                // Fetch teacher data
+                const { data: teacher, error } = await supabase
+                    .from('teachers')
+                    .select('*')
+                    .eq('id', teacherId)
+                    .single();
+
+                if (error) throw error;
+
+                // Fetch teacher reviews
+                const { data: reviews, error: reviewsError } = await supabase
+                    .from('teacher_reviews')
+                    .select('rating')
+                    .eq('teacher_id', teacherId);
+
+                if (reviewsError) throw reviewsError;
+
+                // Calculate average rating
+                const avgRating = reviews.reduce((acc, rev) => acc + rev.rating, 0) / reviews.length;
+
+                // Update UI
+                document.getElementById('teacher-image').src = teacher.teacher_image || '/api/placeholder/150/150';
+                document.getElementById('teacher-name').textContent = teacher.name;
+                document.getElementById('teacher-email').textContent = teacher.email;
+                document.getElementById('teacher-phone').textContent = teacher.mobile_number;
+                document.getElementById('teacher-department').textContent = teacher.department;
+                document.getElementById('start-date').textContent = formatDate(teacher.start_date);
+                document.getElementById('students-count').textContent = teacher.students_taught;
+                document.getElementById('experience').textContent = `${teacher.experience_years} Years`;
+                document.getElementById('subjects-count').textContent = teacher.subjects ? teacher.subjects.length : 0;
+                document.querySelector('.rating-stars').innerHTML = createStarRating(avgRating);
+
+                // Populate qualifications
+                const qualificationsList = document.getElementById('qualifications-list');
+                if (teacher.qualifications) {
+                    Object.entries(teacher.qualifications).forEach(([degree, details]) => {
+                        const li = document.createElement('li');
+                        li.className = 'p-3 bg-gray-50 rounded-lg';
+                        li.innerHTML = `<strong>${degree}</strong>: ${details}`;
+                        qualificationsList.appendChild(li);
+                    });
+                }
+
+                // Populate expertise tags
+                const expertiseTags = document.getElementById('expertise-tags');
+                if (teacher.expertise) {
+                    Object.entries(teacher.expertise).forEach(([area, level]) => {
+                        const tag = document.createElement('span');
+                        tag.className = 'px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm';
+                        tag.textContent = `${area} (${level})`;
+                        expertiseTags.appendChild(tag);
+                    });
+                }
+
+                // Populate weekly schedule
+                const scheduleGrid = document.getElementById('schedule-grid');
+                if (teacher.weekly_schedule) {
+                    Object.entries(teacher.weekly_schedule).forEach(([day, slots]) => {
+                        const dayDiv = document.createElement('div');
+                        dayDiv.className = 'p-3 bg-gray-50 rounded-lg';
+                        dayDiv.innerHTML = `
+                            <h4 class="font-bold text-gray-700 mb-2">${day}</h4>
+                            <div class="text-sm text-gray-600">${slots.join('<br>')}</div>
+                        `;
+                        scheduleGrid.appendChild(dayDiv);
+                    });
+                }
+
+                // Populate teaching statistics
+                const statisticsGrid = document.getElementById('statistics-grid');
+                if (teacher.teaching_statistics) {
+                    Object.entries(teacher.teaching_statistics).forEach(([stat, value]) => {
+                        const statDiv = document.createElement('div');
+                        statDiv.className = 'p-4 bg-gray-50 rounded-lg';
+                        statDiv.innerHTML = `
+                            <h4 class="font-bold text-gray-700 mb-2">${stat}</h4>
+                            <p class="text-xl text-indigo-600">${value}</p>
+                        `;
+                        statisticsGrid.appendChild(statDiv);
+                    });
+                }
+
+                // Show content and hide loading
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('content').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error loading teacher profile:', error);
+                alert('Error loading teacher profile. Please try again.');
+            }
+        }
+
+        // Load teacher profile when page loads (you would need to specify the teacher ID)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get teacher ID from URL parameter or other source
+            const teacherId = '08936058-e39e-4acb-9b50-cb6edf262df5'; // Replace with actual teacher ID
+            loadTeacherProfile(teacherId);
+        });
+    </script>
+</body>
+</html>

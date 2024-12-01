@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .profile-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(74, 144, 226, 0.1);
+            margin: 20px 0;
+            padding: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .social-icons a {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        .timetable {
+            overflow-x: auto;
+        }
+
+        .timetable th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .experience-item {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                padding: 15px;
+            }
+            
+            .profile-img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .skill-progress {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 5px;
+            transition: width 1s ease;
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .achievements-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .achievements-list li::before {
+            content: '🏆';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Header Section -->
+        <div class="profile-section text-center animate__animated animate__fadeIn">
+            <img src="../imgs/anjana.png" alt="Teacher Name" class="profile-img mb-4">
+            <h1 class="display-4 mb-3">Prof. Sarah Johnson</h1>
+            <h3 class="text-muted mb-4">Mathematics Department</h3>
+            <div class="social-icons mb-4">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="profile-section animate__animated animate__fadeInLeft">
+            <h2 class="mb-4"><i class="fas fa-address-card"></i> Contact Information</h2>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> sarah.johnson@education.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-map-marker-alt"></i> Room 302, Science Building</p>
+                <p><i class="fas fa-university"></i> Department of Mathematics, University Name</p>
+            </div>
+        </div>
+
+        <!-- Time Table -->
+        <div class="profile-section animate__animated animate__fadeInRight">
+            <h2 class="mb-4"><i class="fas fa-calendar-alt"></i> Weekly Schedule</h2>
+            <div class="timetable">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>9:00 AM</td>
+                            <td>Calculus I</td>
+                            <td>Office Hours</td>
+                            <td>Linear Algebra</td>
+                            <td>Calculus I</td>
+                            <td>Research</td>
+                        </tr>
+                        <tr>
+                            <td>11:00 AM</td>
+                            <td>Office Hours</td>
+                            <td>Linear Algebra</td>
+                            <td>Research</td>
+                            <td>Office Hours</td>
+                            <td>Department Meeting</td>
+                        </tr>
+                        <tr>
+                            <td>2:00 PM</td>
+                            <td>Research</td>
+                            <td>Calculus II</td>
+                            <td>Office Hours</td>
+                            <td>Calculus II</td>
+                            <td>Office Hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="profile-section animate__animated animate__fadeInLeft">
+            <h2 class="mb-4"><i class="fas fa-briefcase"></i> Experience</h2>
+            <div class="experience-item">
+                <h4>Professor of Mathematics</h4>
+                <p class="text-muted">University Name | 2018 - Present</p>
+                <p>Leading advanced mathematics courses and conducting research in numerical analysis.</p>
+            </div>
+            <div class="experience-item">
+                <h4>Associate Professor</h4>
+                <p class="text-muted">Previous University | 2012 - 2018</p>
+                <p>Taught undergraduate mathematics and supervised graduate students.</p>
+            </div>
+            <div class="experience-item">
+                <h4>Research Fellow</h4>
+                <p class="text-muted">Research Institute | 2010 - 2012</p>
+                <p>Conducted research in applied mathematics and published several papers.</p>
+            </div>
+        </div>
+
+        <!-- Skills -->
+        <div class="profile-section animate__animated animate__fadeInRight">
+            <h2 class="mb-4"><i class="fas fa-chart-bar"></i> Skills & Expertise</h2>
+            <div class="skill-item">
+                <div class="d-flex justify-content-between">
+                    <span>Advanced Mathematics</span>
+                    <span>95%</span>
+                </div>
+                <div class="skill-progress">
+                    <div class="skill-progress-bar" style="width: 95%"></div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="d-flex justify-content-between">
+                    <span>Research Methodology</span>
+                    <span>90%</span>
+                </div>
+                <div class="skill-progress">
+                    <div class="skill-progress-bar" style="width: 90%"></div>
+                </div>
+            </div>
+            <div class="skill-item">
+                <div class="d-flex justify-content-between">
+                    <span>Statistical Analysis</span>
+                    <span>85%</span>
+                </div>
+                <div class="skill-progress">
+                    <div class="skill-progress-bar" style="width: 85%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="profile-section animate__animated animate__fadeInUp">
+            <h2 class="mb-4"><i class="fas fa-trophy"></i> Achievements</h2>
+            <ul class="achievements-list list-unstyled">
+                <li>Outstanding Teacher Award 2023</li>
+                <li>Published 15+ research papers in top mathematics journals</li>
+                <li>Successfully supervised 20+ PhD students</li>
+                <li>Research grant recipient for Mathematical Innovation</li>
+                <li>Best Paper Award at International Mathematics Conference 2022</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Animate skill bars on scroll
+        function animateSkills() {
+            const skillBars = document.querySelectorAll('.skill-progress-bar');
+            skillBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    bar.style.width = bar.parentElement.previousElementSibling.children[1].textContent;
+                }
+            });
+        }
+
+        // Initial animation
+        document.addEventListener('DOMContentLoaded', animateSkills);
+        // Animate on scroll
+        window.addEventListener('scroll', animateSkills);
+    </script>
+</body>
+</html>

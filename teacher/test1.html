@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Reviews</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+          .review-form-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            font-size: 2.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #ffd700;
+            transform: scale(1.1);
+        }
+
+        .file-upload-label {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: #4f46e5;
+            color: white;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-upload-label:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            transition: all 0.2s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .review-form-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+        .review-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    @media (min-width: 640px) {
+      .review-container {
+        padding: 2rem;
+      }
+    }
+
+    .stats-card {
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      border-radius: 20px;
+      padding: 1.5rem;
+      color: white;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px rgba(124, 58, 237, 0.2);
+    }
+
+    @media (min-width: 640px) {
+      .stats-card {
+        padding: 2rem;
+      }
+    }
+
+    .stats-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .stats-content {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+    }
+
+    .rating-summary {
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .rating-summary {
+        text-align: left;
+      }
+    }
+
+    .rating-big {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    @media (min-width: 640px) {
+      .rating-big {
+        font-size: 3.5rem;
+      }
+    }
+
+    .stars-big {
+      font-size: 1.5rem;
+      color: #FCD34D;
+      margin: 0.5rem 0;
+    }
+
+    @media (min-width: 640px) {
+      .stars-big {
+        font-size: 2rem;
+        margin: 1rem 0;
+      }
+    }
+
+    .distribution-container {
+      flex: 1;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .distribution-container {
+        margin-left: 2rem;
+        margin-right: 0;
+      }
+    }
+
+    .distribution-row {
+      display: flex;
+      align-items: center;
+      margin: 0.75rem 0;
+      gap: 0.5rem;
+    }
+
+    .distribution-label {
+      width: 50px;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.875rem;
+    }
+
+    @media (min-width: 640px) {
+      .distribution-label {
+        width: 60px;
+        font-size: 1rem;
+      }
+    }
+
+    .distribution-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .distribution-fill {
+      height: 100%;
+      background: #FCD34D;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .distribution-count {
+      width: 40px;
+      text-align: right;
+      color: rgba(255,255,255,0.9);
+      font-size: 0.875rem;
+    }
+
+    @media (min-width: 640px) {
+      .distribution-count {
+        width: 50px;
+        font-size: 1rem;
+      }
+    }
+
+    .reviews-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      .reviews-grid {
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    }
+
+    .review-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.25rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    @media (min-width: 640px) {
+      .review-card {
+        padding: 1.5rem;
+      }
+
+      .review-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .review-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    @media (min-width: 640px) {
+      .review-header {
+        gap: 1rem;
+        flex-wrap: nowrap;
+      }
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #4F46E5;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 640px) {
+      .user-avatar {
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    .user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-weight: 600;
+      color: #111827;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .review-stars {
+      color: #FCD34D;
+      font-size: 0.875rem;
+    }
+
+    .review-date {
+      color: #6B7280;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    @media (min-width: 640px) {
+      .review-date {
+        font-size: 0.875rem;
+      }
+    }
+
+    .review-text {
+      color: #374151;
+      line-height: 1.6;
+      margin-top: 1rem;
+      font-size: 0.9375rem;
+      overflow-wrap: break-word;
+    }
+
+    .shimmer {
+      background: linear-gradient(90deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.2) 50%, 
+        rgba(255,255,255,0) 100%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+        .loader {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 2px solid #3498db;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .stats-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="text-center md:text-left mb-6 md:mb-0">
+                    <h1 id="teacherName" class="text-4xl font-bold mb-2">Loading teacher info...</h1>
+                    <p class="text-gray-200">Share your experience with this teacher</p>
+                </div>
+                <div class="stats-box">
+                    <div class="text-center">
+                        <span id="averageRating" class="text-5xl font-bold">-</span>
+                        <div id="ratingStars" class="text-yellow-400 text-2xl mt-2"></div>
+                        <p class="mt-2"><span id="totalReviews">0</span> reviews</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4">
+        <!-- Rating Distribution -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-semibold mb-4">Rating Distribution</h2>
+            <div id="ratingDistribution" class="space-y-3"></div>
+        </div>
+
+        <!-- Review Form -->
+       <!-- Review Form Section -->
+<div class="bg-white rounded-lg shadow-lg p-6 mb-8 max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold mb-8 text-center text-gray-800">
+        <i class="fas fa-pen-to-square mr-2 text-indigo-600"></i>Share Your Experience
+    </h2>
+    
+    <form id="reviewForm" class="space-y-8 max-w-xl mx-auto">
+        <!-- Name Input -->
+        <div class="text-center">
+            <input type="text" 
+                   id="userName" 
+                   placeholder="Your Name"
+                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-center text-lg transition-all duration-300" 
+                   required>
+        </div>
+
+        <!-- Star Rating -->
+        <div class="flex flex-col items-center space-y-3">
+            <label class="text-gray-600 font-medium">Your Rating</label>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" required>
+                <label for="star5" class="transition-transform duration-200 hover:scale-110">
+                    <i class="fas fa-star"></i>
+                </label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" class="transition-transform duration-200 hover:scale-110">
+                    <i class="fas fa-star"></i>
+                </label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" class="transition-transform duration-200 hover:scale-110">
+                    <i class="fas fa-star"></i>
+                </label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" class="transition-transform duration-200 hover:scale-110">
+                    <i class="fas fa-star"></i>
+                </label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" class="transition-transform duration-200 hover:scale-110">
+                    <i class="fas fa-star"></i>
+                </label>
+            </div>
+        </div>
+
+        <!-- Review Text -->
+        <div class="text-center">
+            <textarea id="reviewText" 
+                      rows="4" 
+                      placeholder="Share your experience with this teacher..."
+                      class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-center resize-none transition-all duration-300"
+                      required></textarea>
+        </div>
+
+        <!-- Optional Image Upload -->
+        <div class="flex flex-col items-center space-y-3">
+            <label for="userImage" class="cursor-pointer group">
+                <div class="bg-indigo-50 text-indigo-600 px-6 py-3 rounded-lg hover:bg-indigo-100 transition-all duration-300 flex items-center space-x-2">
+                    <i class="fas fa-camera"></i>
+                    <span>Add Profile Picture (Optional)</span>
+                </div>
+                <input type="file" id="userImage" class="hidden" accept="image/*">
+            </label>
+            <img id="imagePreview" class="hidden w-20 h-20 rounded-full object-cover border-4 border-indigo-200">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button type="submit" 
+                    class="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 mx-auto">
+                <span>Submit Review</span>
+                <div class="loader ml-2"></div>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+
+<div class="review-container">
+    <div class="stats-card">
+      <div class="stats-content">
+        <div class="rating-summary">
+          <div class="rating-big" id="averageRating">0.0</div>
+          <div class="stars-big" id="ratingStars">☆☆☆☆☆</div>
+          <div id="totalReviews">0 reviews</div>
+        </div>
+        <div class="distribution-container" id="ratingDistribution">
+          <!-- Distribution bars will be inserted here -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="reviews-grid" id="reviewsContainer">
+      <!-- Review cards will be inserted here -->
+    </div>
+  </div>
+  </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const supabaseClient = supabase.createClient(
+                'https://oyjqllqplktgruvebfap.supabase.co', 
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8'
+            );
+
+            const TEACHER_ID = '8b8ecec4-6c2e-4859-8a0d-6a1bd2e76291';
+
+            async function loadTeacherDetails() {
+                try {
+                    const { data: teacher, error } = await supabaseClient
+                        .from('teachers')
+                        .select('*')
+                        .eq('id', TEACHER_ID)
+                        .single();
+
+                    if (error) throw error;
+                    document.getElementById('teacherName').textContent = teacher.name;
+                } catch (error) {
+                    console.error('Error loading teacher:', error);
+                    document.getElementById('teacherName').textContent = 'Teacher information unavailable';
+                }
+            }
+
+            function calculateReviewStats(reviews) {
+                const stats = {
+                    totalReviews: reviews.length,
+                    distribution: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+                    weightedSum: 0,
+                    recentWeight: 0
+                };
+
+                const now = new Date();
+                reviews.forEach(review => {
+                    const reviewDate = new Date(review.created_at);
+                    const daysSinceReview = (now - reviewDate) / (1000 * 60 * 60 * 24);
+                    const timeWeight = 1 / Math.log(daysSinceReview + Math.E);
+                    
+                    stats.weightedSum += review.rating * timeWeight;
+                    stats.recentWeight += timeWeight;
+                    stats.distribution[review.rating]++;
+                });
+
+                const weightedAverage = stats.weightedSum / stats.recentWeight;
+                const confidenceWeight = Math.min(stats.totalReviews / 10, 1);
+                const baselineRating = 3.5;
+                const adjustedAverage = (weightedAverage * confidenceWeight) + (baselineRating * (1 - confidenceWeight));
+
+                return {
+                    averageRating: adjustedAverage.toFixed(1),
+                    totalReviews: stats.totalReviews,
+                    distribution: stats.distribution
+                };
+            }
+
+            async function loadReviews() {
+      try {
+        const { data: reviews, error } = await supabaseClient
+          .from('teacher_reviews')
+          .select('*')
+          .eq('teacher_id', TEACHER_ID)
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        
+        const stats = calculateReviewStats(reviews);
+        
+        // Update average rating with animation
+        const avgRating = document.getElementById('averageRating');
+        const targetRating = stats.averageRating;
+        let currentRating = 0;
+        const ratingInterval = setInterval(() => {
+          currentRating += 0.1;
+          if (currentRating >= targetRating) {
+            currentRating = targetRating;
+            clearInterval(ratingInterval);
+          }
+          avgRating.textContent = currentRating.toFixed(1);
+        }, 20);
+
+        document.getElementById('totalReviews').textContent = 
+          `${stats.totalReviews} ${stats.totalReviews === 1 ? 'review' : 'reviews'}`;
+        
+        document.getElementById('ratingStars').innerHTML =
+          '<i class="fas fa-star"></i>'.repeat(Math.floor(stats.averageRating)) +
+          (stats.averageRating % 1 >= 0.5 ? '<i class="fas fa-star-half-alt"></i>' : '') +
+          '<i class="far fa-star"></i>'.repeat(5 - Math.ceil(stats.averageRating));
+
+        const distributionHTML = Object.entries(stats.distribution)
+          .reverse()
+          .map(([rating, count]) => {
+            const percentage = (count / stats.totalReviews * 100) || 0;
+            return `
+              <div class="distribution-row">
+                <div class="distribution-label">${rating} stars</div>
+                <div class="distribution-bar">
+                  <div class="distribution-fill shimmer" style="width: ${percentage}%"></div>
+                </div>
+                <div class="distribution-count">${count}</div>
+              </div>
+            `;
+          }).join('');
+
+        document.getElementById('ratingDistribution').innerHTML = distributionHTML;
+
+        const container = document.getElementById('reviewsContainer');
+        container.innerHTML = reviews.map(review => {
+          const date = new Date(review.created_at);
+          const formattedDate = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          }).format(date);
+
+          return `
+            <div class="review-card">
+              <div class="review-header">
+                ${review.user_image_url
+                  ? `<img src="${review.user_image_url}" class="user-avatar" alt="${review.user_name}">`
+                  : `<div class="user-avatar" style="background: #EEF2FF; display: flex; align-items: center; justify-content: center;">
+                      <i class="fas fa-user" style="color: #4F46E5;"></i>
+                     </div>`
+                }
+                <div class="user-info">
+                  <div class="user-name">${review.user_name}</div>
+                  <div class="review-stars">
+                    ${'<i class="fas fa-star"></i>'.repeat(review.rating)}
+                    ${'<i class="far fa-star"></i>'.repeat(5 - review.rating)}
+                  </div>
+                </div>
+                <div class="review-date">${formattedDate}</div>
+              </div>
+              <p class="review-text">${review.review_text}</p>
+            </div>
+          `;
+        }).join('');
+
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      }
+    }
+
+    // Add loading animation
+    document.addEventListener('DOMContentLoaded', () => {
+      loadReviews();
+    });
+            document.getElementById('userImage').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const preview = document.getElementById('imagePreview');
+                        preview.src = e.target.result;
+                        preview.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            document.getElementById('reviewForm').addEventListener('submit', async function(event) {
+                event.preventDefault();
+                const loader = document.querySelector('.loader');
+                loader.style.display = 'inline-block';
+                
+                try {
+                    const userName = document.getElementById('userName').value;
+                    const rating = document.querySelector('input[name="rating"]:checked').value;
+                    const reviewText = document.getElementById('reviewText').value;
+                    const userImage = document.getElementById('userImage').files[0];
+                
+                    let userImageUrl = null;
+                    if (userImage) {
+                        const fileExt = userImage.name.split('.').pop();
+                        const fileName = `${Math.random()}.${fileExt}`;
+                        const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                            .from('teacher_review_images')
+                            .upload(fileName, userImage);
+
+                        if (uploadError) throw uploadError;
+                        
+                        const { data: { publicUrl } } = supabaseClient.storage
+                            .from('teacher_review_images')
+                            .getPublicUrl(fileName);
+                            
+                        userImageUrl = publicUrl;
+                    }
+
+                    const { data, error } = await supabaseClient
+                        .from('teacher_reviews')
+                        .insert([
+                            {
+                                user_name: userName,
+                                rating: rating,
+                                review_text: reviewText,
+                                user_image_url: userImageUrl,
+                                teacher_id: TEACHER_ID
+                            }
+                        ]);
+
+                    if (error) throw error;
+
+                    // Show success message
+                    const successAlert = document.createElement('div');
+                    successAlert.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-500 ease-in-out';
+                    successAlert.textContent = 'Review submitted successfully!';
+                    document.body.appendChild(successAlert);
+
+                    // Remove success message after 3 seconds
+                    setTimeout(() => {
+                        successAlert.style.transform = 'translateX(200%)';
+                        setTimeout(() => successAlert.remove(), 500);
+                    }, 3000);
+
+                    // Reset form and refresh reviews
+                    event.target.reset();
+                    document.getElementById('imagePreview').classList.add('hidden');
+                    loadReviews();
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    
+                    // Show error message
+                    const errorAlert = document.createElement('div');
+                    errorAlert.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg';
+                    errorAlert.textContent = 'Failed to submit review. Please try again.';
+                    document.body.appendChild(errorAlert);
+
+                    // Remove error message after 3 seconds
+                    setTimeout(() => errorAlert.remove(), 3000);
+                } finally {
+                    loader.style.display = 'none';
+                }
+            });
+
+            // Add smooth scroll to reviews section when clicking on total reviews
+            document.getElementById('totalReviews').parentElement.addEventListener('click', () => {
+                document.getElementById('reviewsContainer').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+
+            // Add hover effect to rating stars
+            const starLabels = document.querySelectorAll('.star-rating label');
+            starLabels.forEach((label, index) => {
+                label.addEventListener('mouseover', () => {
+                    starLabels.forEach((l, i) => {
+                        if (i <= index) {
+                            l.style.transform = 'scale(1.2)';
+                        }
+                    });
+                });
+
+                label.addEventListener('mouseout', () => {
+                    starLabels.forEach(l => {
+                        l.style.transform = 'scale(1)';
+                    });
+                });
+            });
+
+            // Add scroll animation for review cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const reviewObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Function to observe review cards
+            function observeReviews() {
+                const reviewCards = document.querySelectorAll('.review-card');
+                reviewCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                    reviewObserver.observe(card);
+                });
+            }
+
+            // Add window resize handler for responsive design
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const isMobile = window.innerWidth < 640;
+                    document.querySelectorAll('.stats-box').forEach(box => {
+                        box.style.width = isMobile ? '100%' : 'auto';
+                    });
+                }, 250);
+            });
+
+            // Initialize
+            loadTeacherDetails();
+            loadReviews();
+
+            // Add event listener for when new reviews are loaded
+            const reviewsContainer = document.getElementById('reviewsContainer');
+            const reviewsObserver = new MutationObserver(observeReviews);
+            reviewsObserver.observe(reviewsContainer, { childList: true });
+        });
+    </script>
+
+    <!-- Floating button to scroll to top -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-8 right-8 bg-indigo-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center hover:bg-indigo-700 transition-colors duration-300"
+            style="display: none;"
+            id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Show/hide scroll to top button
+        window.onscroll = function() {
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollTopBtn.style.display = 'flex';
+            } else {
+                scrollTopBtn.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

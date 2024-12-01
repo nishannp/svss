@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern School</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --secondary: #FF6B6B;
+            --accent: #FFA45C;
+            --dark: #2C3E50;
+            --light: #F8F9FA;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+     
+      
+    
+      
+    </style>
+</head>
+<body>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --hover-color: #2171cc;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            padding: 0.7rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            padding: 0;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-toggler {
+            border: none;
+            padding: 0.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: none;
+            position: relative;
+            width: 24px;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before,
+        .navbar-toggler-icon::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler-icon::before {
+            transform: translateY(-8px);
+        }
+
+        .navbar-toggler-icon::after {
+            transform: translateY(8px);
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+            background-color: transparent;
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::before {
+            transform: rotate(45deg);
+        }
+
+        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon::after {
+            transform: rotate(-45deg);
+        }
+
+        .nav-item {
+            position: relative;
+            margin: 0 0.3rem;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            padding: 0.8rem 1.2rem !important;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .nav-item.active .nav-link {
+            color: var(--primary-color) !important;
+        }
+
+        .nav-item.active .nav-link::before {
+            transform: scaleX(1);
+        }
+
+        @media (min-width: 992px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .nav-item::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                right: -0.3rem;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 20px;
+                background-color: rgba(74, 144, 226, 0.2);
+            }
+
+            .nav-item:last-child::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: white;
+                padding: 1rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                margin-top: 1rem;
+            }
+
+            .nav-item {
+                margin: 0.5rem 0;
+            }
+
+            .nav-link {
+                text-align: center;
+                padding: 0.5rem !important;
+            }
+
+            .nav-link::before {
+                bottom: -2px;
+            }
+        }
+
+        /* Premium animation effects */
+        @keyframes navItemFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar-nav .nav-item {
+            animation: navItemFade 0.5s ease forwards;
+            animation-delay: calc(0.1s * var(--item-number));
+        }
+    </style>
+  
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+          <a class="navbar-brand" href="#">
+              <img src="imgs/logo.jpg" alt="SVSS School logo">
+          </a>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavMain" aria-controls="navbarNavMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNavMain">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item active" style="--item-number: 1">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                  <li class="nav-item" style="--item-number: 2">
+                      <a class="nav-link" href="about.html">About</a>
+                  </li>
+                  <li class="nav-item" style="--item-number: 3">
+                      <a class="nav-link" href="academics.html">Academics</a>
+                  </li>
+                  <li class="nav-item" style="--item-number: 4">
+                      <a class="nav-link" href="gallery.html">Gallery</a>
+                  </li>
+                  <li class="nav-item" style="--item-number: 5">
+                      <a class="nav-link" href="events.html">Events</a>
+                  </li>
+
+                  <li class="nav-item" style="--item-number: 5">
+                    <a class="nav-link" href="teachers.html">Gurdains Of Knowledge</a>
+                </li>
+
+                  <li class="nav-item" style="--item-number: 6">
+                      <a class="nav-link" href="contact.html">Contact</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --white: #ffffff;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(74, 144, 226, 0.9), rgba(74, 144, 226, 0.7)),
+                        url('/api/placeholder/1920/600');
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+        }
+        
+        .container-programs {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #4A90E2;
+            border-radius: 2px;
+        }
+
+        .academic-section {
+            margin-bottom: 100px;
+            position: relative;
+        }
+
+        .section-header {
+            background: #4A90E2;
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            transform: skew(-3deg);
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.2);
+        }
+
+        .section-header h2 {
+            transform: skew(3deg);
+            font-size: 2.2em;
+        }
+
+
+        .class-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .class-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(74, 144, 226, 0.2);
+        }
+
+        .class-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.1) 0%, rgba(74, 144, 226, 0) 100%);
+            border-radius: 0 0 0 100%;
+        }
+
+        .class-name {
+            font-size: 1.8em;
+            color: #4A90E2;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .class-details {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .class-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #4A90E2;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .class-link:hover {
+            background: #357ABD;
+            transform: scale(1.05);
+        }
+
+
+        .stats-box {
+            background: linear-gradient(135deg, var(--primary-color), #2171cd);
+            color: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .curriculum-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .custom-accordion .accordion-button:not(.collapsed) {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            padding: 20px;
+            border-left: 3px solid var(--primary-color);
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 25px;
+            width: 17px;
+            height: 17px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+        @media (max-width: 768px) {
+          
+            
+            .class-container {
+                gap: 20px;
+            }
+            
+            .class-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero-section d-flex align-items-center justify-content-center text-center">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-4" data-aos="fade-up">Academic Excellence</h1>
+        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">Fostering Growth, Knowledge, and Character</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="#classes" class="btn btn-light btn-lg" data-aos="fade-up" data-aos-delay="200">Explore Classes</a>
+            <a href="#curriculum" class="btn btn-outline-light btn-lg" data-aos="fade-up" data-aos-delay="300">Our Curriculum</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3" data-aos="fade-up">
+                <div class="stats-box">
+                    <h2 class="display-4 fw-bold">98%</h2>
+                    <p class="mb-0">Board Results</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="stats-box">
+                    <h2 class="display-4 fw-bold">50+</h2>
+                    <p class="mb-0">Expert Teachers</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="stats-box">
+                    <h2 class="display-4 fw-bold">30+</h2>
+                    <p class="mb-0">Activities</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="stats-box">
+                    <h2 class="display-4 fw-bold">15:1</h2>
+                    <p class="mb-0">Student-Teacher Ratio</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="classes" class="container-programs">
+    <h2 class="section-title">Our Academic Programs</h2>
+
+    <!-- Kindergarten Section -->
+    <div class="academic-section">
+        <div class="section-header">
+            <h2>Early Years Learning</h2>
+        </div>
+        <div class="class-container">
+            <div class="class-card">
+                <div class="class-name">Nursery</div>
+                <div class="class-details">
+                    <p>First steps into the world of learning</p>
+                    <ul>
+                        <li>Age: 2.5-3.5 years</li>
+                        <li>Play-based learning</li>
+                        <li>Social development</li>
+                    </ul>
+                </div>
+                <a href="class/nursery.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">LKG</div>
+                <div class="class-details">
+                    <p>Building foundation through play</p>
+                    <ul>
+                        <li>Age: 3.5-4.5 years</li>
+                        <li>Basic numeracy</li>
+                        <li>Language development</li>
+                    </ul>
+                </div>
+                <a href="class/lkg.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">UKG</div>
+                <div class="class-details">
+                    <p>Preparing for primary education</p>
+                    <ul>
+                        <li>Age: 4.5-5.5 years</li>
+                        <li>Advanced concepts</li>
+                        <li>School readiness</li>
+                    </ul>
+                </div>
+                <a href="class/ukg.html" class="class-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Primary Section -->
+    <div class="academic-section">
+        <div class="section-header">
+            <h2>Primary School</h2>
+        </div>
+        <div class="class-container">
+            <div class="class-card">
+                <div class="class-name">Class 1</div>
+                <div class="class-details">
+                    <p>Beginning the academic journey</p>
+                    <ul>
+                        <li>Core subjects introduction</li>
+                        <li>Basic reading & writing</li>
+                        <li>Foundational math</li>
+                    </ul>
+                </div>
+                <a href="class/class1.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 2</div>
+                <div class="class-details">
+                    <p>Strengthening basics</p>
+                    <ul>
+                        <li>Advanced reading</li>
+                        <li>Writing skills</li>
+                        <li>Mathematical operations</li>
+                    </ul>
+                </div>
+                <a href="class/class2.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 3</div>
+                <div class="class-details">
+                    <p>Expanding knowledge</p>
+                    <ul>
+                        <li>Complex concepts</li>
+                        <li>Science introduction</li>
+                        <li>Language mastery</li>
+                    </ul>
+                </div>
+                <a href="class/class3.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 4</div>
+                <div class="class-details">
+                    <p>Building confidence</p>
+                    <ul>
+                        <li>Advanced topics</li>
+                        <li>Project-based learning</li>
+                        <li>Critical thinking</li>
+                    </ul>
+                </div>
+                <a href="class/class4.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 5</div>
+                <div class="class-details">
+                    <p>Primary completion</p>
+                    <ul>
+                        <li>Comprehensive learning</li>
+                        <li>Leadership skills</li>
+                        <li>Final assessment</li>
+                    </ul>
+                </div>
+                <a href="class/class5.html" class="class-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Section -->
+    <div class="academic-section">
+        <div class="section-header">
+            <h2>Secondary School</h2>
+        </div>
+        <div class="class-container">
+            <div class="class-card">
+                <div class="class-name">Class 6</div>
+                <div class="class-details">
+                    <p>Secondary foundation</p>
+                    <ul>
+                        <li>Advanced subjects</li>
+                        <li>Specialized teaching</li>
+                        <li>Research skills</li>
+                    </ul>
+                </div>
+                <a href="class/class6.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 7</div>
+                <div class="class-details">
+                    <p>Knowledge expansion</p>
+                    <ul>
+                        <li>Complex concepts</li>
+                        <li>Scientific thinking</li>
+                        <li>Analytical skills</li>
+                    </ul>
+                </div>
+                <a href="class/class7.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 8</div>
+                <div class="class-details">
+                    <p>Advanced learning</p>
+                    <ul>
+                        <li>Specialized subjects</li>
+                        <li>Career guidance</li>
+                        <li>Leadership development</li>
+                    </ul>
+                </div>
+                <a href="class/class8.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 9</div>
+                <div class="class-details">
+                    <p>Board preparation begins</p>
+                    <ul>
+                        <li>Board syllabus</li>
+                        <li>Exam techniques</li>
+                        <li>Subject mastery</li>
+                    </ul>
+                </div>
+                <a href="class/class9.html" class="class-link">Learn More</a>
+            </div>
+
+            <div class="class-card">
+                <div class="class-name">Class 10</div>
+                <div class="class-details">
+                    <p>Board examination year</p>
+                    <ul>
+                        <li>Final preparation</li>
+                        <li>Mock examinations</li>
+                        <li>Career counseling</li>
+                    </ul>
+                </div>
+                <a href="class/class10.html" class="class-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+<!-- Curriculum Section -->
+<section id="curriculum" class="curriculum-section">
+    <div class="container">
+        <h2 class="text-center section-title" data-aos="fade-up">Our Curriculum</h2>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="feature-card card h-100 p-4">
+                    <div class="feature-icon">📘</div>
+                    <h4>CBSE Curriculum</h4>
+                    <p>Following the latest CBSE guidelines with enhanced learning modules and practical applications.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-card card h-100 p-4">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Activity Based Learning</h4>
+                    <p>Incorporating hands-on activities and projects to make learning more engaging and effective.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-card card h-100 p-4">
+                    <div class="feature-icon">💻</div>
+                    <h4>Digital Integration</h4>
+                    <p>Smart classrooms and digital resources to enhance the learning experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Academic Features -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center section-title" data-aos="fade-up">Academic Features</h2>
+        <div class="row">
+            <div class="col-lg-6" data-aos="fade-up">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Regular Assessments</h4>
+                        <p>Continuous evaluation system to track student progress</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Parent-Teacher Meetings</h4>
+                        <p>Regular interactions to discuss student development</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Extra Classes</h4>
+                        <p>Additional support for students requiring extra attention</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="accordion custom-accordion" id="academicFeatures">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                Sports & Physical Education
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#academicFeatures">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled">
+                                    <li>✓ Daily sports activities</li>
+                                    <li>✓ Professional coaches</li>
+                                    <li>✓ Annual sports events</li>
+                                    <li>✓ Modern sports facilities</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                Labs & Facilities
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#academicFeatures">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled">
+                                    <li>✓ Science Labs</li>
+                                    <li>✓ Computer Lab</li>
+                                    <li>✓ Math Lab</li>
+                                    <li>✓ Language Lab</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                Co-Curricular Activities
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#academicFeatures">
+                            <div class="accordion-body">
+                                <ul class="list-unstyled">
+                                    <li>✓ Music & Dance</li>
+                                    <li>✓ Art & Craft</li>
+                                    <li>✓ Public Speaking</li>
+                                    <li>✓ Robotics Club</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Admission CTA Section -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-4" data-aos="fade-up">Ready to Join Our Academic Excellence?</h2>
+        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">Admissions open for Academic Year 2024-25</p>
+        <a href="admissions.html" class="btn btn-primary btn-lg" data-aos="fade-up" data-aos-delay="200">Apply Now</a>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center section-title" data-aos="fade-up">Have Questions?</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <p class="mb-4" data-aos="fade-up" data-aos-delay="100">Our academic counselors are here to help you make the right choice for your child's education.</p>
+                <div class="d-flex justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+                    <a href="tel:+1234567890" class="btn btn-outline-primary">Call Us</a>
+                    <a href="contact.html" class="btn btn-primary">Send Message</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+       <!-- Back to Top Button -->
+       <button onclick="topFunction()" id="backToTop" class="btn position-fixed bottom-0 end-0 m-4" style="display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+  
+    <script>
+         // Back to Top Button
+         window.onscroll = function() {scrollFunction()};
+          
+          function scrollFunction() {
+              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                  document.getElementById("backToTop").style.display = "block";
+              } else {
+                  document.getElementById("backToTop").style.display = "none";
+              }
+          }
+          
+          function topFunction() {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+          }
+    </script>
+
+
+
+<script>
+    // Get the current URL path without query strings or hash
+    const currentPath = window.location.pathname;
+
+    // Select all nav-link elements
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    navLinks.forEach(link => {
+        // Normalize link paths and current path for comparison
+        const linkPath = new URL(link.href).pathname;
+
+        // Add 'active' class to the parent nav-item if the paths match
+        if (linkPath === currentPath || (linkPath === '/' && currentPath === '/')) {
+            link.closest(".nav-item").classList.add("active");
+        } else {
+            link.closest(".nav-item").classList.remove("active");
+        }
+    });
+</script>
+  
+    <style>
+      
+      #backToTop {
+              background: var(--primary-color);
+              border: none;
+              border-radius: 50%;
+              width: 50px;
+              height: 50px;
+              box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+          }
+  
+    </style>
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add active class to current section in navigation
+    window.addEventListener('scroll', () => {
+        let current = '';
+        const sections = document.querySelectorAll('section');
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 60) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+    
+
+
+
+
+
+
+
+

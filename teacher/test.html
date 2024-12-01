@@ -1,0 +1,165 @@
+<div class="container mt-5">
+    <!-- Teacher Info Section -->
+    <div class="teacher-info mb-5 bg-white p-4 rounded-lg shadow">
+        <h1 id="teacherName" class="text-2xl font-bold mb-2">Loading teacher info...</h1>
+        <div class="flex items-center space-x-4">
+            <div class="stats-box">
+                <span id="averageRating" class="text-3xl font-bold text-yellow-500">-</span>
+                <div id="ratingStars" class="text-yellow-500 text-xl"></div>
+            </div>
+            <div class="stats-details">
+                <p>Based on <span id="totalReviews" class="font-semibold">0</span> reviews</p>
+                <div id="ratingDistribution" class="text-sm text-gray-600"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rest of your existing review form and container code -->
+    <!-- ... (keep your existing form HTML here) ... -->
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const supabaseClient = supabase.createClient(
+        'https://oyjqllqplktgruvebfap.supabase.co', 
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8'
+    );
+
+    const TEACHER_ID = '8b8ecec4-6c2e-4859-8a0d-6a1bd2e76291';
+
+    // New function to fetch teacher details
+    async function loadTeacherDetails() {
+        try {
+            const { data: teacher, error } = await supabaseClient
+                .from('teachers')
+                .select('*')
+                .eq('id', TEACHER_ID)
+                .single();
+
+            if (error) throw error;
+
+            document.getElementById('teacherName').textContent = teacher.name;
+        } catch (error) {
+            console.error('Error loading teacher:', error);
+            document.getElementById('teacherName').textContent = 'Teacher information unavailable';
+        }
+    }
+
+    // Enhanced review statistics calculation
+    function calculateReviewStats(reviews) {
+        const stats = {
+            totalReviews: reviews.length,
+            distribution: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0},
+            weightedSum: 0,
+            recentWeight: 0
+        };
+
+        // Calculate time-weighted ratings
+        const now = new Date();
+        reviews.forEach(review => {
+            const reviewDate = new Date(review.created_at);
+            const daysSinceReview = (now - reviewDate) / (1000 * 60 * 60 * 24);
+            
+            // Weight calculation: More recent reviews have higher weight
+            // Weight decreases logarithmically with time
+            const timeWeight = 1 / Math.log(daysSinceReview + Math.E);
+            
+            stats.weightedSum += review.rating * timeWeight;
+            stats.recentWeight += timeWeight;
+            stats.distribution[review.rating]++;
+        });
+
+        // Calculate weighted average
+        const weightedAverage = stats.weightedSum / stats.recentWeight;
+        
+        // Apply confidence adjustment based on number of reviews
+        const confidenceWeight = Math.min(stats.totalReviews / 10, 1); // Reaches full confidence at 10 reviews
+        const baselineRating = 3.5; // Neutral baseline
+        const adjustedAverage = (weightedAverage * confidenceWeight) + (baselineRating * (1 - confidenceWeight));
+
+        return {
+            averageRating: adjustedAverage.toFixed(1),
+            totalReviews: stats.totalReviews,
+            distribution: stats.distribution
+        };
+    }
+
+    // Enhanced loadReviews function
+    async function loadReviews() {
+        try {
+            const { data: reviews, error } = await supabaseClient
+                .from('teacher_reviews')
+                .select('*')
+                .eq('teacher_id', TEACHER_ID)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            // Calculate statistics
+            const stats = calculateReviewStats(reviews);
+            
+            // Update UI with statistics
+            document.getElementById('averageRating').textContent = stats.averageRating;
+            document.getElementById('totalReviews').textContent = stats.totalReviews;
+            
+            // Generate rating stars
+            document.getElementById('ratingStars').innerHTML = 
+                '★'.repeat(Math.round(stats.averageRating)) + 
+                '☆'.repeat(5 - Math.round(stats.averageRating));
+
+            // Generate distribution graph
+            const distributionHTML = Object.entries(stats.distribution)
+                .reverse()
+                .map(([rating, count]) => {
+                    const percentage = (count / stats.totalReviews * 100) || 0;
+                    return `
+                        <div class="flex items-center text-sm mb-1">
+                            <span class="w-8">${rating}★</span>
+                            <div class="w-48 bg-gray-200 rounded-full h-2.5 ml-2">
+                                <div class="bg-yellow-500 h-2.5 rounded-full" 
+                                     style="width: ${percentage}%"></div>
+                            </div>
+                            <span class="ml-2">${count}</span>
+                        </div>
+                    `;
+                }).join('');
+            document.getElementById('ratingDistribution').innerHTML = distributionHTML;
+
+            // Update reviews container
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = reviews.map(review => `
+                <div class="review-card mb-4 p-4 bg-gray-50 rounded-lg shadow">
+                    <div class="flex items-center space-x-4 mb-2">
+                        ${review.user_image_url 
+                            ? `<img src="${review.user_image_url}" class="w-12 h-12 rounded-full object-cover" alt="${review.user_name}">`
+                            : `<div class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-white"></i>
+                               </div>`
+                        }
+                        <div>
+                            <h5 class="font-semibold">${review.user_name}</h5>
+                            <div class="text-yellow-500">
+                                ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                            </div>
+                        </div>
+                    </div>
+                    <p>${review.review_text}</p>
+                    <small class="text-gray-500">
+                        ${new Date(review.created_at).toLocaleDateString()}
+                    </small>
+                </div>
+            `).join('');
+
+        } catch (error) {
+            console.error('Error loading reviews:', error);
+        }
+    }
+
+    // Keep your existing event listeners and form handling code
+    // ... (keep your existing form submission code here) ...
+
+    // Initial load
+    loadTeacherDetails();
+    loadReviews();
+});
+</script>

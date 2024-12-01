@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Footer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+        }
+        
+        .footer-section {
+            background-color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-heading {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-subheading {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contact-info li {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .contact-info i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .map-container {
+            height: 300px;
+            width: 100%;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .action-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            width: 100%;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        
+        .action-button:hover {
+            background-color: #c82333;
+        }
+        
+        .bottom-footer {
+            background-color: #000;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .footer-nav li {
+            margin: 0 15px;
+        }
+        
+        .footer-nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+     
+        .footer-nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .footer-section {
+                padding: 2rem 0;
+            }
+            
+            .footer-heading {
+                font-size: 1.5rem;
+            }
+            
+            .footer-subheading {
+                font-size: 2rem;
+            }
+            
+            .footer-nav {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-nav li {
+                margin: 5px 0;
+            }
+            
+            .social-links {
+                text-align: center !important;
+                margin-top: 1rem;
+            }
+        }
+
+
+         /* Only adding new styles and modifying relevant existing ones */
+         .school-logo {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .copyright-section {
+            padding: 15px 0;
+            background-color: #000;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .copyright-text {
+            color: #fff;
+            font-size: 14px;
+            margin: 0;
+            text-align: center;
+        }
+        
+        .designer-link {
+            color: #4A90E2;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .designer-link:hover {
+            color: #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .copyright-text {
+                font-size: 12px;
+            }
+            
+            .school-logo {
+                height: 40px;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<footer>
+    <div class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 class="footer-heading">LIFE AT SCHOOL</h2>
+                    <h3 class="footer-subheading">Secure<br>Your Child's Future.</h3>
+                    
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 32 Rudramati Marg 1, Buddha Nagar 10, Kathmandu, Nepal</li>
+                        <li><i class="fas fa-envelope"></i> info@rosebudschoolnepal.org</li>
+                        <li><i class="fas fa-phone"></i> 01-4790033, 01-4790923, 01-4792443</li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14128.347896753289!2d85.3318661!3d27.7138255!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1919f7dd5ae3%3A0xc94f84b42a9147c9!2sRosebud%20School!5e0!3m2!1sen!2snp!4v1700305496495!5m2!1sen!2snp" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    
+                    <button class="action-button">PLAN YOUR VISIT</button>
+                    <button class="action-button">MAPS & DIRECTIONS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bottom-footer">
+        <div class="container">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-center text-md-start">
+                <img src="imgs/logo.jpg" alt="School logo" class="school-logo">
+            </div>
+            
+          
+                
+                <div class="col-md-4">
+                    <ul class="footer-nav">
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Academic</a></li>
+                        <li><a href="#">Admission</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Login</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="social-links text-end">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+              <!-- New copyright section to be added after the bottom footer -->
+              <div class="copyright-section">
+                <div class="container">
+                    <p class="copyright-text">
+                        © <span id="currentYear"></span> All rights reserved. Designed by <a href="https://yourlink.com" class="designer-link">SNAV</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

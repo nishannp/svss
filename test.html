@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Hero Slider</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slider {
+            position: absolute;
+            width: 400%;
+            height: 100%;
+            display: flex;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide {
+            position: relative;
+            width: 25%;
+            height: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: transform 6s ease;
+        }
+
+        .slide.active img {
+            transform: scale(1);
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+            background: linear-gradient(
+                90deg,
+                rgba(0, 0, 0, 0.7) 0%,
+                rgba(0, 0, 0, 0.4) 50%,
+                rgba(0, 0, 0, 0.2) 100%
+            );
+        }
+
+        .text-container {
+            max-width: 600px;
+            overflow: hidden;
+        }
+
+        .tagline-wrapper {
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 3.5rem;
+            font-weight: bold;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sub-tagline-wrapper {
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .sub-tagline {
+            color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s,
+                        opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+        }
+
+        .slide.active .tagline,
+        .slide.active .sub-tagline {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                        opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s,
+                        box-shadow 0.3s ease;
+        }
+
+        .slide.active .cta-button {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        .progress-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 10;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background: white;
+            transition: width 0.1s linear;
+        }
+
+        @media (max-width: 1024px) {
+            .tagline {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tagline {
+                font-size: 2.5rem;
+            }
+
+            .sub-tagline {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tagline {
+                font-size: 2rem;
+            }
+
+            .sub-tagline {
+                font-size: 1rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.6rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="slider" id="slider">
+            <div class="slide active">
+                <img src="imgs/image.jpg" alt="Education Excellence">
+                <div class="slide-content">
+                    <div class="text-container">
+                        <div class="tagline-wrapper">
+                            <h1 class="tagline">Empowering Minds, Shaping Futures</h1>
+                        </div>
+                        <div class="sub-tagline-wrapper">
+                            <p class="sub-tagline">Where Innovation Meets Excellence in Education</p>
+                        </div>
+                        <a href="#" class="cta-button">Discover More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imgs/image.jpg" alt="Innovation Hub">
+                <div class="slide-content">
+                    <div class="text-container">
+                        <div class="tagline-wrapper">
+                            <h1 class="tagline">Unleashing Creative Potential</h1>
+                        </div>
+                        <div class="sub-tagline-wrapper">
+                            <p class="sub-tagline">Building Tomorrow's Leaders Today</p>
+                        </div>
+                        <a href="#" class="cta-button">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imgs/image.jpg" alt="Student Success">
+                <div class="slide-content">
+                    <div class="text-container">
+                        <div class="tagline-wrapper">
+                            <h1 class="tagline">Inspiring Academic Excellence</h1>
+                        </div>
+                        <div class="sub-tagline-wrapper">
+                            <p class="sub-tagline">Creating Pathways to Success</p>
+                        </div>
+                        <a href="#" class="cta-button">Join Us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="imgs/image.jpg" alt="Global Learning">
+                <div class="slide-content">
+                    <div class="text-container">
+                        <div class="tagline-wrapper">
+                            <h1 class="tagline">Global Perspectives, Local Values</h1>
+                        </div>
+                        <div class="sub-tagline-wrapper">
+                            <p class="sub-tagline">Preparing Students for a Connected World</p>
+                        </div>
+                        <a href="#" class="cta-button">Explore More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-nav" id="sliderNav"></div>
+        <div class="progress-line"><div class="progress" id="progress"></div></div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.getElementById('slider');
+            const slides = document.querySelectorAll('.slide');
+            const progress = document.getElementById('progress');
+            const sliderNav = document.getElementById('sliderNav');
+            
+            let currentSlide = 0;
+            let slideInterval;
+            const intervalTime = 6000; // Increased to 6 seconds for better reading time
+            let isDragging = false;
+            let startPos = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+
+            // Create navigation dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = `nav-dot ${index === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => goToSlide(index));
+                sliderNav.appendChild(dot);
+            });
+
+            function updateDots() {
+                document.querySelectorAll('.nav-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function updateSlides() {
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[currentSlide].classList.add('active');
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                slider.style.transform = `translateX(-${currentSlide * 25}%)`;
+                updateDots();
+                updateSlides();
+                resetProgress();
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                goToSlide(currentSlide);
+            }
+
+            function resetProgress() {
+                progress.style.width = '0%';
+                clearInterval(slideInterval);
+                startProgress();
+            }
+
+            function startProgress() {
+                let width = 0;
+                slideInterval = setInterval(() => {
+                    if (width >= 100) {
+                        width = 0;
+                        nextSlide();
+                    } else {
+                        width += 100 / (intervalTime / 100);
+                        progress.style.width = width + '%';
+                    }
+                }, 100);
+            }
+
+            // Touch events
+            slider.addEventListener('touchstart', touchStart);
+            slider.addEventListener('touchmove', touchMove);
+            slider.addEventListener('touchend', touchEnd);
+
+            function touchStart(event) {
+                isDragging = true;
+                startPos = event.touches[0].clientX;
+                slider.style.transition = 'none';
+            }
+
+            function touchMove(event) {
+                if (!isDragging) return;
+                const currentPosition = event.touches[0].clientX;
+                const diff = currentPosition - startPos;
+                const walk = diff / window.innerWidth * 100;
+                currentTranslate = prevTranslate + walk;
+                slider.style.transform = `translateX(${currentTranslate}%)`;
+            }
+
+            function touchEnd() {
+                isDragging = false;
+                slider.style.transition = 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+                const movedBy = currentTranslate - prevTranslate;
+                
+                if (Math.abs(movedBy) > 10) {
+                    if (movedBy > 0) {
+                        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    } else {
+                        currentSlide = (currentSlide + 1) % slides.length;
+                    }
+                }
+                goToSlide(currentSlide);
+            }
+
+            // Start automatic slideshow
+            startProgress();
+        });
+    </script>
+</body>
+</html>
