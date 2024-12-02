@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Website Hero Section</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            opacity: 0;
+            transition: all 0.8s ease-in-out;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        .overlay-text.active {
+            opacity: 1;
+        }
+
+        .navigation-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .overlay-text h1 {
+                font-size: 2rem !important;
+            }
+            
+            .overlay-text p {
+                font-size: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <!-- Desktop Images -->
+        <div class="slide active hidden md:block">
+            <img src="imgs/image.jpg" alt="Campus View" class="slide-image">
+        </div>
+        <div class="slide hidden md:block">
+            <img src="imgs/image.jpg" alt="Library" class="slide-image">
+        </div>
+        <div class="slide hidden md:block">
+            <img src="imgs/image.jpg" alt="Sports Complex" class="slide-image">
+        </div>
+        <div class="slide hidden md:block">
+            <img src="imgs/image.jpg" alt="Student Life" class="slide-image">
+        </div>
+
+        <!-- Mobile Images -->
+        <div class="slide active md:hidden">
+            <img src="imgs/anjana.png" alt="Campus View Mobile" class="slide-image">
+        </div>
+        <div class="slide md:hidden">
+            <img src="imgs/anjana.png" alt="Library Mobile" class="slide-image">
+        </div>
+        <div class="slide md:hidden">
+            <img src="imgs/anjana.png" alt="Sports Complex Mobile" class="slide-image">
+        </div>
+        <div class="slide md:hidden">
+            <img src="imgs/anjana.png" alt="Student Life Mobile" class="slide-image">
+        </div>
+
+        <!-- Overlay Texts -->
+        <div class="overlay-text active animate__animated animate__fadeIn">
+            <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Welcome to Excellence</h1>
+            <p class="text-xl mb-8">Shaping the leaders of tomorrow through quality education</p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                Learn More
+            </button>
+        </div>
+        <div class="overlay-text">
+            <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">World-Class Library</h1>
+            <p class="text-xl mb-8">Access to over 100,000 resources and digital materials</p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                Explore Resources
+            </button>
+        </div>
+        <div class="overlay-text">
+            <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Sports Excellence</h1>
+            <p class="text-xl mb-8">State-of-the-art facilities for athletic development</p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                View Facilities
+            </button>
+        </div>
+        <div class="overlay-text">
+            <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Vibrant Student Life</h1>
+            <p class="text-xl mb-8">Join a community of passionate learners</p>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                Get Involved
+            </button>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="navigation-dots"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const texts = document.querySelectorAll('.overlay-text');
+            const dotsContainer = document.querySelector('.navigation-dots');
+            let currentSlide = 0;
+            let autoSlideInterval;
+
+            // Create navigation dots
+            slides.length = 4; // Since we have 4 unique slides (ignoring mobile duplicates)
+            for (let i = 0; i < 4; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+
+            function updateSlide() {
+                // Update desktop slides
+                document.querySelectorAll('.slide.md\\:block').forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+
+                // Update mobile slides
+                document.querySelectorAll('.slide.md\\:hidden').forEach((slide, index) => {
+                    slide.classList.toggle('active', index === currentSlide);
+                });
+
+                // Update texts with animation
+                texts.forEach((text, index) => {
+                    if (index === currentSlide) {
+                        text.classList.add('active', 'animate__fadeIn');
+                        text.classList.remove('animate__fadeOut');
+                    } else {
+                        text.classList.remove('active', 'animate__fadeIn');
+                        text.classList.add('animate__fadeOut');
+                    }
+                });
+
+                // Update navigation dots
+                document.querySelectorAll('.dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                updateSlide();
+                resetAutoSlide();
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % 4;
+                updateSlide();
+            }
+
+            function resetAutoSlide() {
+                clearInterval(autoSlideInterval);
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            }
+
+            // Initialize auto-slide
+            resetAutoSlide();
+
+            // Add touch support for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.querySelector('.hero-section').addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            document.querySelector('.hero-section').addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const difference = touchStartX - touchEndX;
+
+                if (Math.abs(difference) > swipeThreshold) {
+                    if (difference > 0) {
+                        // Swipe left
+                        currentSlide = (currentSlide + 1) % 4;
+                    } else {
+                        // Swipe right
+                        currentSlide = (currentSlide - 1 + 4) % 4;
+                    }
+                    updateSlide();
+                    resetAutoSlide();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

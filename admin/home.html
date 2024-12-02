@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: none; /* Hidden until cookie check */
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px;
+      width: 100%;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="loginForm">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">Login</button>
+  </form>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Check if the cookie is set
+    function checkCookie() {
+      const cookies = document.cookie.split("; ");
+      const adminLogin = cookies.find(row => row.startsWith("admin_login="));
+
+      if (adminLogin && adminLogin.split("=")[1] === "true") {
+        window.location.href = "admin.html";
+      } else {
+        document.querySelector("form").style.display = "block";
+      }
+    }
+
+    // Check cookie on page load
+    checkCookie();
+
+    // Handle login form submission
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Fetch admin credentials from Supabase
+      const { data, error } = await supabase
+        .from("admin")
+        .select("*")
+        .eq("username", username)
+        .eq("password", password);
+
+      if (error || data.length === 0) {
+        alert("Invalid username or password.");
+      } else {
+        // Set cookie and redirect to admin.html
+        document.cookie = "admin_login=true; path=/";
+        window.location.href = "admin.html";
+      }
+    });
+  </script>
+</body>
+</html>

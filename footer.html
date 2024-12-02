@@ -1,266 +1,511 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Footer</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #4A90E2;
-        }
-        
-        .footer-section {
-            background-color: white;
-            padding: 3rem 0;
-        }
-        
-        .footer-heading {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .footer-subheading {
-            color: #333;
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-        
-        .contact-info {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .contact-info li {
-            margin-bottom: 1rem;
-            color: #666;
-        }
-        
-        .contact-info i {
-            color: var(--primary-color);
-            margin-right: 10px;
-            width: 20px;
-        }
-        
-        .map-container {
-            height: 300px;
-            width: 100%;
-            margin-bottom: 1rem;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-        
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .action-button {
-            background-color: #dc3545;
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            width: 100%;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-        
-        .action-button:hover {
-            background-color: #c82333;
-        }
-        
-        .bottom-footer {
-            background-color: #000;
-            color: white;
-            padding: 1rem 0;
-        }
-        
-        .social-links a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.2rem;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .social-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        .footer-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .footer-nav li {
-            margin: 0 15px;
-        }
-        
-        .footer-nav a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-     
-        .footer-nav a:hover {
-            color: var(--primary-color);
-        }
-        
-        @media (max-width: 768px) {
-            .footer-section {
-                padding: 2rem 0;
-            }
-            
-            .footer-heading {
-                font-size: 1.5rem;
-            }
-            
-            .footer-subheading {
-                font-size: 2rem;
-            }
-            
-            .footer-nav {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .footer-nav li {
-                margin: 5px 0;
-            }
-            
-            .social-links {
-                text-align: center !important;
-                margin-top: 1rem;
-            }
-        }
 
-
-         /* Only adding new styles and modifying relevant existing ones */
-         .school-logo {
-            height: 50px;
-            width: auto;
-            object-fit: contain;
-        }
-        
-        .copyright-section {
-            padding: 15px 0;
-            background-color: #000;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .copyright-text {
-            color: #fff;
-            font-size: 14px;
-            margin: 0;
-            text-align: center;
-        }
-        
-        .designer-link {
-            color: #4A90E2;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .designer-link:hover {
-            color: #fff;
-        }
-        
-        @media (max-width: 768px) {
-            .copyright-text {
-                font-size: 12px;
-            }
-            
-            .school-logo {
-                height: 40px;
-                margin-bottom: 1rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-<footer>
-    <div class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h2 class="footer-heading">LIFE AT SCHOOL</h2>
-                    <h3 class="footer-subheading">Secure<br>Your Child's Future.</h3>
-                    
-                    <ul class="contact-info">
-                        <li><i class="fas fa-map-marker-alt"></i> 32 Rudramati Marg 1, Buddha Nagar 10, Kathmandu, Nepal</li>
-                        <li><i class="fas fa-envelope"></i> info@rosebudschoolnepal.org</li>
-                        <li><i class="fas fa-phone"></i> 01-4790033, 01-4790923, 01-4792443</li>
-                    </ul>
+    <!-- Call to Action -->
+    <section class="contact-section">
+        <header class="contact-header">
+          <h2 class="contact-subtitle">LIFE AT SVSS</h2>
+          <h1 class="contact-title">Secure <br>Your Child's Future.</h1>
+        </header>
+      
+        <div class="contact-content">
+          <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2928.1199769273967!2d81.61117867469494!3d28.605844275679296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39a285318e14bb97%3A0x60bb2129b34e618!2sShanti%20Vidhya%20Sadan%20Boarding%20School!5e1!3m2!1sne!2snp!4v1733111440110!5m2!1sne!2snp" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+      
+          <div class="contact-info">
+            <div class="info-section">
+              <h3 class="info-title">Find Us</h3>
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                  </svg>
                 </div>
-                
-                <div class="col-md-6">
-                    <div class="map-container">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14128.347896753289!2d85.3318661!3d27.7138255!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1919f7dd5ae3%3A0xc94f84b42a9147c9!2sRosebud%20School!5e0!3m2!1sen!2snp!4v1700305496495!5m2!1sen!2snp" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                    </div>
-                    
-                    <button class="action-button">PLAN YOUR VISIT</button>
-                    <button class="action-button">MAPS & DIRECTIONS</button>
+                <div>Chisapani, Birendranagar-06 , Surkhet, Nepal</div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
                 </div>
+                <div>083-521732, 083-521732, 083-521732</div>
+              </div>
+              <div class="info-item">
+                <div class="info-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div>shantividhyasadan@gmail.com</div>
+              </div>
+            </div>
+      
+            <div class="action-buttons">
+              <a href="#directions" class="action-button primary-button">MAPS & DIRECTIONS</a>
+              <a href="#careers" class="action-button secondary-button">Plan Your Visit</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <img src="imgs/logo.jpg" alt="SVSS School Logo" class="footer-logo">
+            <p class="footer-description">
+                At SVSS School, we're committed to nurturing minds and cultivating futures. Join us on the journey of educational excellence as we prepare students for success in a rapidly changing world.
+            </p>
+            <div class="footer-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                Complete Schooling Program (CSP)
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="academics.html">Academic</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Programs</h3>
+            <ul class="footer-links">
+                <li><a href="academics.html#primary-levels-svss">Primary Level</a></li>
+                <li><a href="academics.html#secondary-levels-svss">Secondary Level</a></li>
+                <li><a href="events.html#extra-activities-svss">Extra Activities</a></li>
+                <li><a href="events.html#sports-svss">Sports</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Connect With Us</h3>
+            <ul class="footer-links">
+                <li><a href="events.html">Newsletter</a></li>
+                <li><a href="academics.html">Careers</a></li>
+                <li><a href="about.html#alumni-svss">Alumni</a></li>
+            </ul>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/SVSMONTESSORI" target="_blank" class="social-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+                <a href="#instagram" class="social-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </a>
+                <a href="#youtube" class="social-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
-    
-    <div class="bottom-footer">
-        <div class="container">
-            <div class="row align-items-center">
-              <div class="col-md-4 text-center text-md-start">
-                <img src="imgs/logo.jpg" alt="School logo" class="school-logo">
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-content">
+            <div class="footer-copyright">
+                <p class="copyright-text">
+                    © <span id="currentYear"></span> All rights reserved. Designed by <a href="https://snavteam.netlify.app" class="designer-link">SNAV</a>
+                </p>
             </div>
-            
-          
-                
-                <div class="col-md-4">
-                    <ul class="footer-nav">
-                        <li><a href="#">Events</a></li>
-                        <li><a href="#">Academic</a></li>
-                        <li><a href="#">Admission</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Login</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="social-links text-end">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-              <!-- New copyright section to be added after the bottom footer -->
-              <div class="copyright-section">
-                <div class="container">
-                    <p class="copyright-text">
-                        © <span id="currentYear"></span> All rights reserved. Designed by <a href="https://yourlink.com" class="designer-link">SNAV</a>
-                    </p>
-                </div>
+            <div class="footer-secondary-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#sitemap">Sitemap</a>
             </div>
         </div>
     </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
+
+
+
+
+
+  <style>
+    .contact-section {
+      background: white;
+      padding: 3rem 1rem;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+  
+    .contact-header {
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+    }
+  
+    .contact-subtitle {
+      color: #8898aa;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+  
+    .contact-title {
+      color: #4A90E2;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+  
+    .contact-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+  
+    .map-container {
+      border-radius: 12px;
+      overflow: hidden;
+      height: 400px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  
+    .contact-info {
+      padding: 2rem;
+    }
+  
+    .info-section {
+      margin-bottom: 2rem;
+    }
+  
+    .info-title {
+      color: #4A90E2;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+  
+    .info-item {
+      display: flex;
+      align-items: start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      color: #4a5568;
+    }
+  
+    .info-icon {
+      color: #4A90E2;
+      flex-shrink: 0;
+    }
+  
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+  
+    .action-button {
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+  
+    .primary-button {
+      background: #4A90E2;
+      color: white;
+    }
+  
+    .primary-button:hover {
+      background: #357abd;
+    }
+  
+    .secondary-button {
+      background: #2d3748;
+      color: white;
+    }
+  
+    .secondary-button:hover {
+      background: #1a202c;
+    }
+  
+    @media (max-width: 768px) {
+      .contact-content {
+        grid-template-columns: 1fr;
+      }
+  
+      .contact-title {
+        font-size: 2rem;
+      }
+  
+      .contact-subtitle {
+        font-size: 1.2rem;
+      }
+  
+      .map-container {
+        height: 300px;
+      }
+  
+      .action-buttons {
+        flex-direction: column;
+      }
+  
+      .action-button {
+        text-align: center;
+      }
+    }
+  </style>
+
+<style>
+  .footer {
+      background: linear-gradient(to bottom, #fff 0%, #f8f9fa 100%);
+      padding: 4rem 0 0;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #4A90E2, transparent);
+  }
+
+  .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+  }
+
+  .footer-brand {
+      position: relative;
+  }
+
+  .footer-logo {
+      height: 60px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+  }
+
+  .footer-logo:hover {
+      transform: scale(1.05);
+  }
+
+  .footer-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+  }
+
+  .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(74, 144, 226, 0.1);
+      border-radius: 50px;
+      color: #4A90E2;
+      font-weight: 500;
+      transition: all 0.3s ease;
+  }
+
+  .footer-badge:hover {
+      background: rgba(74, 144, 226, 0.2);
+      transform: translateY(-2px);
+  }
+
+  .footer-column h3 {
+      color: #333;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+  }
+
+  .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: #4A90E2;
+      transition: width 0.3s ease;
+  }
+
+  .footer-column:hover h3::after {
+      width: 60px;
+  }
+
+  .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .footer-links li {
+      margin-bottom: 0.75rem;
+  }
+
+  .footer-links a {
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+  }
+
+  .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #4A90E2;
+      transition: width 0.3s ease;
+  }
+
+  .footer-links a:hover {
+      color: #4A90E2;
+      transform: translateX(5px);
+  }
+
+  .footer-links a:hover::after {
+      width: 100%;
+  }
+
+  .footer-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+  }
+
+  .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      color: #4A90E2;
+      box-shadow: 0 2px 10px rgba(74, 144, 226, 0.1);
+      transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+      background: #4A90E2;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+  }
+
+  .footer-bottom {
+      margin-top: 4rem;
+      padding: 1.5rem 0;
+      background: #f8f9fa;
+      border-top: 1px solid rgba(74, 144, 226, 0.1);
+  }
+
+  .footer-bottom-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .copyright-text {
+      color: #666;
+      margin: 0;
+  }
+
+  .designer-link {
+      color: #4A90E2;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+  }
+
+  .designer-link:hover {
+      color: #2171c7;
+  }
+
+  .footer-secondary-links {
+      display: flex;
+      gap: 1.5rem;
+  }
+
+  .footer-secondary-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+  }
+
+  .footer-secondary-links a:hover {
+      color: #4A90E2;
+  }
+
+  @media (max-width: 1024px) {
+      .footer-top {
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+      }
+
+      .footer-brand {
+          grid-column: 1 / -1;
+      }
+  }
+
+  @media (max-width: 768px) {
+      .footer-top {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+      }
+
+      .footer-bottom-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+      }
+
+      .footer-secondary-links {
+          justify-content: center;
+          flex-wrap: wrap;
+      }
+  }
+
+  @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+  }
+</style>

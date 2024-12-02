@@ -1,403 +1,226 @@
-
-
-
-<style>
-    .calendar-container {
-        max-width: 1200px;
-        margin: 2rem auto;
-    }
-    
-    .calendar-header {
-        background-color: #f8f9fa;
-        padding: 1rem;
-        border-radius: 8px 8px 0 0;
-    }
-    
-    .calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 1px;
-        background-color: #dee2e6;
-        border: 1px solid #dee2e6;
-    }
-    
-    .calendar-day {
-        background-color: white;
-        aspect-ratio: 1;
-        padding: 0.5rem;
-        position: relative;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-    
-    .calendar-day:hover {
-        background-color: #f8f9fa;
-    }
-    
-    .day-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        margin-bottom: 0.25rem;
-    }
-    
-    .bs-date {
-        font-weight: bold;
-        font-size: 1.1rem;
-        color: #1a73e8;
-    }
-    
-    .ad-date {
-        color: #666;
-        font-size: 0.7rem;
-    }
-    
-    .event-indicators {
-        display: flex;
-        gap: 2px;
-        margin-top: 0.25rem;
-    }
-    
-    .event-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        margin-right: 2px;
-    }
-    
-    .event-dot.holiday {
-        background-color: #dc3545;
-    }
-    
-    .event-dot.normal {
-        background-color: #1a73e8;
-    }
-    
-    .today {
-        background-color: #e8f4f8;
-    }
-    
-    .weekend {
-        background-color: #f8f9fa;
-    }
-    
-    .holiday-cell {
-        background-color: #fff5f5;
-    }
-    
-    .weekday-header {
-        background-color: #f8f9fa;
-        padding: 0.5rem;
-        text-align: center;
-        font-weight: 500;
-        color: #666;
-    }
-
-    /* Modal styles */
-    .event-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .modal-content {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 500px;
-        max-height: 80vh;
-        overflow-y: auto;
-    }
-
-    .event-list {
-        margin-top: 1rem;
-    }
-
-    .event-item {
-        padding: 0.5rem;
-        margin-bottom: 0.5rem;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-    }
-
-    .event-item.holiday {
-        background-color: #fff5f5;
-        border-left: 3px solid #dc3545;
-    }
-
-    .event-item.normal {
-        background-color: #f0f7ff;
-        border-left: 3px solid #1a73e8;
-    }
-
-    .loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(255, 255, 255, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .calendar-header-text {
-text-align: center;
-color: #4A90E2;
-font-size: 24px;
-font-weight: bold;
-}
-</style>
-
-
-<h1 class="calendar-header-text">Our Calendar</h1>
-
-<div class="container calendar-container">
-    <div class="calendar-header d-flex justify-content-between align-items-center mb-3">
-        <button class="btn btn-outline-primary" id="prevMonth">&lt; Previous</button>
-        <h2 class="mb-0" id="currentMonth"></h2>
-        <button class="btn btn-outline-primary" id="nextMonth">Next &gt;</button>
-    </div>
-    
-    <div class="calendar-grid">
-        <div class="weekday-header">Sun</div>
-        <div class="weekday-header">Mon</div>
-        <div class="weekday-header">Tue</div>
-        <div class="weekday-header">Wed</div>
-        <div class="weekday-header">Thu</div>
-        <div class="weekday-header">Fri</div>
-        <div  class="weekday-header">Sat</div>
-    </div>
-    <div id="calendarBody" class="calendar-grid"></div>
-</div>
-
-<!-- Event Modal -->
-<div id="eventModal" class="event-modal">
-    <div class="modal-content">
-        <div class="d-flex justify-content-between align-items-center">
-            <h4 id="modalDate" class="mb-0"></h4>
-            <button class="btn-close" onclick="closeModal()"></button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepali Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @media (max-width: 640px) {
+            .calendar-cell {
+                aspect-ratio: 1/1;
+                font-size: 0.9rem;
+            }
+            .nepali-date {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg">
+        <!-- Calendar Header -->
+        <div class="p-4 border-b">
+            <div class="flex justify-between items-center mb-4">
+                <button id="prevMonth" class="text-red-600 hover:text-red-800 p-2">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="text-center">
+                    <div class="flex gap-4 items-center">
+                        <span class="text-lg font-medium text-red-600">Current Month</span>
+                        
+                    </div>
+                </div>
+                <button id="nextMonth" class="text-red-600 hover:text-red-800 p-2">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="text-center">
+                <h2 id="currentMonth" class="text-xl font-bold"></h2>
+                <p id="currentMonthNp" class="text-lg text-gray-600"></p>
+            </div>
         </div>
-        <div id="eventList" class="event-list"></div>
+
+        <!-- Calendar Grid -->
+        <div class="p-2 md:p-4">
+            <div class="grid grid-cols-7 gap-1 md:gap-2 mb-2">
+                <div class="text-center p-2 text-gray-800 font-medium">Sun</div>
+                <div class="text-center p-2 text-gray-800 font-medium">Mon</div>
+                <div class="text-center p-2 text-gray-800 font-medium">Tue</div>
+                <div class="text-center p-2 text-gray-800 font-medium">Wed</div>
+                <div class="text-center p-2 text-gray-800 font-medium">Thu</div>
+                <div class="text-center p-2 text-gray-800 font-medium">Fri</div>
+                <div class="text-center p-2 text-red-600 font-medium">Sat</div>
+            </div>
+            <div id="calendarGrid" class="grid grid-cols-7 gap-1 md:gap-2"></div>
+        </div>
     </div>
-</div>
 
-<div id="loading" class="loading d-none">
-    <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+    <!-- Event Popup -->
+    <div id="eventPopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-4 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="popupDate" class="text-lg font-bold"></h3>
+                <button onclick="closePopup()" class="text-gray-600 hover:text-gray-800">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="eventDetails" class="space-y-2"></div>
+        </div>
     </div>
-</div>
 
-<script>
-    class Calendar {
-        constructor() {
-            this.currentBsYear = 2081;
-            this.currentBsMonth = 8; // Mangsir
-            this.calendarData = null;
-            
-            this.initializeCalendar();
-            this.attachEventListeners();
-        }
+    <script>
+        let currentDate = {
+            year: 2081,
+            month: 8,
+            calendarData: null
+        };
 
-        async initializeCalendar() {
-            const loading = document.getElementById('loading');
-            loading.classList.remove('d-none');
-            
-            await this.fetchCalendarData();
-            this.renderCalendar();
-            
-            loading.classList.add('d-none');
-        }
-
-        attachEventListeners() {
-            document.getElementById('prevMonth').addEventListener('click', () => {
-                this.currentBsMonth--;
-                if (this.currentBsMonth < 1) {
-                    this.currentBsMonth = 12;
-                    this.currentBsYear--;
-                }
-                this.initializeCalendar();
-            });
-
-            document.getElementById('nextMonth').addEventListener('click', () => {
-                this.currentBsMonth++;
-                if (this.currentBsMonth > 12) {
-                    this.currentBsMonth = 1;
-                    this.currentBsYear++;
-                }
-                this.initializeCalendar();
-            });
-        }
-
-        async fetchCalendarData() {
-            try {
-                const response = await fetch("https://api.saralpatro.com/graphql", {
-                    credentials: "omit",
-                    headers: {
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                    },
-                    method: "POST",
-                    body: JSON.stringify({
-                        query: `
-                            {
-                                dates(bsYear: ${this.currentBsYear}, bsMonth: ${this.currentBsMonth}) {
-                                    bsDay
-                                    bsMonth
-                                    bsYear
-                                    adDay
-                                    adMonth
-                                    adYear
-                                    weekday
-                                    isHoliday
-                                    events {
-                                        strEn
-                                        strNp
-                                        isHoliday
-                                    }
-                                }
+        async function fetchCalendarData() {
+            const response = await fetch("https://api.saralpatro.com/graphql", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    query: `
+                    {
+                        dates(bsYear: ${currentDate.year}) {
+                            bsDay
+                            bsMonth
+                            bsDayNp
+                            bsMonthNp
+                            weekday
+                            isHoliday
+                            events {
+                                strEn
+                                strNp
+                                isHoliday
                             }
-                        `
-                    })
-                });
-                
-                const data = await response.json();
-                this.calendarData = data.data.dates;
-            } catch (error) {
-                console.error('Error fetching calendar data:', error);
-                this.calendarData = [];
-            }
-        }
-
-        getNepaliMonth(month) {
-            const nepaliMonths = [
-                'Baisakh', 'Jestha', 'Ashar', 'Shrawan', 
-                'Bhadra', 'Ashwin', 'Kartik', 'Mangsir',
-                'Poush', 'Magh', 'Falgun', 'Chaitra'
-            ];
-            return nepaliMonths[month - 1];
-        }
-
-        renderCalendar() {
-            if (!this.calendarData || this.calendarData.length === 0) return;
-
-            document.getElementById('currentMonth').textContent = 
-                `${this.getNepaliMonth(this.currentBsMonth)} ${this.currentBsYear}`;
-
-            const calendarBody = document.getElementById('calendarBody');
-            calendarBody.innerHTML = '';
-
-            // Find the first day of the month
-            const firstDayData = this.calendarData[0];
-            const startingDay = firstDayData.weekday;
-
-            // Create empty cells for days before the first day of the month
-            for (let i = 0; i < startingDay; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.className = 'calendar-day';
-                calendarBody.appendChild(emptyCell);
-            }
-
-            // Render actual days
-            this.calendarData.forEach(dayData => {
-                const dayCell = document.createElement('div');
-                dayCell.className = 'calendar-day';
-                
-                if (dayData.isHoliday) {
-                    dayCell.classList.add('holiday-cell');
-                }
-                
-                if (dayData.weekday === 0 || dayData.weekday === 6) {
-                    dayCell.classList.add('weekend');
-                }
-
-                // Create date display
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'day-header';
-                dayHeader.innerHTML = `
-                    <span class="bs-date">${dayData.bsDay}</span>
-                    <span class="ad-date">${dayData.adMonth}/${dayData.adDay}</span>
-                `;
-                dayCell.appendChild(dayHeader);
-
-                // Add event indicators
-                if (dayData.events && dayData.events.length > 0) {
-                    const indicators = document.createElement('div');
-                    indicators.className = 'event-indicators';
-                    
-                    const holidayEvents = dayData.events.filter(e => e.isHoliday);
-                    const normalEvents = dayData.events.filter(e => !e.isHoliday);
-                    
-                    if (holidayEvents.length > 0) {
-                        const dot = document.createElement('div');
-                        dot.className = 'event-dot holiday';
-                        indicators.appendChild(dot);
+                        }
                     }
-                    
-                    if (normalEvents.length > 0) {
-                        const dot = document.createElement('div');
-                        dot.className = 'event-dot normal';
-                        indicators.appendChild(dot);
-                    }
-                    
-                    dayCell.appendChild(indicators);
-
-                    // Add click event to show modal
-                    dayCell.addEventListener('click', () => this.showEvents(dayData));
-                }
-
-                calendarBody.appendChild(dayCell);
+                    `
+                })
             });
+
+            const data = await response.json();
+            currentDate.calendarData = data.data.dates;
+            renderCalendar();
         }
 
-        showEvents(dayData) {
-            const modal = document.getElementById('eventModal');
-            const modalDate = document.getElementById('modalDate');
-            const eventList = document.getElementById('eventList');
+        function createDateCell(date) {
+            const cell = document.createElement('div');
+            cell.className = `calendar-cell p-1 border rounded ${date.isHoliday ? 'bg-red-50' : 'bg-white'} 
+                            hover:shadow-md transition-shadow cursor-pointer relative flex flex-col justify-between`;
+            
+            const hasEvents = date.events && date.events.length > 0;
+            
+            cell.innerHTML = `
+                <div class="flex flex-col items-end">
+                    <span class="${date.isHoliday ? 'text-red-600' : 'text-gray-800'} font-medium">
+                        ${date.bsDay}
+                    </span>
+                    <span class="nepali-date text-gray-600">${date.bsDayNp}</span>
+                </div>
+                ${hasEvents ? '<div class="absolute bottom-1 right-1 text-blue-500"><i class="fas fa-circle text-xs"></i></div>' : ''}
+            `;
 
-            modalDate.textContent = `${this.getNepaliMonth(dayData.bsMonth)} ${dayData.bsDay}, ${dayData.bsYear}`;
-            eventList.innerHTML = '';
+            cell.onclick = () => showEventPopup(date);
+            return cell;
+        }
 
-            if (dayData.events && dayData.events.length > 0) {
-                dayData.events.forEach(event => {
+        function createEmptyCell() {
+            const cell = document.createElement('div');
+            cell.className = 'calendar-cell p-1 border rounded bg-gray-50';
+            return cell;
+        }
+
+        function renderCalendar() {
+            const monthData = currentDate.calendarData.filter(date => date.bsMonth === currentDate.month);
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const firstDay = monthData[0].weekday;
+            for (let i = 0; i < firstDay; i++) {
+                grid.appendChild(createEmptyCell());
+            }
+
+            monthData.forEach(date => {
+                grid.appendChild(createDateCell(date));
+            });
+
+            updateMonthHeader();
+        }
+
+        function showEventPopup(date) {
+            const popup = document.getElementById('eventPopup');
+            const popupDate = document.getElementById('popupDate');
+            const eventDetails = document.getElementById('eventDetails');
+
+            popupDate.textContent = `${date.bsDay}/${currentDate.month}/${currentDate.year}`;
+            eventDetails.innerHTML = '';
+
+            if (date.events && date.events.length > 0) {
+                date.events.forEach(event => {
                     const eventDiv = document.createElement('div');
-                    eventDiv.className = `event-item ${event.isHoliday ? 'holiday' : 'normal'}`;
-                    eventDiv.textContent = event.strEn;
-                    eventList.appendChild(eventDiv);
+                    eventDiv.className = 'p-2 border rounded bg-gray-50';
+                    eventDiv.innerHTML = `
+                        <p class="text-gray-800">${event.strEn}</p>
+                        <p class="text-gray-600 text-sm">${event.strNp}</p>
+                    `;
+                    eventDetails.appendChild(eventDiv);
                 });
             } else {
-                eventList.innerHTML = '<p class="text-muted">No events for this day</p>';
+                eventDetails.innerHTML = '<p class="text-gray-600">No events for this date</p>';
             }
 
-            modal.style.display = 'flex';
+            popup.classList.remove('hidden');
         }
-    }
 
-    // Global function to close modal
-    function closeModal() {
-        document.getElementById('eventModal').style.display = 'none';
-    }
-
-    // Close modal when clicking outside
-    document.getElementById('eventModal').addEventListener('click', (e) => {
-        if (e.target.id === 'eventModal') {
-            closeModal();
+        function closePopup() {
+            document.getElementById('eventPopup').classList.add('hidden');
         }
-    });
 
-    // Initialize calendar when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        new Calendar();
-    });
-</script>
+        function updateMonthHeader() {
+            const monthNames = [
+                "Baisakh", "Jestha", "Ashadh", "Shrawan", "Bhadra", "Ashwin",
+                "Kartik", "Mangsir", "Poush", "Magh", "Falgun", "Chaitra"
+            ];
+            const monthNamesNp = [
+                "बैशाख", "जेठ", "असार", "श्रावण", "भदौ", "असोज",
+                "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत्र"
+            ];
+            
+            document.getElementById('currentMonth').textContent = monthNames[currentDate.month - 1];
+            document.getElementById('currentMonthNp').textContent = monthNamesNp[currentDate.month - 1];
+        }
+
+        document.getElementById('prevMonth').onclick = () => {
+            if (currentDate.month > 1) {
+                currentDate.month--;
+            } else {
+                currentDate.year--;
+                currentDate.month = 12;
+                fetchCalendarData();
+                return;
+            }
+            renderCalendar();
+        };
+
+        document.getElementById('nextMonth').onclick = () => {
+            if (currentDate.month < 12) {
+                currentDate.month++;
+            } else {
+                currentDate.year++;
+                currentDate.month = 1;
+                fetchCalendarData();
+                return;
+            }
+            renderCalendar();
+        };
+
+        fetchCalendarData();
+    </script>
+</body>
+</html>
