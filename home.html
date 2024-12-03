@@ -432,7 +432,7 @@ body {
                   </li>
 
                   <li class="nav-item" style="--item-number: 5">
-                    <a class="nav-link" href="teachers.html">Gurdains Of Knowledge</a>
+                    <a class="nav-link" href="teachers.html">Guardians Of Knowledge</a>
                 </li>
 
                   <li class="nav-item" style="--item-number: 6">
@@ -443,245 +443,263 @@ body {
       </div>
   </nav>
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-  <style>
-      .hero-section {
-          position: relative;
-          height: 100vh;
-          overflow: hidden;
-      }
-
-      .slide {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          opacity: 0;
-          transition: opacity 1s ease-in-out;
-      }
-
-      .slide.active {
-          opacity: 1;
-      }
-
-      .slide-image {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-      }
-
-      .overlay-text {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          text-align: center;
-          color: white;
-          opacity: 0;
-          transition: all 0.8s ease-in-out;
-          width: 80%;
-          max-width: 800px;
-      }
-
-      .overlay-text.active {
-          opacity: 1;
-      }
-
-      .navigation-dots {
-          position: absolute;
-          bottom: 2rem;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 1rem;
-          z-index: 10;
-      }
-
-      .dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.5);
-          cursor: pointer;
-          transition: all 0.3s ease;
-      }
-
-      .dot.active {
-          background: white;
-          transform: scale(1.2);
-      }
-
-      @media (max-width: 768px) {
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+      <style>
+          .hero-section {
+              position: relative;
+              height: 100vh;
+              overflow: hidden;
+          }
+  
+          .slide {
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+              transition: opacity 1s ease-in-out;
+          }
+  
+          .slide.active {
+              opacity: 1;
+          }
+  
+          .slide-image {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              filter: brightness(70%);
+          }
+  
+          .overlay-text {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: center;
+              text-align: center;
+              color: white;
+              opacity: 0;
+              transition: all 0.8s ease-in-out;
+              background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.3));
+              padding: 2rem;
+          }
+  
+          .overlay-text.active {
+              opacity: 1;
+          }
+  
+          .overlay-text-inner {
+              max-width: 800px;
+              transform: translateY(50px);
+              opacity: 0;
+              transition: all 0.8s ease-out;
+          }
+  
+          .overlay-text.active .overlay-text-inner {
+              transform: translateY(0);
+              opacity: 1;
+          }
+  
           .overlay-text h1 {
-              font-size: 2rem !important;
+              font-size: 4rem;
+              font-weight: 900;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              margin-bottom: 1rem;
+              background: linear-gradient(to right, #fff, #aaa);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
           }
-          
+  
           .overlay-text p {
-              font-size: 1rem !important;
+              font-size: 2.6rem;
+              font-weight: 300;
+              color: rgba(255, 255, 255, 0.9);
+              line-height: 1.6;
+              margin-bottom: 1rem;
           }
-      }
-  </style>
-</head>
-<body>
-  <div class="hero-section">
-    <div class="slide active hidden md:block">
-      <img src="imgs/seo-img/about.jpg" alt="Campus View" class="slide-image">
-  </div>
-  <div class="slide hidden md:block">
-      <img src="imgs/seo-img/main.jpg" alt="Library" class="slide-image">
-  </div>
-  <div class="slide hidden md:block">
-      <img src="imgs/seo-img/events-main.jpg" alt="Sports Complex" class="slide-image">
-  </div>
-  <div class="slide hidden md:block">
-      <img src="imgs/seo-img/teachers-main.jpg" alt="Student Life" class="slide-image">
-  </div>
-
-  <div class="slide active md:hidden">
-      <img src="imgs/seo-img/about.jpg" alt="Campus View Mobile" class="slide-image">
-  </div>
-  <div class="slide md:hidden">
-      <img src="imgs/seo-img/main.jpg" alt="Library Mobile" class="slide-image">
-  </div>
-  <div class="slide md:hidden">
-      <img src="imgs/seo-img/events-main.jpg" alt="Sports Complex Mobile" class="slide-image">
-  </div>
-  <div class="slide md:hidden">
-      <img src="imgs/seo-img/teachers-main.jpg" alt="Student Life Mobile" class="slide-image">
-  </div>
-
-      <div class="overlay-text active animate__animated animate__fadeIn">
-          <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Welcome to SVSS</h1>
-          <p class="text-xl mb-8">Shaping the leaders of tomorrow through quality education</p>
-          <!--
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-              Learn More
-          </button>
-          -->
+  
+          .navigation-dots {
+              position: absolute;
+              bottom: 2rem;
+              left: 50%;
+              transform: translateX(-50%);
+              display: flex;
+              gap: 1rem;
+              z-index: 10;
+          }
+  
+          .dot {
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 0.5);
+              cursor: pointer;
+              transition: all 0.3s ease;
+          }
+  
+          .dot.active {
+              background: white;
+              transform: scale(1.2);
+          }
+  
+          @media (max-width: 768px) {
+              .overlay-text h1 {
+                  font-size: 2.5rem;
+              }
+              
+              .overlay-text p {
+                  font-size: 1.2rem;
+              }
+          }
+      </style>
+ 
+      <div class="hero-section">
+          <div class="slide active hidden md:block">
+              <img src="imgs/seo-img/dtd.jpg" alt="Campus View" class="slide-image">
+          </div>
+          <div class="slide hidden md:block">
+              <img src="imgs/seo-img/main.jpg" alt="Library" class="slide-image">
+          </div>
+          <div class="slide hidden md:block">
+              <img src="imgs/seo-img/cover1.jpg" alt="Sports Complex" class="slide-image">
+          </div>
+          <div class="slide hidden md:block">
+              <img src="imgs/seo-img/teachers-main.jpg" alt="Student Life" class="slide-image">
+          </div>
+  
+          <div class="slide active md:hidden">
+              <img src="imgs/seo-img/mobile_cover1.jpg" alt="Campus View Mobile" class="slide-image">
+          </div>
+          <div class="slide md:hidden">
+              <img src="imgs/seo-img/main.jpg" alt="Library Mobile" class="slide-image">
+          </div>
+          <div class="slide md:hidden">
+              <img src="imgs/seo-img/events-main.jpg" alt="Sports Complex Mobile" class="slide-image">
+          </div>
+          <div class="slide md:hidden">
+              <img src="imgs/seo-img/teachers-main.jpg" alt="Student Life Mobile" class="slide-image">
+          </div>
+  
+          <div class="overlay-text active">
+              <div class="overlay-text-inner">
+                  <h1>Welcome To SVSS</h1>
+                  <p>Where Innovation Meets Inspiration</p>
+              </div>
+          </div>
+          <div class="overlay-text">
+              <div class="overlay-text-inner">
+                  <h1>Learning Redefined</h1>
+                  <p>Empowering Minds, Transforming Potential</p>
+              </div>
+          </div>
+          <div class="overlay-text">
+              <div class="overlay-text-inner">
+                  <h1>Beyond Boundaries</h1>
+                  <p>Exploring, Growing, Achieving</p>
+              </div>
+          </div>
+          <div class="overlay-text">
+              <div class="overlay-text-inner">
+                  <h1>Your Journey Starts Here</h1>
+                  <p>Discover, Develop, Excel</p>
+              </div>
+          </div>
+  
+          <div class="navigation-dots"></div>
       </div>
-      <div class="overlay-text">
-          <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Top-Class Environment</h1>
-          <p class="text-xl mb-8">Close to Nature and Cooperative peoples.</p>
-           <!--
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-              Explore Resources
-          </button>
-        -->
-      </div>
-      <div class="overlay-text">
-          <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Sports Excellence</h1>
-          <p class="text-xl mb-8">State-of-the-art facilities for athletic development</p>
-
-           <!--
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-              View Facilities
-          </button>
-
-        -->
-      </div>
-      <div class="overlay-text">
-          <h1 class="text-6xl font-bold mb-4 text-white drop-shadow-lg">Vibrant Student Life</h1>
-          <p class="text-xl mb-8">Join a community of passionate learners</p>
-
-           <!--
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
-              Get Involved
-          </button>
-
-        -->
-      </div>
-
-      <div class="navigation-dots"></div>
-  </div>
-
-  <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          const slides = document.querySelectorAll('.slide');
-          const texts = document.querySelectorAll('.overlay-text');
-          const dotsContainer = document.querySelector('.navigation-dots');
-          let currentSlide = 0;
-          let autoSlideInterval;
-
-          slides.length = 4;
-          for (let i = 0; i < 4; i++) {
-              const dot = document.createElement('div');
-              dot.classList.add('dot');
-              if (i === 0) dot.classList.add('active');
-              dot.addEventListener('click', () => goToSlide(i));
-              dotsContainer.appendChild(dot);
-          }
-
-          function updateSlide() {
-              document.querySelectorAll('.slide.md\\:block').forEach((slide, index) => {
-                  slide.classList.toggle('active', index === currentSlide);
-              });
-
-              document.querySelectorAll('.slide.md\\:hidden').forEach((slide, index) => {
-                  slide.classList.toggle('active', index === currentSlide);
-              });
-
-              texts.forEach((text, index) => {
-                  if (index === currentSlide) {
-                      text.classList.add('active', 'animate__fadeIn');
-                      text.classList.remove('animate__fadeOut');
-                  } else {
-                      text.classList.remove('active', 'animate__fadeIn');
-                      text.classList.add('animate__fadeOut');
-                  }
-              });
-
-              document.querySelectorAll('.dot').forEach((dot, index) => {
-                  dot.classList.toggle('active', index === currentSlide);
-              });
-          }
-
-          function goToSlide(index) {
-              currentSlide = index;
-              updateSlide();
-              resetAutoSlide();
-          }
-
-          function nextSlide() {
-              currentSlide = (currentSlide + 1) % 4;
-              updateSlide();
-          }
-
-          function resetAutoSlide() {
-              clearInterval(autoSlideInterval);
-              autoSlideInterval = setInterval(nextSlide, 5000);
-          }
-
-          resetAutoSlide();
-
-          let touchStartX = 0;
-          let touchEndX = 0;
-
-          document.querySelector('.hero-section').addEventListener('touchstart', e => {
-              touchStartX = e.changedTouches[0].screenX;
-          }, false);
-
-          document.querySelector('.hero-section').addEventListener('touchend', e => {
-              touchEndX = e.changedTouches[0].screenX;
-              handleSwipe();
-          }, false);
-
-          function handleSwipe() {
-              const swipeThreshold = 50;
-              const difference = touchStartX - touchEndX;
-
-              if (Math.abs(difference) > swipeThreshold) {
-                  if (difference > 0) {
-                      currentSlide = (currentSlide + 1) % 4;
-                  } else {
-                      currentSlide = (currentSlide - 1 + 4) % 4;
-                  }
+  
+      <script>
+          // The previous JavaScript remains the same as in the original document
+          document.addEventListener('DOMContentLoaded', function() {
+              const slides = document.querySelectorAll('.slide');
+              const texts = document.querySelectorAll('.overlay-text');
+              const dotsContainer = document.querySelector('.navigation-dots');
+              let currentSlide = 0;
+              let autoSlideInterval;
+  
+              slides.length = 4;
+              for (let i = 0; i < 4; i++) {
+                  const dot = document.createElement('div');
+                  dot.classList.add('dot');
+                  if (i === 0) dot.classList.add('active');
+                  dot.addEventListener('click', () => goToSlide(i));
+                  dotsContainer.appendChild(dot);
+              }
+  
+              function updateSlide() {
+                  document.querySelectorAll('.slide.md\\:block').forEach((slide, index) => {
+                      slide.classList.toggle('active', index === currentSlide);
+                  });
+  
+                  document.querySelectorAll('.slide.md\\:hidden').forEach((slide, index) => {
+                      slide.classList.toggle('active', index === currentSlide);
+                  });
+  
+                  texts.forEach((text, index) => {
+                      if (index === currentSlide) {
+                          text.classList.add('active');
+                      } else {
+                          text.classList.remove('active');
+                      }
+                  });
+  
+                  document.querySelectorAll('.dot').forEach((dot, index) => {
+                      dot.classList.toggle('active', index === currentSlide);
+                  });
+              }
+  
+              function goToSlide(index) {
+                  currentSlide = index;
                   updateSlide();
                   resetAutoSlide();
               }
-          }
-      });
-  </script>
-
+  
+              function nextSlide() {
+                  currentSlide = (currentSlide + 1) % 4;
+                  updateSlide();
+              }
+  
+              function resetAutoSlide() {
+                  clearInterval(autoSlideInterval);
+                  autoSlideInterval = setInterval(nextSlide, 5000);
+              }
+  
+              resetAutoSlide();
+  
+              let touchStartX = 0;
+              let touchEndX = 0;
+  
+              document.querySelector('.hero-section').addEventListener('touchstart', e => {
+                  touchStartX = e.changedTouches[0].screenX;
+              }, false);
+  
+              document.querySelector('.hero-section').addEventListener('touchend', e => {
+                  touchEndX = e.changedTouches[0].screenX;
+                  handleSwipe();
+              }, false);
+  
+              function handleSwipe() {
+                  const swipeThreshold = 50;
+                  const difference = touchStartX - touchEndX;
+  
+                  if (Math.abs(difference) > swipeThreshold) {
+                      if (difference > 0) {
+                          currentSlide = (currentSlide + 1) % 4;
+                      } else {
+                          currentSlide = (currentSlide - 1 + 4) % 4;
+                      }
+                      updateSlide();
+                      resetAutoSlide();
+                  }
+              }
+          });
+      </script>
+ 
 <section class="about-section">
   <header class="about-header">
     <h2 class="about-subtitle">LIFE AT PEACE</h2>
@@ -1091,40 +1109,93 @@ body {
       <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
       <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
       <style>
+        
+        .review-card-container {
+            perspective: 1000px;
+        }
+
         .review-card {
-          transition: all 0.3s ease;
-          background-color: #f9fafb; /* Light gray background */
-          border: 1px solid #d1d5db; /* Subtle border */
-          padding: 20px;
-          border-radius: 8px;
-          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: linear-gradient(145deg, #f9fafb, #f3f4f6);
+            border: 1px solid #e5e7eb;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
         }
-      
+
+        .review-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg, 
+                transparent, 
+                rgba(255,255,255,0.3), 
+                transparent
+            );
+            transition: all 0.6s;
+        }
+
+        .review-card:hover::before {
+            left: 100%;
+        }
+
         .review-card:hover {
-          transform: scale(1.05);
-          box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px) rotateX(5deg) scale(1.03);
+            box-shadow: 
+                0 10px 20px rgba(0,0,0,0.12),
+                0 4px 8px rgba(0,0,0,0.06);
         }
-      
+
         .review-card h3 {
-          color: #333333; /* Dark gray text */
+            color: #1f2937;
+            font-weight: 700;
+            transition: color 0.3s ease;
         }
-      
+
+        .review-card:hover h3 {
+            color: #6366f1;
+        }
+
         .review-card p {
-          color: #555555; /* Medium gray text */
+            color: #4b5563;
+            line-height: 1.6;
         }
-      
+
         .review-card img {
-          border: 2px solid #e5e7eb; /* Subtle border for images */
-          border-radius: 50%;
+            border: 3px solid #e5e7eb;
+            border-radius: 50%;
+            transition: all 0.3s ease;
         }
-      
+
+        .review-card:hover img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
         .review-scroll {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
+            scrollbar-width: thin;
+            scrollbar-color: #6366f1 #e5e7eb;
         }
-      
+
         .review-scroll::-webkit-scrollbar {
-          display: none;
+            width: 8px;
+        }
+
+        .review-scroll::-webkit-scrollbar-track {
+            background: #f3f4f6;
+            border-radius: 10px;
+        }
+
+        .review-scroll::-webkit-scrollbar-thumb {
+            background-color: #6366f1;
+            border-radius: 10px;
         }
       
         .form-container {
@@ -1162,19 +1233,95 @@ body {
           animation: fadeIn 0.5s ease forwards;
         }
       </style>
+
+<style>
+  .section-header {
+      position: relative;
+      text-align: center;
+      padding: 4rem 1rem;
+      overflow: hidden;
+  }
+
+  .section-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.02));
+      z-index: -1;
+  }
+
+  .section-header-title {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      font-weight: 800;
+      color: #6366f1;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+  }
+
+  .section-header-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background-color: #6366f1;
+      border-radius: 2px;
+  }
+
+  .section-header-subtitle {
+      color: #4b5563;
+      font-size: 1.125rem;
+      max-width: 600px;
+      margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+      .section-header-title {
+          font-size: 3.75rem;
+      }
+
+      .section-header-subtitle {
+          font-size: 1.25rem;
+      }
+  }
+
+  @media (max-width: 640px) {
+      .section-header {
+          padding: 2rem 1rem;
+      }
+
+      .section-header-title {
+          font-size: 2rem;
+      }
+
+      .section-header-subtitle {
+          font-size: 1rem;
+      }
+  }
+</style>
       
   </head>
   <body class="bg-white">
       <div class="container mx-auto px-4 py-12 max-w-7xl">
-          <div class="text-center mb-16">
-            <h1 class="text-5xl md:text-6xl font-bold text-[#6366f1] mb-4">Voices of Shanti Vidhya Sadan</h1>
-            <p class="text-gray-600 text-lg">Real stories from our cherished school family</p>
-            
-          </div>
+        <div class="section-header">
+          <h1 class="section-header-title">
+              Voices of Shanti Vidhya Sadan
+          </h1>
+          <p class="section-header-subtitle">
+              Real stories from our cherished school family
+          </p>
+      </div>
   
           <div class="mb-20 relative">
               <div class="overflow-hidden">
-                  <div class="review-scroll flex transition-transform duration-300 ease-out space-x-6" id="reviewsGrid">
+                  <div class="review-scroll flex transition-transform duration-300 ease-out space-x-6" id="reviewsGrid" class="review-card-container">
                   </div>
               </div>
               

@@ -1,95 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-    }
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: none; /* Hidden until cookie check */
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      padding: 10px;
-      width: 100%;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            perspective: 1000px;
+        }
+        .login-card {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .login-card.flipped {
+            transform: rotateY(180deg);
+        }
+        .login-front, .login-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .login-back {
+            transform: rotateY(180deg);
+        }
+        .shake-animation {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    </style>
 </head>
-<body>
+<body class="overflow-hidden">
+    <div class="login-container w-96 relative">
+        <div class="login-card relative bg-transparent">
+            <div class="login-front">
+                <div class="bg-white shadow-2xl rounded-xl p-8 transform transition-all duration-500 hover:scale-105">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-lock text-5xl text-purple-600 mb-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-800">Admin Login</h2>
+                    </div>
+                    <form id="loginForm" class="space-y-4">
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                id="username" 
+                                placeholder="Username" 
+                                required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300"
+                            >
+                            <i class="fas fa-user absolute right-4 top-4 text-gray-400"></i>
+                        </div>
+                        <div class="relative">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                placeholder="Password" 
+                                required 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300"
+                            >
+                            <i class="fas fa-lock absolute right-4 top-4 text-gray-400"></i>
+                        </div>
+                        <button 
+                            type="submit" 
+                            class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center"
+                        >
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Login
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <form id="loginForm">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
+    <script type="module">
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+        const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+        const supabase = createClient(supabaseUrl, supabaseKey);
 
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+        function checkCookie() {
+            const cookies = document.cookie.split("; ");
+            const adminLogin = cookies.find(row => row.startsWith("admin_login="));
+            if (adminLogin && adminLogin.split("=")[1] === "true") {
+                window.location.href = "main.html";
+            }
+        }
+        checkCookie();
 
-    const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
-    const supabase = createClient(supabaseUrl, supabaseKey);
+        document.getElementById("loginForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const usernameInput = document.getElementById("username");
+            const passwordInput = document.getElementById("password");
+            const username = usernameInput.value;
+            const password = passwordInput.value;
 
-    // Check if the cookie is set
-    function checkCookie() {
-      const cookies = document.cookie.split("; ");
-      const adminLogin = cookies.find(row => row.startsWith("admin_login="));
+            try {
+                const { data, error } = await supabase
+                    .from("admin")
+                    .select("*")
+                    .eq("username", username)
+                    .eq("password", password);
 
-      if (adminLogin && adminLogin.split("=")[1] === "true") {
-        window.location.href = "main.html";
-      } else {
-        document.querySelector("form").style.display = "block";
-      }
-    }
-
-    // Check cookie on page load
-    checkCookie();
-
-    // Handle login form submission
-    document.getElementById("loginForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      // Fetch admin credentials from Supabase
-      const { data, error } = await supabase
-        .from("admin")
-        .select("*")
-        .eq("username", username)
-        .eq("password", password);
-
-      if (error || data.length === 0) {
-        alert("Invalid username or password.");
-      } else {
-        // Set cookie and redirect to admin.html
-        document.cookie = "admin_login=true; path=/";
-        window.location.href = "main.html";
-      }
-    });
-  </script>
+                if (error || data.length === 0) {
+                    // Add shake animation for error
+                    const loginCard = document.querySelector('.login-card');
+                    loginCard.classList.add('shake-animation');
+                    setTimeout(() => {
+                        loginCard.classList.remove('shake-animation');
+                    }, 500);
+                    
+                    // Visual error indication
+                    usernameInput.classList.add('border-red-500');
+                    passwordInput.classList.add('border-red-500');
+                    
+                    // Custom error toast
+                    const errorToast = document.createElement('div');
+                    errorToast.className = 'fixed top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg';
+                    errorToast.textContent = 'Invalid login credentials';
+                    document.body.appendChild(errorToast);
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(errorToast);
+                        usernameInput.classList.remove('border-red-500');
+                        passwordInput.classList.remove('border-red-500');
+                    }, 3000);
+                } else {
+                    // Successful login
+                    document.cookie = "admin_login=true; path=/";
+                    window.location.href = "main.html";
+                }
+            } catch (err) {
+                console.error("Login error:", err);
+            }
+        });
+    </script>
 </body>
 </html>
