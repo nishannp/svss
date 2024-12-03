@@ -59,7 +59,7 @@
       const adminLogin = cookies.find(row => row.startsWith("admin_login="));
 
       if (adminLogin && adminLogin.split("=")[1] === "true") {
-        window.location.href = "admin.html";
+        window.location.href = "main.html";
       } else {
         document.querySelector("form").style.display = "block";
       }
@@ -87,7 +87,7 @@
       } else {
         // Set cookie and redirect to admin.html
         document.cookie = "admin_login=true; path=/";
-        window.location.href = "admin.html";
+        window.location.href = "main.html";
       }
     });
   </script>

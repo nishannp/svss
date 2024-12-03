@@ -3,14 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Profile - Education Portal</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.7/supabase-js.min.js"></script>
-   
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <title>Shanti Vidhya Sadan School - Teacher</title>
+    
+    <!-- Default SEO Tags -->
+    <meta name="description" content="Loading teacher information...">
+    <meta name="keywords" content="Shanti Vidhya Sadan School, Teachers, Education, Surkhet">
+    <meta name="author" content="Shanti Vidhya Sadan School">
+    
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="Shanti Vidhya Sadan School - Teacher">
+    <meta property="og:description" content="Loading teacher information...">
+    <meta property="og:image" content="imgs/default.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://svss.com.np/teacher/nishannepali.html">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shanti Vidhya Sadan School - Teacher">
+    <meta name="twitter:description" content="Loading teacher information...">
+    <meta name="twitter:image" content="imgs/default.jpg">
+    <link rel="canonical" href="https://svss.com.np/teacher/nishannepali.html">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" id="structuredData">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Loading...",
+            "jobTitle": "Teacher",
+            "worksFor": {
+                "@type": "EducationalOrganization",
+                "name": "Shanti Vidhya Sadan School"
+            }
+        }
+    </script>
+
+
+    
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="../favicon_io/site.webmanifest">
+  
+ <!-- Tailwind CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+<!-- Font Awesome (latest version kept) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<!-- Animate.css (only one version kept) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- AOS (Animate On Scroll) Library -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+<!-- Supabase JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase-js/2.39.7/supabase-js.min.js"></script>
+
         <style>
             :root {
                 --primary-color: #4F46E5;
@@ -237,15 +289,142 @@
             }
         </style>
   
+
+
+
+
     <body class="bg-gray-50 custom-scrollbar">
+
+
+
+
+       
+
+        <div class="back-overlay">
+            <button onclick="goBack()" class="back-btn" title="Go Back">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        
+        <style>
+        .back-overlay {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+        
+        .back-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn i {
+            font-size: 24px;
+            color: #333;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transform: translateX(-3px);
+        }
+        
+        .back-btn:hover i {
+            transform: scale(1.1);
+        }
+        
+        /* Optional: Add a subtle animation when the page loads */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .back-overlay {
+            animation: slideIn 0.3s ease-out;
+        }
+        </style>
+        
+        <script>
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'teachers.html';
+            }
+        }
+        </script>
+
+
         <!-- Loading Screen -->
         <div id="loading" class="fixed inset-0 flex items-center justify-center bg-white z-50">
             <div class="text-center">
-                <div class="animate-spin rounded-full h-32 w-32 border-b-4 border-indigo-600"></div>
-                <p class="mt-4 text-lg text-gray-600 animate-pulse">Loading profile...</p>
+                <!-- Animated School Icons -->
+                <div class="relative h-40 w-40">
+                    <!-- Pencil Animation -->
+                    <div class="absolute inset-0 animate-bounce-slow">
+                        <i class="fas fa-pencil text-5xl text-yellow-500 transform -rotate-45"></i>
+                    </div>
+                    <!-- Book Stack Animation -->
+                    <div class="absolute inset-0 animate-pulse">
+                        <i class="fas fa-book text-4xl text-blue-600 transform translate-x-4"></i>
+                        <i class="fas fa-book text-4xl text-indigo-600 transform -translate-x-4"></i>
+                        <i class="fas fa-graduation-cap text-4xl text-purple-600 transform translate-y-8"></i>
+                    </div>
+                </div>
+                <!-- Loading Text -->
+                <div class="space-y-2">
+                    <p class="text-xl font-semibold text-gray-800">Welcome to Teacher's Profile</p>
+                    <p class="text-md text-gray-600 animate-pulse">Preparing educational journey...</p>
+                </div>
             </div>
         </div>
-    
+        
+        <style>
+        @keyframes bounce-slow {
+            0%, 100% {
+                transform: translateY(-15%) rotate(-45deg);
+            }
+            50% {
+                transform: translateY(15%) rotate(-45deg);
+            }
+        }
+        
+        .animate-bounce-slow {
+            animation: bounce-slow 2s infinite;
+        }
+        
+        /* Add a fade-out animation for when we remove the loading screen */
+        .fade-out {
+            animation: fadeOut 0.5s forwards;
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        </style>
         <div id="mainContent" class="hidden">
             <!-- Header Section -->
             <div class="gradient-primary text-white py-16 px-4 sm:px-6 lg:px-8 mb-8">
@@ -253,7 +432,7 @@
                     <div class="flex flex-col md:flex-row items-center justify-between">
                         <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0 slide-in-left">
                             <div class="relative inline-block">
-                                <img id="teacherImage" src="/api/placeholder/200/200" alt="Teacher"
+                                <img id="teacherImage" src="../imgs/default.jpg" alt="Teacher"
                                     class="rounded-full w-48 h-48 object-cover border-4 border-white shadow-xl shine-effect">
                                 <div class="absolute bottom-0 right-0 bg-green-500 rounded-full w-6 h-6 border-4 border-white animate-pulse"></div>
                             </div>
@@ -391,14 +570,11 @@
             </div>
         </div>
         
-    
-        <!-- Additional Scripts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-        
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Additional Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
    // Create Supabase client (correct initialization)
 const supabaseClient = window.supabase.createClient(
@@ -462,6 +638,11 @@ async function fetchTeacherData() {
             .single();
 
         if (error) throw error;
+        
+        const slug = generateSlug(data.name); // Generate slug from the teacher's name
+
+updateSEOTags(data, slug);  // Pass the slug to update the SEO tags
+        updateJSONLD(data);
 
         document.getElementById('loading').classList.add('hidden');
         document.getElementById('mainContent').classList.remove('hidden');
@@ -471,6 +652,62 @@ async function fetchTeacherData() {
         console.error('Error fetching teacher data:', error);
         alert('Failed to load teacher data. Please try again later.');
     }
+}
+// Function to generate the slug by replacing spaces with hyphens
+function generateSlug(name) {
+    return name.replace(/ /g, '-'); // Replace spaces with hyphens
+}
+function updateSEOTags(data, slug) {
+    // Update Title
+    document.title = `${data.name} - Teacher at Shanti Vidhya Sadan School`;
+
+    // Update Meta Description
+    document.querySelector('meta[name="description"]').setAttribute('content', `${data.name} is a teacher at Shanti Vidhya Sadan School, Surkhet. Specializes in ${data.expertise || 'various subjects.'}`);
+
+    // Update Meta Keywords
+    document.querySelector('meta[name="keywords"]').setAttribute('content', `Shanti Vidhya Sadan School, ${data.name}, ${data.department}, Education, Teachers, Surkhet`);
+
+    // Update Open Graph Tags
+    document.querySelector('meta[property="og:title"]').setAttribute('content', `${data.name} - Teacher at Shanti Vidhya Sadan School`);
+    document.querySelector('meta[property="og:description"]').setAttribute('content', `${data.name} teaches at Shanti Vidhya Sadan School.`);
+    document.querySelector('meta[property="og:image"]').setAttribute('content', data.teacher_image || 'default.jpg');
+    document.querySelector('meta[property="og:url"]').setAttribute('content', `https://svss.com.np/teacher/${slug}.html`);
+
+    // Add Canonical Tag
+    const canonicalLink = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+    canonicalLink.setAttribute('rel', 'canonical');
+    canonicalLink.setAttribute('href', `https://svss.com.np/teacher/${slug}.html`);
+    if (!document.head.contains(canonicalLink)) {
+        document.head.appendChild(canonicalLink);
+    }
+
+    // Update Twitter Tags
+    document.querySelector('meta[name="twitter:title"]').setAttribute('content', `${data.name} - Teacher at Shanti Vidhya Sadan School`);
+    document.querySelector('meta[name="twitter:description"]').setAttribute('content', `${data.name} is a teacher at Shanti Vidhya Sadan School.`);
+    document.querySelector('meta[name="twitter:image"]').setAttribute('content', data.teacher_image || 'default.jpg');
+}
+
+function updateJSONLD(data) {
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": data.name,
+        "image": data.teacher_image || 'default.jpg',
+        "jobTitle": "Teacher",
+        "worksFor": {
+            "@type": "EducationalOrganization",
+            "name": "Shanti Vidhya Sadan School"
+        },
+        "email": data.email,
+        "telephone": data.mobile_number,
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Surkhet",
+            "addressCountry": "Nepal"
+        }
+    };
+
+    document.getElementById('structuredData').textContent = JSON.stringify(structuredData, null, 2);
 }
 
 function populateTeacherData(teacher) {
@@ -683,7 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+   
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -890,7 +1127,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="reviewsContainer" class="space-y-6 mb-8"></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const supabaseClient = supabase.createClient(
@@ -1074,6 +1311,332 @@ document.addEventListener('DOMContentLoaded', () => {
             loadReviews();
         });
     </script>
+
+
+<footer class="footer">
+    <div class="footer-top">
+        <div class="footer-brand">
+            <img src="../imgs/logo.jpg" alt="SVSS School Logo" class="footer-logo">
+            <p class="footer-description">
+                At SVSS School, we're committed to nurturing minds and cultivating futures. Join us on the journey of educational excellence as we prepare students for success in a rapidly changing world.
+            </p>
+            <div class="footer-badge">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                Complete Schooling Program (CSP)
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+                <li><a href="../about.html">About Us</a></li>
+                <li><a href="../academics.html">Academic</a></li>
+                <li><a href="../gallery.html">Gallery</a></li>
+                <li><a href="../events.html">Events</a></li>
+                <li><a href="../contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Programs</h3>
+            <ul class="footer-links">
+                <li><a href="../academics.html#primary-levels-svss">Primary Level</a></li>
+                <li><a href="../academics.html#secondary-levels-svss">Secondary Level</a></li>
+                <li><a href="../events.html#extra-activities-svss">Extra Activities</a></li>
+                <li><a href="../events.html#sports-svss">Sports</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Connect With Us</h3>
+            <ul class="footer-links">
+                <li><a href="../events.html">Newsletter</a></li>
+                <li><a href="../academics.html">Careers</a></li>
+                <li><a href="../about.html#alumni-svss">Alumni</a></li>
+            </ul>
+            <div class="footer-social">
+                <a href="https://www.facebook.com/SVSMONTESSORI" target="_blank" class="social-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                    </svg>
+                </a>
+                <a href="#instagram" class="social-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                    </svg>
+                </a>
+                <a href="#youtube" class="social-link">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="footer-bottom-content">
+            <div class="footer-copyright">
+                <p class="copyright-text">
+                    © <span id="currentYear"></span> All rights reserved. Designed by <a href="https://snavteam.netlify.app" class="designer-link">SNAV</a>
+                </p>
+            </div>
+            <div class="footer-secondary-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#sitemap">Sitemap</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
+
+
+
+<style>
+  .footer {
+      background: linear-gradient(to bottom, #fff 0%, #f8f9fa 100%);
+      padding: 4rem 0 0;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #4A90E2, transparent);
+  }
+
+  .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+  }
+
+  .footer-brand {
+      position: relative;
+  }
+
+  .footer-logo {
+      height: 60px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+  }
+
+  .footer-logo:hover {
+      transform: scale(1.05);
+  }
+
+  .footer-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+  }
+
+  .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(74, 144, 226, 0.1);
+      border-radius: 50px;
+      color: #4A90E2;
+      font-weight: 500;
+      transition: all 0.3s ease;
+  }
+
+  .footer-badge:hover {
+      background: rgba(74, 144, 226, 0.2);
+      transform: translateY(-2px);
+  }
+
+  .footer-column h3 {
+      color: #333;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+  }
+
+  .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: #4A90E2;
+      transition: width 0.3s ease;
+  }
+
+  .footer-column:hover h3::after {
+      width: 60px;
+  }
+
+  .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .footer-links li {
+      margin-bottom: 0.75rem;
+  }
+
+  .footer-links a {
+      color: #666;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+  }
+
+  .footer-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #4A90E2;
+      transition: width 0.3s ease;
+  }
+
+  .footer-links a:hover {
+      color: #4A90E2;
+      transform: translateX(5px);
+  }
+
+  .footer-links a:hover::after {
+      width: 100%;
+  }
+
+  .footer-social {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+  }
+
+  .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      color: #4A90E2;
+      box-shadow: 0 2px 10px rgba(74, 144, 226, 0.1);
+      transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+      background: #4A90E2;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+  }
+
+  .footer-bottom {
+      margin-top: 4rem;
+      padding: 1.5rem 0;
+      background: #f8f9fa;
+      border-top: 1px solid rgba(74, 144, 226, 0.1);
+  }
+
+  .footer-bottom-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .copyright-text {
+      color: #666;
+      margin: 0;
+  }
+
+  .designer-link {
+      color: #4A90E2;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+  }
+
+  .designer-link:hover {
+      color: #2171c7;
+  }
+
+  .footer-secondary-links {
+      display: flex;
+      gap: 1.5rem;
+  }
+
+  .footer-secondary-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+  }
+
+  .footer-secondary-links a:hover {
+      color: #4A90E2;
+  }
+
+  @media (max-width: 1024px) {
+      .footer-top {
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+      }
+
+      .footer-brand {
+          grid-column: 1 / -1;
+      }
+  }
+
+  @media (max-width: 768px) {
+      .footer-top {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+      }
+
+      .footer-bottom-content {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+      }
+
+      .footer-secondary-links {
+          justify-content: center;
+          flex-wrap: wrap;
+      }
+  }
+
+  @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+  }
+</style>
 
 
 </body>

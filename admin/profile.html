@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile | School Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --secondary-color: #6366F1;
+            --accent-color: #818CF8;
+        }
+
+        body {
+            background-color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .profile-container {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .image-upload-overlay {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: var(--primary-color);
+            border-radius: 50%;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload-overlay:hover {
+            transform: scale(1.1);
+        }
+
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #E5E7EB;
+            padding: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .tag {
+            background-color: #EEF2FF;
+            color: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            margin: 0.25rem;
+            display: inline-block;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .achievements-container {
+            background: #F9FAFB;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .achievement-item {
+            background: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .subjects-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-image-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex">
+    <!-- Side Navbar -->
+    <div class="w-64 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
+        <div class="p-5 border-b">
+            <h1 class="text-2xl font-bold text-gray-800">Admin Panel</h1>
+        </div>
+       
+        <nav class="mt-5">
+            <ul>
+                <li class="nav-item">
+                    <a href="main.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-home mr-3"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="teacher.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-user-graduate mr-3"></i>Edit Teachers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="review.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-clipboard-check mr-3"></i>Review
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delete.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-trash-alt mr-3"></i>Delete
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="loading-overlay d-none">
+        <div class="spinner"></div>
+    </div>
+    <div class="ml-64 w-full">
+    <div class="container mx-auto py-8 px-4">
+        <div id="alerts-container"></div>
+
+        <div class="profile-container p-6">
+            <form id="teacherForm" class="needs-validation" novalidate>
+                <!-- Profile Section -->
+                <div class="mb-8">
+                    <h2 class="section-title">Personal Information</h2>
+                    <div class="text-center mb-6">
+                        <div class="profile-image-container">
+                            <img id="currentImage" class="profile-image" src="https://via.placeholder.com/200" alt="Teacher's photo">
+                            <label for="teacherImage" class="image-upload-overlay">
+                                <i class="fas fa-camera text-white"></i>
+                                <input type="file" id="teacherImage" class="hidden" accept="image/*">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="form-label" for="name">
+                                <i class="fas fa-user text-indigo-600 mr-2"></i>Full Name
+                            </label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="email">
+                                <i class="fas fa-envelope text-indigo-600 mr-2"></i>Email
+                            </label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Information -->
+                <div class="mb-8">
+                    <h2 class="section-title">Professional Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="form-label" for="department">
+                                <i class="fas fa-building text-indigo-600 mr-2"></i>Department
+                            </label>
+                            <input type="text" class="form-control" id="department" required>
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="mobile_number">
+                                <i class="fas fa-phone text-indigo-600 mr-2"></i>Mobile Number
+                            </label>
+                            <input type="tel" class="form-control" id="mobile_number" required>
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="start_date">
+                                <i class="fas fa-calendar text-indigo-600 mr-2"></i>Start Date
+                            </label>
+                            <input type="date" class="form-control" id="start_date" required>
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="experience_years">
+                                <i class="fas fa-briefcase text-indigo-600 mr-2"></i>Experience (Years)
+                            </label>
+                            <input type="number" class="form-control" id="experience_years" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subjects and Achievements -->
+                <div class="mb-8">
+                    <h2 class="section-title">Teaching Details</h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label class="form-label" for="subjects">
+                                <i class="fas fa-book text-indigo-600 mr-2"></i>Subjects
+                            </label>
+                            <input type="text" class="form-control" id="subjects" required>
+                            <div class="subjects-container" id="subjectTags"></div>
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="achievements">
+                                <i class="fas fa-trophy text-indigo-600 mr-2"></i>Achievements
+                            </label>
+                            <div class="achievements-container">
+                                <textarea class="form-control" id="achievements" rows="3"></textarea>
+                                <div id="achievementsList" class="mt-3"></div>
+                                <button type="button" class="btn btn-outline-primary mt-2" onclick="addAchievement()">
+                                    <i class="fas fa-plus mr-2"></i>Add Achievement
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="mb-8">
+                    <h2 class="section-title">Contact & Schedule</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="md:col-span-2">
+                            <label class="form-label" for="address">
+                                <i class="fas fa-location-dot text-indigo-600 mr-2"></i>Address
+                            </label>
+                            <textarea class="form-control" id="address" rows="2" required></textarea>
+                        </div>
+
+                        <div>
+                            <label class="form-label" for="working_hours">
+                                <i class="fas fa-clock text-indigo-600 mr-2"></i>Working Hours
+                            </label>
+                            <input type="text" class="form-control" id="working_hours" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" id="submitButton">
+                        <i class="fas fa-save mr-2"></i>Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+    <script>
+
+function checkAdminLogin() {
+            const cookies = document.cookie.split(';');
+            let adminLoginCookie = cookies.find(cookie => cookie.trim().startsWith('admin_login='));
+
+            if (!adminLoginCookie || adminLoginCookie.trim().split('=')[1] !== 'true') {
+                window.location.href = 'home.html';
+            }
+        }
+
+        // Navbar active link functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-nav');
+                }
+            });
+
+            checkAdminLogin();
+        });
+
+        // Initialize Supabase client
+        const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // UI Helper Functions
+        function showLoading(show) {
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            if (show) {
+                loadingOverlay.classList.remove('d-none');
+            } else {
+                loadingOverlay.classList.add('d-none');
+            }
+        }
+
+        function showAlert(type, message) {
+            Swal.fire({
+                icon: type,
+                title: type === 'success' ? 'Success!' : 'Oops...',
+                text: message,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        }
+
+        // Subject Tags Management
+        function updateSubjectTags() {
+            const subjectsInput = document.getElementById('subjects');
+            const subjectTags = document.getElementById('subjectTags');
+            const subjects = subjectsInput.value.split(',').map(s => s.trim()).filter(s => s);
+
+            subjectTags.innerHTML = subjects.map(subject => `
+                <span class="tag">
+                    ${subject}
+                    <i class="fas fa-times ml-2 cursor-pointer" onclick="removeSubject('${subject}')"></i>
+                </span>
+            `).join('');
+        }
+
+        function removeSubject(subject) {
+            const subjectsInput = document.getElementById('subjects');
+            const subjects = subjectsInput.value.split(',').map(s => s.trim()).filter(s => s);
+            const updatedSubjects = subjects.filter(s => s !== subject);
+            subjectsInput.value = updatedSubjects.join(', ');
+            updateSubjectTags();
+        }
+
+       
+    // Achievements Management
+    function addAchievement() {
+        const achievements = document.getElementById('achievements');
+        const achievementsList = document.getElementById('achievementsList');
+        
+        if (!achievements.value.trim()) {
+            showAlert('error', 'Please enter an achievement first');
+            return;
+        }
+
+        const achievementDiv = document.createElement('div');
+        achievementDiv.className = 'achievement-item';
+        achievementDiv.innerHTML = `
+            <div class="flex justify-between items-center">
+                <div>${achievements.value}</div>
+                <button type="button" class="text-red-500 hover:text-red-700" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        `;
+
+        achievementsList.appendChild(achievementDiv);
+        achievements.value = '';
+    }
+
+    // Form Validation
+    function validateForm() {
+        const requiredFields = ['name', 'email', 'department', 'mobile_number', 'start_date', 'experience_years', 'subjects', 'address', 'working_hours'];
+        let isValid = true;
+
+        requiredFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('border-red-500');
+            } else {
+                field.classList.remove('border-red-500');
+            }
+        });
+
+        // Email validation
+        const emailField = document.getElementById('email');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailField.value)) {
+            isValid = false;
+            emailField.classList.add('border-red-500');
+            showAlert('error', 'Please enter a valid email address');
+        }
+
+        // Mobile number validation
+        const mobileField = document.getElementById('mobile_number');
+        const mobileRegex = /^\+?[\d\s-]{10,}$/;
+        if (!mobileRegex.test(mobileField.value)) {
+            isValid = false;
+            mobileField.classList.add('border-red-500');
+            showAlert('error', 'Please enter a valid mobile number');
+        }
+
+        return isValid;
+    }
+
+    // Image Processing
+    async function processImage(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Max dimensions for the image
+                    const MAX_WIDTH = 800;
+                    const MAX_HEIGHT = 800;
+                    
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    // Calculate new dimensions
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    canvas.toBlob(resolve, 'image/jpeg', 0.85);
+                };
+                img.src = e.target.result;
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Load and Display Teacher Data
+    async function loadTeacherData() {
+        if (!teacherId) return;
+
+        showLoading(true);
+        try {
+            const { data: teacher, error } = await supabaseClient
+                .from('teachers')
+                .select('*')
+                .eq('id', teacherId)
+                .single();
+
+            if (error) throw error;
+            if (!teacher) throw new Error('Teacher not found');
+
+            // Set form values
+            Object.keys(teacher).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (key === 'subjects') {
+                        element.value = Array.isArray(teacher[key]) ? teacher[key].join(', ') : teacher[key];
+                        updateSubjectTags();
+                    } else {
+                        element.value = teacher[key] || '';
+                    }
+                }
+            });
+
+            // Set image
+            if (teacher.teacher_image) {
+                document.getElementById('currentImage').src = teacher.teacher_image;
+            }
+
+            // Load achievements
+            if (teacher.achievements) {
+                const achievementsList = document.getElementById('achievementsList');
+                achievementsList.innerHTML = '';
+                
+                const achievements = Array.isArray(teacher.achievements) 
+                    ? teacher.achievements 
+                    : [teacher.achievements];
+
+                achievements.forEach(achievement => {
+                    if (achievement.trim()) {
+                        const achievementDiv = document.createElement('div');
+                        achievementDiv.className = 'achievement-item';
+                        achievementDiv.innerHTML = `
+                            <div class="flex justify-between items-center">
+                                <div>${achievement}</div>
+                                <button type="button" class="text-red-500 hover:text-red-700" onclick="this.parentElement.parentElement.remove()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `;
+                        achievementsList.appendChild(achievementDiv);
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('error', error.message || 'Failed to load teacher data');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Handle Form Submission
+    document.getElementById('teacherForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+
+        showLoading(true);
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+
+        try {
+            // Gather form data
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                department: document.getElementById('department').value.trim(),
+                mobile_number: document.getElementById('mobile_number').value.trim(),
+                start_date: document.getElementById('start_date').value,
+                experience_years: parseInt(document.getElementById('experience_years').value),
+                subjects: document.getElementById('subjects').value.split(',').map(s => s.trim()).filter(s => s),
+                address: document.getElementById('address').value.trim(),
+                working_hours: document.getElementById('working_hours').value.trim(),
+            };
+
+            // Gather achievements
+            const achievementsList = document.getElementById('achievementsList');
+            formData.achievements = Array.from(achievementsList.children).map(div => 
+                div.querySelector('div').textContent.trim()
+            );
+
+            // Handle image upload
+            const imageFile = document.getElementById('teacherImage').files[0];
+            if (imageFile) {
+                const processedImage = await processImage(imageFile);
+                const fileName = `${Date.now()}-${imageFile.name}`;
+                const filePath = `${teacherId}/${fileName}`;
+
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('teache_images_bucket')
+                    .upload(filePath, processedImage, {
+                        upsert: true,
+                        cacheControl: '3600'
+                    });
+
+                if (uploadError) throw uploadError;
+
+                const { data: { publicUrl } } = supabaseClient.storage
+                    .from('teache_images_bucket')
+                    .getPublicUrl(filePath);
+
+                formData.teacher_image = publicUrl;
+            }
+
+            // Update teacher data
+            const { error } = await supabaseClient
+                .from('teachers')
+                .update(formData)
+                .eq('id', teacherId);
+
+            if (error) throw error;
+
+            showAlert('success', 'Profile updated successfully!');
+            
+
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('error', error.message || 'Failed to update profile');
+        } finally {
+            showLoading(false);
+            submitButton.disabled = false;
+        }
+    });
+
+    // Event Listeners
+    document.getElementById('subjects').addEventListener('input', updateSubjectTags);
+    document.getElementById('teacherImage').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('currentImage').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+
+    // Declare teacherId at the top
+let teacherId;
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    teacherId = urlParams.get('id'); // Assign value to global teacherId
+    
+    if (!teacherId) {
+        showAlert('error', 'Teacher ID is missing from the URL');
+        document.getElementById('teacherForm').style.display = 'none';
+        return;
+    }
+
+    loadTeacherData(); // Now teacherId is accessible
+});
+
+
+</script>
+</body>
+</html>

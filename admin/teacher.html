@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teachers Directory</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #818cf8;
+            --accent-color: #c7d2fe;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+        }
+
+        .active-nav {
+            background-color: #3B82F6;
+            color: white;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .teacher-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .teacher-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .teacher-image:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex">
+    <!-- Side Navbar -->
+    <div class="w-64 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
+        <div class="p-5 border-b">
+            <h1 class="text-2xl font-bold text-gray-800">Admin Panel</h1>
+        </div>
+        
+        <nav class="mt-5">
+            <ul>
+                <li class="nav-item">
+                    <a href="main.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-home mr-3"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="teacher.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-user-graduate mr-3"></i>Edit Teachers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="review.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-clipboard-check mr-3"></i>Review
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delete.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-trash-alt mr-3"></i>Delete
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="ml-64 p-4 md:p-6 lg:p-8 w-full">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header Section -->
+            <div class="glass-effect rounded-xl p-6 mb-8 text-center">
+                <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+                    Teachers Directory
+                </h1>
+                <p class="text-gray-600 mt-2">Manage and edit teacher information</p>
+            </div>
+
+            <!-- Teachers List -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="teachersList">
+                <!-- Teachers will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to check admin login
+        function checkAdminLogin() {
+            const cookies = document.cookie.split(';');
+            let adminLoginCookie = cookies.find(cookie => cookie.trim().startsWith('admin_login='));
+
+            if (!adminLoginCookie || adminLoginCookie.trim().split('=')[1] !== 'true') {
+                window.location.href = 'home.html';
+            }
+        }
+
+        // Navbar active link functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-nav');
+                }
+            });
+
+            checkAdminLogin();
+        });
+
+        // Initialize Supabase client
+        const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Load teachers
+        async function loadTeachers() {
+            try {
+                const { data: teachers, error } = await supabaseClient
+                    .from('teachers')
+                    .select('*');
+                
+                if (error) throw error;
+                
+                const teachersList = document.getElementById('teachersList');
+                teachersList.innerHTML = teachers.map(teacher => `
+                    <div class="teacher-card glass-effect rounded-xl overflow-hidden">
+                        <div class="p-6 text-center">
+                            <div class="flex justify-center mb-4">
+                                ${teacher.teacher_image 
+                                    ? `<img src="${teacher.teacher_image}" 
+                                         alt="${teacher.name}" 
+                                         class="teacher-image border-4 border-indigo-500">` 
+                                    : `<div class="w-36 h-36 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-white text-5xl">
+                                        ${teacher.name.charAt(0)}
+                                       </div>`
+                                }
+                            </div>
+                            <h5 class="text-xl font-bold text-gray-800 mb-2">${teacher.name}</h5>
+                            <p class="text-gray-600 mb-2">
+                                <i class="fas fa-book-reader mr-2"></i>${teacher.department || 'No Department'}
+                            </p>
+                            <p class="text-gray-600 mb-4">
+                                <i class="fas fa-envelope mr-2"></i>${teacher.email}
+                            </p>
+                            <a href="profile.html?id=${teacher.id}" 
+                               class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                                <i class="fas fa-edit mr-2"></i>Edit Profile
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load teachers');
+            }
+        }
+
+        // Load teachers when page loads
+        document.addEventListener('DOMContentLoaded', loadTeachers);
+    </script>
+</body>
+</html>

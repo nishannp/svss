@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        .active-nav {
+            background-color: #3B82F6;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex">
+    <!-- Side Navbar -->
+    <div class="w-64 bg-white shadow-lg h-screen fixed left-0 top-0 overflow-y-auto">
+        <div class="p-5 border-b">
+            <h1 class="text-2xl font-bold text-gray-800">Admin Panel</h1>
+        </div>
+        
+        <nav class="mt-5">
+            <ul>
+                <li class="nav-item">
+                    <a href="main.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-home mr-3"></i>Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="teacher.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-user-graduate mr-3"></i>Edit Teachers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="review.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-clipboard-check mr-3"></i>Review
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delete.html" class="nav-link block py-3 px-5 hover:bg-blue-100">
+                        <i class="fas fa-trash-alt mr-3"></i>Delete
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Shared Navbar Styles and Functionality Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-nav');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
