@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit School Information</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.3/supabase.min.js"></script> 
+
+    <!-- Add Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        a{
+            text-decoration: none;
+            color: white;
+        }
+        .form-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .form-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .section-header {
+            border-bottom: 2px solid #3B82F6;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .custom-input {
+            transition: all 0.3s ease;
+        }
+        .custom-input:focus {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        .json-input {
+            font-family: monospace;
+            min-height: 100px;
+        }
+        .modified {
+            border: 2px solid #10B981 !important;
+            background-color: #F0FDF4;
+        }
+        .save-indicator {
+            display: none;
+            color: #10B981;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .save-indicator.show {
+            display: inline;
+        }
+        .field-save-btn {
+            display: none;
+            margin-left: 0.5rem;
+        }
+        .modified + .field-save-btn {
+            display: inline-block;
+        }
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        #saveStatus {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+        }
+        .success {
+            background-color: #10B981;
+            color: white;
+        }
+        .error {
+            background-color: #EF4444;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex">
+    <!-- Sidebar -->
+    <div class="w-64 bg-indigo-800 text-white h-screen fixed left-0 top-0 overflow-y-auto">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold mb-6">School Dashboard</h1>
+            <nav>
+                <ul>
+                    <li class="mb-4">
+                        <a href="main.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
+                            <i class="fas fa-home mr-3"></i>Overview
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="teacher.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
+                            <i class="fas fa-users mr-3"></i>Teacher
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="review.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
+                            <i class="fas fa-comments mr-3"></i>Review
+                        </a>
+                    </li>
+                    <li class="mb-4">
+                        <a href="edit.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
+                            <i class="fas fa-edit mr-3"></i>Edit
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    
+ 
+ <!-- Main Content -->
+ <div class="flex-1 ml-64">
+    <div class="container mx-auto py-8 px-4">
+        <form id="schoolForm" class="space-y-6">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-info-circle me-2"></i>Basic Information
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">School Name</label>
+                        <input type="text" name="school_name" class="form-control custom-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Established Year</label>
+                        <input type="number" name="established_year" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">School Motto</label>
+                        <input type="text" name="school_motto" class="form-control custom-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demographics -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-users me-2"></i>Demographics
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Total Students</label>
+                        <input type="number" name="total_students" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Teachers</label>
+                        <input type="number" name="total_teachers" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Staff</label>
+                        <input type="number" name="total_staff" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Boys Percentage</label>
+                        <input type="number" name="boys_percentage" step="0.01" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Girls Percentage</label>
+                        <input type="number" name="girls_percentage" step="0.01" class="form-control custom-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-address-card me-2"></i>Contact Information
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Contact Email</label>
+                        <input type="email" name="contact_email" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Phone</label>
+                        <input type="tel" name="contact_phone" class="form-control custom-input">
+                    </div>
+                    <div class="form-group col-span-full">
+                        <label class="form-label">Location</label>
+                        <input type="text" name="location" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Website URL</label>
+                        <input type="url" name="website_url" class="form-control custom-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-chart-line me-2"></i>Performance Metrics
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Average Attendance Rate</label>
+                        <input type="number" name="average_attendance_rate" step="0.01" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Parent Satisfaction Level</label>
+                        <input type="number" name="parent_satisfaction_level" step="0.01" class="form-control custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Passing Rate</label>
+                        <input type="number" name="passing_rate" step="0.01" class="form-control custom-input">
+                    </div>
+                </div>
+            </div>
+
+            <!-- JSON Fields -->
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        <i class="fas fa-code me-2"></i>Advanced Information (JSON)
+                    </h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                        <label class="form-label">Founders</label>
+                        <textarea name="founders" class="form-control custom-input json-input" placeholder='["John Doe", "Jane Smith"]'></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Social Links</label>
+                        <textarea name="social_links" class="form-control custom-input json-input" placeholder='{"facebook": "url", "twitter": "url"}'></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Student Age Groups</label>
+                        <textarea name="student_age_groups" class="form-control custom-input json-input" placeholder='{"5-10": 100, "11-15": 150}'></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Facilities</label>
+                        <textarea name="facilities" class="form-control custom-input json-input" placeholder='["Library", "Swimming Pool", "Computer Lab"]'></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="flex justify-end space-x-4">
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                    <i class="fas fa-undo me-2"></i>Reset
+                </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-2"></i>Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="saveStatus"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+     
+     
+function checkAdminLogin() {
+            const cookies = document.cookie.split(';');
+            let adminLoginCookie = cookies.find(cookie => cookie.trim().startsWith('admin_login='));
+
+            if (!adminLoginCookie || adminLoginCookie.trim().split('=')[1] !== 'true') {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Navbar active link functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentPage = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPage) {
+                    link.classList.add('active-nav');
+                }
+            });
+
+            checkAdminLogin();
+        });
+
+     const { createClient } = supabase;
+    const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+    
+    const supabaseClient = createClient(supabaseUrl, supabaseKey);
+
+
+        let currentData = {};
+        let modifiedFields = new Set();
+
+        // Fetch and populate data
+        async function fetchSchoolData() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('school_info')
+                    .select('*')
+                    .single();
+
+                if (error) throw error;
+
+                currentData = data;
+                populateForm(data);
+            } catch (error) {
+                showNotification('Error loading school data: ' + error.message, 'error');
+            }
+        }
+
+        // Populate form with data
+       // Populate form with data
+function populateForm(data) {
+    const form = document.getElementById('schoolForm');
+    
+    // Populate regular inputs
+    Object.keys(data).forEach(key => {
+        const input = form.elements[key];
+        if (!input) return;
+
+        if (input.tagName === 'TEXTAREA') {
+            // Handle JSON fields
+            input.value = JSON.stringify(data[key], null, 2);
+        } else {
+            input.value = data[key];
+        }
+
+        // Add change event listener - remove handleFieldChange and only use handleFieldInput
+        input.addEventListener('input', () => handleFieldInput(input));
+    });
+}
+
+        // Handle field input (marking as modified)
+        function handleFieldInput(input) {
+            const fieldName = input.name;
+            const originalValue = currentData[fieldName];
+            let currentValue = input.value;
+
+            // Parse JSON fields for comparison
+            if (input.classList.contains('json-input')) {
+                try {
+                    currentValue = JSON.parse(currentValue);
+                } catch (e) {
+                    return; // Invalid JSON, don't mark as modified
+                }
+            }
+
+            if (JSON.stringify(originalValue) !== JSON.stringify(currentValue)) {
+                input.classList.add('modified');
+                modifiedFields.add(fieldName);
+            } else {
+                input.classList.remove('modified');
+                modifiedFields.delete(fieldName);
+            }
+        }
+
+        // Handle individual field save
+        async function handleFieldSave(input) {
+            const fieldName = input.name;
+            let value = input.value;
+
+            // Parse JSON fields
+            if (input.classList.contains('json-input')) {
+                try {
+                    value = JSON.parse(value);
+                } catch (e) {
+                    showNotification('Invalid JSON format', 'error');
+                    return;
+                }
+            }
+
+            input.classList.add('loading');
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('school_info')
+                    .update({ [fieldName]: value })
+                    .eq('id', currentData.id);
+
+                if (error) throw error;
+
+                // Update current data and UI
+                currentData[fieldName] = value;
+                input.classList.remove('modified', 'loading');
+                modifiedFields.delete(fieldName);
+                showNotification(`${fieldName} updated successfully!`, 'success');
+            } catch (error) {
+                showNotification('Error saving field: ' + error.message, 'error');
+                input.classList.remove('loading');
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.getElementById('saveStatus');
+            notification.textContent = message;
+            notification.className = type;
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Add save buttons next to each input
+        function addSaveButtons() {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                const saveBtn = document.createElement('button');
+                saveBtn.type = 'button';
+                saveBtn.className = 'btn btn-sm btn-success field-save-btn';
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+                saveBtn.onclick = () => handleFieldSave(input);
+                
+                // Insert save button after input
+                input.parentNode.insertBefore(saveBtn, input.nextSibling);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSchoolData();
+            addSaveButtons();
+        });
+
+        // Form submission handler for saving all changes
+        document.getElementById('schoolForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (modifiedFields.size === 0) {
+                showNotification('No changes to save', 'error');
+                return;
+            }
+
+            const updates = {};
+            modifiedFields.forEach(field => {
+                const input = e.target.elements[field];
+                let value = input.value;
+                
+                if (input.classList.contains('json-input')) {
+                    try {
+                        value = JSON.parse(value);
+                    } catch (e) {
+                        showNotification(`Invalid JSON in ${field}`, 'error');
+                        return;
+                    }
+                }
+                
+                updates[field] = value;
+            });
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('school_info')
+                    .update(updates)
+                    .eq('id', currentData.id);
+
+                if (error) throw error;
+
+                // Update current data and UI
+                Object.assign(currentData, updates);
+                document.querySelectorAll('.modified').forEach(input => {
+                    input.classList.remove('modified');
+                });
+                modifiedFields.clear();
+                showNotification('All changes saved successfully!', 'success');
+            } catch (error) {
+                showNotification('Error saving changes: ' + error.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>
