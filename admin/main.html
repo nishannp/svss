@@ -3,176 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Information Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>School Analytics Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <!-- Add Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 2rem;
+            background-color: #f3f4f6;
+            min-height: 100vh;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            height: 300px;
+        }
+
+        .nav-link {
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 flex">
-    <!-- Sidebar -->
-    <div class="w-64 bg-indigo-800 text-white h-screen fixed left-0 top-0 overflow-y-auto">
-        <div class="p-6">
-            <h1 class="text-2xl font-bold mb-6">School Dashboard</h1>
-            <nav>
-                <ul>
-                    <li class="mb-4">
-                        <a href="main.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
-                            <i class="fas fa-home mr-3"></i>Overview
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="teacher.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
-                            <i class="fas fa-users mr-3"></i>Teacher
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="review.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
-                            <i class="fas fa-comments mr-3"></i>Review
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+<body class="bg-gray-100">
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-2" role="status"></div>
+            <p>Loading dashboard data...</p>
         </div>
     </div>
 
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="p-4 text-center">
+            <img id="schoolLogo" src="../imgs/logo-small.jpg" alt="School Logo" class="mx-auto rounded-full mb-3">
+            <h4 id="schoolName" class="text-lg font-semibold">Loading...</h4>
+        </div>
+        <nav class="mt-4">
+            <a href="main.html" class="nav-link d-block active"><i class="fas fa-home"></i> Overview</a>
+           
+            <a href="teacher.html" class="nav-link d-block"><i class="fas fa-chalkboard-teacher"></i> Teachers</a>
+            <a href="review.html" class="nav-link d-block"><i class="fas fa-chart-line"></i> Performance</a>
+      
+        </nav>
+    </div>
+
     <!-- Main Content -->
-    <div class="ml-64 p-8 w-full">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div id="totalStudentsCard" class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold mb-4">Total Students</h3>
-                <div id="totalStudentsValue" class="text-4xl font-bold text-blue-600">0</div>
+    <div class="main-content">
+        <div class="container-fluid">
+            <!-- Header -->
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">School Analytics Overview</h1>
+                <p class="text-gray-600" id="schoolMotto">Loading school motto...</p>
             </div>
-            <div id="totalTeachersCard" class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold mb-4">Total Teachers</h3>
-                <div id="totalTeachersValue" class="text-4xl font-bold text-green-600">0</div>
-            </div>
-            <div id="studentTeacherRatioCard" class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold mb-4">Student-Teacher Ratio</h3>
-                <div id="studentTeacherRatioValue" class="text-4xl font-bold text-purple-600">0</div>
-            </div>
-            <div id="schoolCountCard" class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold mb-4">Total Schools</h3>
-                <div id="schoolCountValue" class="text-4xl font-bold text-red-600">0</div>
-            </div>
-        </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold mb-4">Students by Level</h3>
-                <canvas id="studentLevelChart"></canvas>
+            <!-- Stats Row -->
+            <div class="row mb-6">
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-gray-500">Total Students</h6>
+                                <h3 class="text-2xl font-bold" id="totalStudents">-</h3>
+                            </div>
+                            <i class="fas fa-users fa-2x text-blue-500"></i>
+                        </div>
+                        <div class="mt-2">
+                            <span id="studentRatio" class="text-gray-500 text-sm">Student-Teacher Ratio: -</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-gray-500">Total Staff</h6>
+                                <h3 class="text-2xl font-bold" id="totalStaff">-</h3>
+                            </div>
+                            <i class="fas fa-chalkboard-teacher fa-2x text-green-500"></i>
+                        </div>
+                        <div class="mt-2">
+                            <span id="teacherCount" class="text-gray-500 text-sm">Teachers: -</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-gray-500">Attendance Rate</h6>
+                                <h3 class="text-2xl font-bold" id="attendanceRate">-</h3>
+                            </div>
+                            <i class="fas fa-chart-line fa-2x text-purple-500"></i>
+                        </div>
+                        <div class="mt-2">
+                            <span id="dropoutRate" class="text-gray-500 text-sm">Dropout Rate: -</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-gray-500">Passing Rate</h6>
+                                <h3 class="text-2xl font-bold" id="passingRate">-</h3>
+                            </div>
+                            <i class="fas fa-graduation-cap fa-2x text-yellow-500"></i>
+                        </div>
+                        <div class="mt-2">
+                            <span id="scholarshipCount" class="text-gray-500 text-sm">Scholarship Students: -</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold mb-4">Gender Distribution</h3>
-                <canvas id="genderDistributionChart"></canvas>
-            </div>
-        </div>
 
-        <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-lg font-semibold mb-4">School Information</h3>
-            <table id="schoolInfoTable" class="w-full text-sm text-left">
-                <thead>
-                    <tr class="bg-gray-100">
-                        <th class="p-3">School Name</th>
-                        <th class="p-3">Established Year</th>
-                        <th class="p-3">Total Students</th>
-                        <th class="p-3">Location</th>
-                    </tr>
-                </thead>
-                <tbody id="schoolInfoTableBody">
-                    <!-- Data will be populated dynamically -->
-                </tbody>
-            </table>
+            <!-- Charts Row -->
+            <div class="row mb-6">
+                <div class="col-md-8">
+                    <div class="chart-container">
+                        <h5 class="mb-4">Student Distribution</h5>
+                        <canvas id="studentDistributionChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chart-container">
+                        <h5 class="mb-4">Gender Distribution</h5>
+                        <canvas id="genderDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance & Budget -->
+            <div class="row mb-6">
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <h5 class="mb-4">Student Performance Levels</h5>
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="chart-container">
+                        <h5 class="mb-4">Budget Allocation</h5>
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facilities Section -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="stat-card">
+                        <h5 class="mb-4">School Facilities Overview</h5>
+                        <div class="row" id="facilitiesContainer">
+                            <!-- Facilities will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Supabase Configuration (Replace with your actual credentials)
-      
-        const SUPABASE_URL = 'https://oyjqllqplktgruvebfap.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+        // Initialize Supabase Client
+  
+        const { createClient } = supabase;
+    const supabaseUrl = 'https://oyjqllqplktgruvebfap.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95anFsbHFwbGt0Z3J1dmViZmFwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIxMDU1NDcsImV4cCI6MjA0NzY4MTU0N30.QLaVHoTfK5XmdemfJq--yObvkUr28jWhdoUIKTjTeq8';
+    
+    const supabaseClient = createClient(supabaseUrl, supabaseKey);
 
-        async function fetchSchoolData() {
-            try {
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/school_info`, {
-                    method: 'GET',
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Content-Type': 'application/json',
-                        'Prefer': 'return=representation'
-                    }
-                });
+    // Charts objects
+    let studentDistChart, genderDistChart, performanceChart, budgetChart;
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+    // Update all subsequent function calls to use supabaseClient instead of supabase
+    async function fetchDashboardData() {
+        try {
+            const { data, error } = await supabaseClient
+                .from('school_info')
+                .select('*')
+                .limit(1)
+                .single();
+
+            if (error) throw error;
+
+                // Update basic info
+                document.getElementById('schoolName').textContent = data.school_name;
+                document.getElementById('schoolMotto').textContent = data.school_motto;
+                if (data.school_logo_url) {
+                    document.getElementById('schoolLogo').src = data.school_logo_url;
                 }
 
-                const data = await response.json();
-                updateDashboard(data);
+                // Update stats
+                document.getElementById('totalStudents').textContent = data.total_students.toLocaleString();
+                document.getElementById('totalStaff').textContent = data.total_staff.toLocaleString();
+                document.getElementById('attendanceRate').textContent = `${data.average_attendance_rate}%`;
+                document.getElementById('passingRate').textContent = `${data.passing_rate}%`;
+                
+                document.getElementById('studentRatio').textContent = `Student-Teacher Ratio: ${data.student_teacher_ratio}:1`;
+                document.getElementById('teacherCount').textContent = `Teachers: ${data.total_teachers}`;
+                document.getElementById('dropoutRate').textContent = `Dropout Rate: ${data.dropout_rate}%`;
+                document.getElementById('scholarshipCount').textContent = `Scholarship Students: ${data.scholarship_students}`;
+
+                // Update Charts
+                updateStudentDistributionChart(data);
+                updateGenderDistributionChart(data);
+                updatePerformanceChart(data);
+                updateBudgetChart(data);
+                updateFacilities(data);
+
             } catch (error) {
-                console.error('Error fetching school data:', error);
-            }
+            console.error('Error fetching data:', error);
+            alert('Error loading dashboard data. Please check console for details.');
+        } finally {
+            document.getElementById('loading').style.display = 'none';
         }
+    }
 
-        function updateDashboard(schools) {
-            // Total Statistics
-            const totalStudents = schools.reduce((sum, school) => sum + school.total_students, 0);
-            const totalTeachers = schools.reduce((sum, school) => sum + school.total_teachers, 0);
-            const avgStudentTeacherRatio = (totalStudents / totalTeachers).toFixed(1);
-
-            document.getElementById('totalStudentsValue').textContent = totalStudents.toLocaleString();
-            document.getElementById('totalTeachersValue').textContent = totalTeachers.toLocaleString();
-            document.getElementById('studentTeacherRatioValue').textContent = avgStudentTeacherRatio;
-            document.getElementById('schoolCountValue').textContent = schools.length;
-
-            // Students by Level Chart
-            const studentLevelChart = new Chart(document.getElementById('studentLevelChart'), {
-                type: 'pie',
+        function updateStudentDistributionChart(data) {
+            const ctx = document.getElementById('studentDistributionChart');
+            if (studentDistChart) studentDistChart.destroy();
+            
+            studentDistChart = new Chart(ctx, {
+                type: 'bar',
                 data: {
                     labels: ['Montessori', 'Primary', 'Secondary'],
                     datasets: [{
+                        label: 'Number of Students',
                         data: [
-                            schools.reduce((sum, school) => sum + school.montessori_students, 0),
-                            schools.reduce((sum, school) => sum + school.primary_students, 0),
-                            schools.reduce((sum, school) => sum + school.secondary_students, 0)
+                            data.montessori_students,
+                            data.primary_students,
+                            data.secondary_students
                         ],
-                        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ]
                     }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
                 }
             });
+        }
 
-            // Gender Distribution Chart
-            const genderDistributionChart = new Chart(document.getElementById('genderDistributionChart'), {
+        function updateGenderDistributionChart(data) {
+            const ctx = document.getElementById('genderDistributionChart');
+            if (genderDistChart) genderDistChart.destroy();
+            
+            genderDistChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: ['Boys', 'Girls'],
                     datasets: [{
-                        data: [
-                            schools.reduce((sum, school) => sum + (school.total_students * (school.boys_percentage / 100)), 0),
-                            schools.reduce((sum, school) => sum + (school.total_students * (school.girls_percentage / 100)), 0)
-                        ],
-                        backgroundColor: ['#36A2EB', '#FF6384']
+                        data: [data.boys_percentage, data.girls_percentage],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ]
                     }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
                 }
-            });
-
-            // School Info Table
-            const tableBody = document.getElementById('schoolInfoTableBody');
-            schools.forEach(school => {
-                const row = `
-                    <tr class="border-b">
-                        <td class="p-3">${school.school_name}</td>
-                        <td class="p-3">${school.established_year}</td>
-                        <td class="p-3">${school.total_students}</td>
-                        <td class="p-3">${school.location}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
             });
         }
 
-        // Fetch data on page load
-        fetchSchoolData();
+        function updatePerformanceChart(data) {
+            const performanceLevels = data.student_performance;
+            const ctx = document.getElementById('performanceChart');
+            if (performanceChart) performanceChart.destroy();
+            
+            performanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(performanceLevels),
+                    datasets: [{
+                        label: 'Number of Students',
+                        data: Object.values(performanceLevels),
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function updateBudgetChart(data) {
+            const budgetAllocation = data.budget_allocation;
+            const ctx = document.getElementById('budgetChart');
+            if (budgetChart) budgetChart.destroy();
+            
+           // Continuing from previous code...
+
+           budgetChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(budgetAllocation),
+                    datasets: [{
+                        data: Object.values(budgetAllocation),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function updateFacilities(data) {
+            const facilitiesContainer = document.getElementById('facilitiesContainer');
+            const facilities = data.facilities;
+            
+            // Clear existing content
+            facilitiesContainer.innerHTML = '';
+            
+            // Create facility cards
+            const facilityCards = [
+                {
+                    icon: 'flask',
+                    label: 'Laboratories',
+                    value: data.laboratory_count,
+                    color: 'blue'
+                },
+                {
+                    icon: 'book',
+                    label: 'Library Books',
+                    value: data.library_books_count,
+                    color: 'green'
+                },
+                {
+                    icon: 'futbol',
+                    label: 'Sports Facilities',
+                    value: Object.keys(data.sports_facilities || {}).length,
+                    color: 'yellow'
+                },
+                {
+                    icon: 'door-open',
+                    label: 'Classrooms',
+                    value: data.classroom_count,
+                    color: 'purple'
+                }
+            ];
+
+            facilityCards.forEach(facility => {
+                const cardHtml = `
+                    <div class="col-md-3">
+                        <div class="text-center p-3">
+                            <i class="fas fa-${facility.icon} fa-2x mb-2 text-${facility.color}-500"></i>
+                            <h6>${facility.label}</h6>
+                            <p class="text-2xl font-bold">${facility.value}</p>
+                        </div>
+                    </div>
+                `;
+                facilitiesContainer.innerHTML += cardHtml;
+            });
+
+            // Add additional facilities from the database
+            if (facilities) {
+                Object.entries(facilities).forEach(([name, details]) => {
+                    const cardHtml = `
+                        <div class="col-md-3">
+                            <div class="text-center p-3">
+                                <i class="fas fa-building fa-2x mb-2 text-gray-500"></i>
+                                <h6>${name}</h6>
+                                <p class="text-2xl font-bold">${typeof details === 'object' ? 'Available' : details}</p>
+                            </div>
+                        </div>
+                    `;
+                    facilitiesContainer.innerHTML += cardHtml;
+                });
+            }
+        }
+
+        // Real-time updates
+        function setupRealtimeSubscription() {
+        const subscription = supabaseClient
+            .channel('school_info_changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'school_info'
+                },
+                (payload) => {
+                    console.log('Change received!', payload);
+                    fetchDashboardData(); // Refresh dashboard data
+                }
+            )
+            .subscribe();
+    }
+
+        // Error handling function
+        function handleError(error) {
+            console.error('Error:', error);
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'alert alert-danger m-3';
+            errorMessage.role = 'alert';
+            errorMessage.textContent = `Error: ${error.message}. Please try refreshing the page.`;
+            document.body.insertBefore(errorMessage, document.body.firstChild);
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await fetchDashboardData();
+                setupRealtimeSubscription();
+            } catch (error) {
+                handleError(error);
+            }
+        });
+
+        // Add interactivity to sidebar
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+
+        // Add responsive handling
+        function handleResize() {
+            const width = window.innerWidth;
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            
+            if (width < 768) {
+                sidebar.style.transform = 'translateX(-250px)';
+                mainContent.style.marginLeft = '0';
+            } else {
+                sidebar.style.transform = 'translateX(0)';
+                mainContent.style.marginLeft = '250px';
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initial check
     </script>
 </body>
 </html>
