@@ -116,6 +116,11 @@
                             <i class="fas fa-edit mr-3"></i>Edit
                         </a>
                     </li>
+                    <li class="mb-4">
+                        <a href="notice.html" class="flex items-center hover:bg-indigo-700 p-2 rounded">
+                            <i class="fas fa-bell mr-3"></i>Notice
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -164,7 +169,7 @@
 
             // If 'admin_login' cookie is not set or is false, redirect to home.html
             if (!adminLoginCookie || adminLoginCookie.trim().split('=')[1] !== 'true') {
-                window.location.href = 'home.html';
+                window.location.href = 'index.html';
             }
         }
 
