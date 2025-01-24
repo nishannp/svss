@@ -15,14 +15,14 @@
     <meta property="og:description" content="Loading teacher information...">
     <meta property="og:image" content="imgs/default.jpg">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://svss.edu.np/teacher/nishannepali.html">
+    <meta property="og:url" content="https://svss.com.np/teacher/nishannepali.html">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Shanti Vidhya Sadan School - Teacher">
     <meta name="twitter:description" content="Loading teacher information...">
     <meta name="twitter:image" content="imgs/default.jpg">
-    <link rel="canonical" href="https://svss.edu.np/teacher/nishannepali.html">
+    <link rel="canonical" href="https://svss.com.np/teacher/nishannepali.html">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" id="structuredData">
@@ -671,12 +671,12 @@ function updateSEOTags(data, slug) {
     document.querySelector('meta[property="og:title"]').setAttribute('content', `${data.name} - Teacher at Shanti Vidhya Sadan School`);
     document.querySelector('meta[property="og:description"]').setAttribute('content', `${data.name} teaches at Shanti Vidhya Sadan School.`);
     document.querySelector('meta[property="og:image"]').setAttribute('content', data.teacher_image || 'default.jpg');
-    document.querySelector('meta[property="og:url"]').setAttribute('content', `https://svss.edu.np/teacher/${slug}.html`);
+    document.querySelector('meta[property="og:url"]').setAttribute('content', `https://svss.com.np/teacher/${slug}.html`);
 
     // Add Canonical Tag
     const canonicalLink = document.querySelector('link[rel="canonical"]') || document.createElement('link');
     canonicalLink.setAttribute('rel', 'canonical');
-    canonicalLink.setAttribute('href', `https://svss.edu.np/teacher/${slug}.html`);
+    canonicalLink.setAttribute('href', `https://svss.com.np/teacher/${slug}.html`);
     if (!document.head.contains(canonicalLink)) {
         document.head.appendChild(canonicalLink);
     }
